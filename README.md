@@ -1,5 +1,5 @@
 # AMAZON PRÁCTICA ECSDI
 
-Alejandro,Kenny
-CLemente,Daniel
-Hossain,Tanvir
+- Alejandro,Kenny
+- CLemente,Daniel
+- Hossain,Tanvir
