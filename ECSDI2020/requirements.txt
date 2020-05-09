@@ -1,0 +1,5 @@
+rdflib
+flask
+SPARQLWrapper
+semantics3
+requests
