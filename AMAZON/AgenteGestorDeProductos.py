@@ -33,8 +33,8 @@ else:
 if args.open:
     hostname = '0.0.0.0'
 else:
-    hostname = socket.gethostname()
-print('DS Hostname =', socket.gethostname())
+    hostname = '127.0.0.1'
+print('Hostname =', hostname)
 
 
 #crear aplicacion servidor
@@ -57,19 +57,18 @@ def main():
 
 
 
-@app.route("/buscar", methods=["GET","POST"])
+@app.route("/buscar", methods=['GET','POST'])
 def buscar_productos():
     """
     Permite la comunicacion con el agente via un navegador, via un formulario
     """
     print("Entrado en /buscar")
-    if(request == "GET"):
+    if request.method == 'GET':
         return render_template("buscar.html")
     
-    elif (request == "POST"):
+    elif request.method == 'POST':
         #buscar productos
-        print()
-    return "OK"
+        return "OK"
 
 if __name__ == '__main__':
     # Ponemos en marcha el servidor Flask
