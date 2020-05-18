@@ -1,75 +1,181 @@
-# -*- coding: utf-8 -*-
-"""
-Nombre del fichero: AgenteGestorDeProductos
-
-Agente que gestiona las peticiones de los usuarios
-
-
-/comm es la entrada para la recepcion de mensajes del agente
-/Stop es la entrada que para el agente
-
-Tiene una funcion AgentBehavior1 que se lanza como un thread concurrente
-
-Se que el agente de registro esta en el puerto 9000
-
-"""
-from flask import Flask, render_template, request
-import socket
 import argparse
-from rdflib import Namespace
-from AgentUtil.Agent import Agent
+import socket
+import sys
+from multiprocessing import Queue, Process
+from threading import Thread
 
+from flask import Flask, request
+from rdflib import Namespace, Graph, RDF, URIRef, Literal, XSD
+from AgentUtil.ACLMessages import get_agent_info, send_message, build_message, get_message_properties, register_agent
+from AgentUtil.Agent import Agent
+from AgentUtil.FlaskServer import shutdown_server
+from AgentUtil.Logging import config_logger
+from AgentUtil.OntoNamespaces import ECSDIAmazon, ACL
+
+#definimos los parametros de entrada (linea de comandos)
 parser = argparse.ArgumentParser()
 parser.add_argument('--open', help="Define si el servidor esta abierto al exterior o no", action='store_true', default=False)
 parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
+parser.add_argument('--dhost', default=socket.gethostname(), help="Host del agente de directorio")
+parser.add_argument('--dport', type=int, help="Puerto de comunicacion del agente de directorio")
+
+# configuramos logger para imprimir
+logger = config_logger(level=1) #1 para registrar todo (error i info)
 
 # parsear los parametros de entrada
 args = parser.parse_args()
-# configurar cosas
 if args.port is None:
-    port = 9000
+    port = 9002
 else:
     port = args.port
-if args.open:
+
+if args.open is None:
     hostname = '0.0.0.0'
 else:
     hostname = '127.0.0.1'
-print('Hostname =', hostname)
+
+if args.dport is None:
+    dport = 9000
+else:
+    dport = args.dport
+
+if args.dhost is None:
+    dhostname = '127.0.0.1'
+else:
+    dhostname = args.dhost
 
 
-#crear aplicacion servidor
-app = Flask(__name__, template_folder="./templates")
-
-#confiurar RDFuri
+#definimos un espacio de nombre
 agn = Namespace("http://www.agentes.org#")
 
+# Contador de mensajes, por si queremos hacer un seguimiento
+mss_cnt = 0
 
 #crear agente
 AgenteGestorDeProductos = Agent('AgenteGestorDeProductos', agn.AgenteGestorDeProductos,
                           'http://%s:%d/comm' % (hostname, port),'http://%s:%d/Stop' % (hostname, port))
 
 
+# direccion del agente directorio
+DirectoryAgent = Agent('DirectoryAgent',
+                       agn.Directory,
+                       'http://%s:%d/Register' % (dhostname, dport),
+                       'http://%s:%d/Stop' % (dhostname, dport))
 
-@app.route("/")
-def main():
-    print("Entrado en main")
-    return render_template("pg_usuario.html")
+
+# Global triplestore graph
+dsGraph = Graph()
+# Queue
+queue = Queue()
+#crear aplicacion servidor
+app = Flask(__name__)
+
+def get_message_count():
+    global mss_cnt
+    if mss_cnt is None:
+        mss_cnt = 0
+    mss_cnt += 1
+    return mss_cnt
 
 
 
-@app.route("/buscar", methods=['GET','POST'])
-def buscar_productos():
+
+
+@app.route("/comm")
+def communication():
+    message = request.args['content'] #cogo el contenido enviado
+    grafo = Graph()
+    grafo.parse(data=message)
+
+    message_properties = get_message_properties(grafo)
+
+    resultado_comunicacion = None
+
+    if message_properties is None:
+        # Respondemos que no hemos entendido el mensaje
+        resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
+                                              sender=AgenteGestorDeProductos.uri, msgcnt=get_message_count())
+    else:
+        # Obtenemos la performativa
+        if message_properties['performative'] != ACL.request:
+            # Si no es un request, respondemos que no hemos entendido el mensaje
+            resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
+                                                  sender=DirectoryAgent.uri, msgcnt=get_message_count())
+        else:
+            # Extraemos el contenido que ha de ser una accion de la ontologia definida en Protege
+            contenido = message_properties['content']
+            accion = grafo.value(subject=contenido, predicate=RDF.type)
+
+            # Si la acción es de tipo busqueda  empezamos
+            if accion == ECSDIAmazon.Buscar_productos:
+                print("-----Entro para empezar la accion-----")
+                #resultado_comunicacion = buscar_producto(contenido, grafo)
+
+    serialize = resultado_comunicacion.serialize(format='xml')
+    return serialize, 200
+
+@app.route("/Stop")
+def stop():
     """
-    Permite la comunicacion con el agente via un navegador, via un formulario
+    Entrypoint to the agent
+    :return: string
     """
-    print("Entrado en /buscar")
-    if request.method == 'GET':
-        return render_template("buscar.html")
-    
-    elif request.method == 'POST':
-        #buscar productos
-        return "OK"
+
+    tidyUp()
+    shutdown_server()
+    return "Stopping server"
+
+
+
+#función llamada antes de cerrar el servidor
+def tidyUp():
+    """
+    Previous actions for the agent.
+    """
+
+    global queue
+    queue.put(0)
+
+    pass
+
+
+#función para registro de agente en el servicio de directorios
+def register_message():
+    """
+    Envia un mensaje de registro al servicio de registro
+    usando una performativa Request y una accion Register del
+    servicio de directorio
+
+    :param gmess:
+    :return:
+    """
+
+    logger.info('Nos registramos')
+
+    gr = register_agent(AgenteGestorDeProductos, DirectoryAgent, AgenteGestorDeProductos.uri, get_message_count())
+    return gr
+
+
+
+#funcion llamada al principio de un agente
+def filterBehavior(queue):
+
+    """
+    Agent Behaviour in a concurrent thread.
+    :param queue: the queue
+    :return: something
+    """
+    gr = register_message()
+
 
 if __name__ == '__main__':
-    # Ponemos en marcha el servidor Flask
-    app.run(debug=True, host=hostname, port=port, use_reloader=False)
+    # Run behaviors
+    ab1 = Process(target=filterBehavior, args=(queue,))
+    ab1.start()
+
+    # Run server
+    app.run(host=hostname, port=port, debug=False)
+
+    # Wait behaviors
+    ab1.join()
+    print('The End')
