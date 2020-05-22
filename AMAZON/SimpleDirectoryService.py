@@ -47,7 +47,8 @@ else:
 if args.open:
     hostname = '0.0.0.0'
 else:
-    hostname = socket.gethostname()
+    hostname = '127.0.0.1'
+    # socket.gethostname()
 
 # Directory Service Graph
 dsgraph = Graph()
@@ -86,12 +87,11 @@ def register():
         # su direccion y su tipo
 
         logger.info('Peticion de registro')
-
         agn_add = gm.value(subject=content, predicate=DSO.Address)
         agn_name = gm.value(subject=content, predicate=FOAF.name)
         agn_uri = gm.value(subject=content, predicate=DSO.Uri)
         agn_type = gm.value(subject=content, predicate=DSO.AgentType)
-
+        
         # Añadimos la informacion en el grafo de registro vinculandola a la URI
         # del agente y registrandola como tipo FOAF.Agent
         dsgraph.add((agn_uri, RDF.type, FOAF.Agent))
@@ -118,9 +118,16 @@ def register():
         # Retornamos el primero de la lista de posibilidades
 
         logger.info('Peticion de busqueda')
-
+        print("HEY BEFORE")
         agn_type = gm.value(subject=content, predicate=DSO.AgentType)
-        rsearch = dsgraph.triples((None, DSO.AgentType, agn_type))
+        print(agn_type)
+        print("HEY")
+        print(DSO.AgentType)
+        print("hey man")
+
+        # agn_uri = next(rsearch)[0]
+
+        rsearch = dsgraph.triples((None, DSO.AgentType, agn.AgenteGestorDeProductos))
         if rsearch is not None:
             agn_uri = next(rsearch)[0]
             agn_add = dsgraph.value(subject=agn_uri, predicate=DSO.Address)
@@ -129,6 +136,7 @@ def register():
             rsp_obj = agn['Directory-response']
             gr.add((rsp_obj, DSO.Address, agn_add))
             gr.add((rsp_obj, DSO.Uri, agn_uri))
+            logger.info('He encontrado a un agente')
             return build_message(gr,
                                  ACL.inform,
                                  sender=DirectoryAgent.uri,
@@ -136,6 +144,8 @@ def register():
                                  receiver=agn_uri,
                                  content=rsp_obj)
         else:
+            logger.info("sorry no match found")
+            # print("sorry no match found")
             # Si no encontramos nada retornamos un inform sin contenido
             return build_message(Graph(),
                 ACL.inform,

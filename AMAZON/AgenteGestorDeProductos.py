@@ -10,7 +10,8 @@ from AgentUtil.ACLMessages import get_agent_info, send_message, build_message, g
 from AgentUtil.Agent import Agent
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Logging import config_logger
-from AgentUtil.OntoNamespaces import ECSDIAmazon, ACL
+from AgentUtil.OntoNamespaces import ECSDIAmazon, ACL,DSO
+from rdflib.namespace import RDF, FOAF
 
 #definimos los parametros de entrada (linea de comandos)
 parser = argparse.ArgumentParser()
@@ -79,14 +80,13 @@ def get_message_count():
 
 
 
-
-
 @app.route("/comm")
 def communication():
     message = request.args['content'] #cogo el contenido enviado
     grafo = Graph()
+    logger.info('--Envian una comunicacion')
     grafo.parse(data=message)
-
+    logger.info('--Envian una comunicacion')
     message_properties = get_message_properties(grafo)
 
     resultado_comunicacion = None
@@ -105,14 +105,19 @@ def communication():
             # Extraemos el contenido que ha de ser una accion de la ontologia definida en Protege
             contenido = message_properties['content']
             accion = grafo.value(subject=contenido, predicate=RDF.type)
-
+            logger.info("-----La accion es:----")
+            logger.info(accion)
             # Si la acción es de tipo busqueda  empezamos
             if accion == ECSDIAmazon.Buscar_productos:
-                print("-----Entro para empezar la accion-----")
-                #resultado_comunicacion = buscar_producto(contenido, grafo)
-
+                logger.info("-----Entro para empezar la accion-----")
+                resultado_comunicacion = buscar_producto(contenido, grafo)
+                
+    logger.info('--Antes de serializar la respuesta')
     serialize = resultado_comunicacion.serialize(format='xml')
+
     return serialize, 200
+
+
 
 @app.route("/Stop")
 def stop():
@@ -151,22 +156,20 @@ def register_message():
     """
 
     logger.info('Nos registramos')
-
-    gr = register_agent(AgenteGestorDeProductos, DirectoryAgent, AgenteGestorDeProductos.uri, get_message_count())
+    gr = register_agent(AgenteGestorDeProductos, DirectoryAgent, agn.AgenteGestorDeProductos, get_message_count())
     return gr
 
 
 
 #funcion llamada al principio de un agente
 def filterBehavior(queue):
-
     """
     Agent Behaviour in a concurrent thread.
     :param queue: the queue
     :return: something
     """
-    gr = register_message()
-
+    graf = register_message()
+    pass
 
 if __name__ == '__main__':
     # Run behaviors

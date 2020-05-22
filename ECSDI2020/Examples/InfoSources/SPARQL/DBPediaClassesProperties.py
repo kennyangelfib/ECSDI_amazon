@@ -21,12 +21,13 @@ __author__ = 'bejar'
 from SPARQLWrapper import SPARQLWrapper, JSON, XML, RDF, N3
 from rdflib import Graph, BNode, Literal
 
-from AgentUtil.SPARQLPoints import DBPEDIA
+# from AgentUtil.SPARQLPoints import DBPEDIA
 
+DBPEDIA = "http://dbpedia.org/sparql"
 # Configuramos el SPARQL de wikipedia
 sparql = SPARQLWrapper(DBPEDIA)
 
-# Obtenemos tods los atributos que tienen como dominio
+# Obtenemos todos los atributos que tienen como dominio
 # las clases asignadas a Barcelona
 sparql.setQuery("""
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

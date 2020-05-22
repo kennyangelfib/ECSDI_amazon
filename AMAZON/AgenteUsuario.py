@@ -117,7 +117,7 @@ def peticion_buscar(request):
     precio_min = request.form['precio_min']
     precio_max = request.form['precio_max']
     # agregamos el rango de precios 
-    if precio_min or precio_min:
+    if precio_min or precio_max:
         print(precio_min)
         print(precio_max)
         precio_sujeto = ECSDIAmazon['Restriccion_precio' + str(get_message_count())]
@@ -131,6 +131,7 @@ def peticion_buscar(request):
     #pedimos informacion del agente GestorDeProductos
     print("----------------------------1")
     agente = get_agent_info(agn.AgenteGestorDeProductos, DirectoryAgent, AgenteUsuario, get_message_count())
+    print(agente)
     print("----------------------------2")
     logger.info("Enviando peticion de busqueda al agente GestorDeProductos")
     grafo_busqueda = send_message(build_message(
@@ -222,7 +223,7 @@ def register_message():
 
     logger.info('Nos registramos')
 
-    gr = register_agent(AgenteUsuario, DirectoryAgent, AgenteUsuario.uri, get_message_count())
+    gr = register_agent(AgenteUsuario, DirectoryAgent, agn.AgenteUsuario, get_message_count())
     return gr
 
 
@@ -232,11 +233,11 @@ def agentbehavior1():
 
     :return:
     """
-    gr = register_message()
+    graf = register_message()
         
 
 if __name__ == '__main__':
-        # Ponemos en marcha los behaviors
+    # Ponemos en marcha los behaviors
     ab1 = Process(target=agentbehavior1)
     ab1.start()
     # Ponemos en marcha el servidor Flask
