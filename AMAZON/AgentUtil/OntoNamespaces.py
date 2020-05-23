@@ -39,4 +39,4 @@ GEO = Namespace('http://www.w3.org/2003/01/geo/wgs84_pos#')
 DSO = Namespace('http://www.semanticweb.org/directory-service-ontology#')
 
 #definimos nuestro espacio de nombre
-ECSDIAmazon = Namespace("http://www.owl-ontologies.com/ECSDIAmazon.owl#")
+ECSDIAmazon = Namespace("http://www.nuestra-ontologia.com/ECSDIAmazon/")

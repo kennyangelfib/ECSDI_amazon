@@ -114,8 +114,8 @@ def peticion_buscar(request):
         grafo.add((nombre_sujeto, ECSDIAmazon.Nombre, Literal(nombre_producto, datatype=XSD.string)))
         grafo.add((contenido, ECSDIAmazon.Restringe, URIRef(nombre_sujeto)))
 
-    precio_min = request.form['precio_min']
-    precio_max = request.form['precio_max']
+    precio_min = int(request.form['precio_min'])*100
+    precio_max = int(request.form['precio_max'])*100
     # agregamos el rango de precios 
     if precio_min or precio_max:
         print(precio_min)
@@ -129,17 +129,29 @@ def peticion_buscar(request):
         grafo.add((contenido, ECSDIAmazon.Restringe, URIRef(precio_sujeto)))
 
     #pedimos informacion del agente GestorDeProductos
-    print("----------------------------1")
+    logger.info("Cogiendo informacion del AgenteGestorDeProductos")
     agente = get_agent_info(agn.AgenteGestorDeProductos, DirectoryAgent, AgenteUsuario, get_message_count())
-    print(agente)
-    print("----------------------------2")
-    logger.info("Enviando peticion de busqueda al agente GestorDeProductos")
-    grafo_busqueda = send_message(build_message(
+    logger.info("Enviando peticion de busqueda al AgenteGestorDeProductos")
+    respuesta_msg = send_message(build_message(
             grafo, perf=ACL.request, sender=AgenteUsuario.uri, receiver=agente.uri, msgcnt=get_message_count(), 
             content=contenido), agente.address)
+
     
-    logger.info("Resultado de busqueda recibido")
     lista_de_productos = []
+    for item in respuesta_msg.subjects(RDF.type, ECSDIAmazon.product):
+        product = dict(
+            product_name=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.product_name)),
+            product_id=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.product_id)),
+            brand=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.brand)),
+            product_description=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.product_description)),
+            price_euros=int(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.price_eurocents))/100,
+            category=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.category)),
+        )
+        lista_de_productos.append(product)
+
+    logger.info("Resultado de busqueda")
+    print(lista_de_productos)
+    '''
     i_sujueto = {}
     i = 0
 
@@ -165,6 +177,7 @@ def peticion_buscar(request):
             elif p == RDF.type:
                 producto["Sujeto"] = s
             lista_de_productos[i_sujueto[s]] = producto
+    '''
     #mostramos los productos
     return render_template('buscar.html', productos=lista_de_productos)
 

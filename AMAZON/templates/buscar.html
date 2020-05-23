@@ -20,15 +20,18 @@
                     <tr align="left">
                         <th style="padding:15px">Nombre</th>
                         <th style="padding:15px">Precio</th>
+                        <th style="padding:15px">Marca</th>
+                        <th style="padding:15px">Categoria</th>
                         <th style="padding:15px">Descripcion</th>
                     </tr>
-                    {% for product in products %}
-                    <tr>
-                        <td style="padding:15px">{{ product.Nombre }}</td>
-                        <td style="padding:15px">{{ product.Precio }}</td>
-                        <td style="padding:15px">{{ product.Descripcion }}</td>
-                        <td style="padding:15px"><input type="checkbox" name="checkbox" value="{{ products.index(product) }}"></td>
-                    </tr>
+                    {% for product in productos %}
+                        <tr>
+                            <td style="padding:15px">{{product["product_name"]}}</td>
+                            <td style="padding:15px">{{product["price_euros"]}}</td>
+                            <td style="padding:15px">{{product["brand"]}}</td>
+                            <td style="padding:15px">{{product["category"]}}</td>
+                            <td style="padding:15px">{{product["product_description"]}}</td>
+                        </tr>
                     {% endfor %}
                 </table>
             </form>

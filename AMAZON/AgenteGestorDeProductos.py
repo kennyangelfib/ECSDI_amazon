@@ -12,6 +12,7 @@ from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Logging import config_logger
 from AgentUtil.OntoNamespaces import ECSDIAmazon, ACL,DSO
 from rdflib.namespace import RDF, FOAF
+from string import Template
 
 #definimos los parametros de entrada (linea de comandos)
 parser = argparse.ArgumentParser()
@@ -79,6 +80,85 @@ def get_message_count():
     return mss_cnt
 
 
+#cogemos lo que nos envia el AgenteUsuario y hacemos la busqueda a la bd local de productos
+def buscar_productos(contenido, grafo):
+    logger.info("Analizando la peticion de busqueda")
+    #en el contenido puedo tener dos restricciones: de nombre y precio (porque el predicato se relaciona con estas dos)
+    restricciones = grafo.objects(contenido, ECSDIAmazon.Restringe)
+    r_dict = {}
+    for r in restricciones:
+        if grafo.value(subject=r, predicate=RDF.type) == ECSDIAmazon.Restriccion_nombre:
+            nombre = grafo.value(subject=r, predicate=ECSDIAmazon.Nombre)
+            r_dict['Nombre'] = nombre
+            logger.info("Restriccion nombre: " + nombre)
+        elif grafo.value(subject=r, predicate=RDF.type) == ECSDIAmazon.Restriccion_precio:
+            precio_min = grafo.value(subject=r, predicate=ECSDIAmazon.Precio_minimo)
+            precio_max = grafo.value(subject=r, predicate=ECSDIAmazon.Precio_maximo)
+            r_dict['precio_mim'] = precio_min
+            r_dict['precio_max'] = precio_max
+    
+    #construimos el grafo de busqueda accediendo a la bd local
+    brand='(.*)'
+    search_text='(.*)'
+    precio_min = 0.0
+    precio_max = sys.float_info.max
+    logger.info("Empezando la busqueda")
+
+    productos = Graph()
+    productos.parse('./rdf/productos.rdf')
+    
+    sparql_query = Template('''
+        SELECT DISTINCT ?product ?id ?name ?description ?weight_grams ?category ?price_eurocents ?brand
+        WHERE {
+            ?product rdf:type ?type_prod .
+            ?product ns:product_id ?id .
+            ?product ns:product_name ?name .
+            ?product ns:product_description ?description .
+            ?product ns:weight_grams ?weight_grams .
+            ?product ns:category ?category .
+            ?product ns:price_eurocents ?price_eurocents .
+            ?product ns:brand ?brand .
+            FILTER (
+                ?price_eurocents > $precio_min && 
+                ?price_eurocents < $precio_max &&
+                (regex(str(?name), '$search_text', 'i') || regex(str(?description), '$search_text', 'i') ) &&
+                regex(str(?brand), '$brand', 'i')
+            )
+        }
+    ''').substitute(dict(
+        precio_min=precio_min,
+        precio_max=precio_max,
+        brand=brand,
+        search_text=search_text
+    )
+    )
+
+    #aplicamos la query
+    resultado = productos.query(
+        sparql_query,
+        initNs=dict(
+            foaf=FOAF,
+            rdf=RDF,
+            ns=ECSDIAmazon,
+        )
+    )
+
+    result_graph = Graph()
+    for x in resultado:
+        subject = x.product
+        result_graph.add((subject, RDF.type, ECSDIAmazon.product))
+        result_graph.add((subject, ECSDIAmazon.product_id, x.id))
+        result_graph.add((subject, ECSDIAmazon.product_name, x.name))
+        result_graph.add((subject, ECSDIAmazon.product_description, x.description))
+        result_graph.add((subject, ECSDIAmazon.category, x.category))
+        result_graph.add((subject, ECSDIAmazon.price_eurocents, x.price_eurocents))
+        result_graph.add((subject, ECSDIAmazon.brand, x.brand))
+
+    return result_graph
+
+    
+
+
 
 @app.route("/comm")
 def communication():
@@ -105,14 +185,17 @@ def communication():
             # Extraemos el contenido que ha de ser una accion de la ontologia definida en Protege
             contenido = message_properties['content']
             accion = grafo.value(subject=contenido, predicate=RDF.type)
-            logger.info("-----La accion es:----")
-            logger.info(accion)
+            logger.info("La accion es: " + accion)
             # Si la acción es de tipo busqueda  empezamos
             if accion == ECSDIAmazon.Buscar_productos:
-                logger.info("-----Entro para empezar la accion-----")
-                resultado_comunicacion = buscar_producto(contenido, grafo)
+                logger.info("Para buscar productos tengo el contenido: " + contenido)
+                logger.info("Para buscar productos tengo el grafo: ")
+                for s, p, o in grafo:
+                    print("- ", s, " -- ", p, " -- ", o)
+                    print("----------------------------")
+                resultado_comunicacion = buscar_productos(contenido, grafo)
                 
-    logger.info('--Antes de serializar la respuesta')
+    logger.info('Antes de serializar la respuesta')
     serialize = resultado_comunicacion.serialize(format='xml')
 
     return serialize, 200
@@ -177,7 +260,7 @@ if __name__ == '__main__':
     ab1.start()
 
     # Run server
-    app.run(host=hostname, port=port, debug=False)
+    app.run(host=hostname, port=port, debug=True)
 
     # Wait behaviors
     ab1.join()
