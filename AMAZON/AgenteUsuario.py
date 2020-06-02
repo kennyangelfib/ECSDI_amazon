@@ -77,7 +77,6 @@ app = Flask(__name__, template_folder="./templates")
 # global dsgraph triplestore
 dsgraph = Graph()
 
-# productos enconctrados
 lista_de_productos = []
 
 def get_message_count():
@@ -138,48 +137,85 @@ def peticion_buscar(request):
 
     
     lista_de_productos = []
-    for item in respuesta_msg.subjects(RDF.type, ECSDIAmazon.product):
+    for item in respuesta_msg.subjects(RDF.type, ECSDIAmazon.Producto):
         product = dict(
-            product_name=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.product_name)),
-            product_id=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.product_id)),
-            brand=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.brand)),
-            product_description=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.product_description)),
-            price_euros=int(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.price_eurocents))/100,
-            category=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.category)),
+            id_producto=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.Id_producto)),
+            nombre_producto=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.Nombre_producto)),
+            precio_producto=int(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.Precio_producto))/100,
+            descripcion_producto=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.Descripcion_producto)),
+            categoria=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.Categoria)),
+            marca=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.Marca)),
+            peso=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.Peso_producto))
         )
         lista_de_productos.append(product)
 
     logger.info("Resultado de busqueda")
     print(lista_de_productos)
-    '''
-    i_sujueto = {}
-    i = 0
-
-    sujetos = grafo_busqueda.objects(predicate=ECSDIAmazon.Muestra)
-    for s in sujetos:
-        i_sujueto[s] = i
-        i+=1
-        lista_de_productos.append({})
-
-    for s, p, o in grafo_busqueda:
-        if s in i_sujueto:
-            producto = lista_de_productos[i_sujueto[s]]
-            if p == ECSDIAmazon.Nombre:
-                producto["Nombre"] = o
-            elif p == ECSDIAmazon.Precio:
-                producto["Precio"] = o
-            elif p == ECSDIAmazon.Descripcion:
-                producto["Descripcion"] = o
-            elif p == ECSDIAmazon.Id:
-                producto["Id"] = o
-            elif p == ECSDIAmazon.Peso:
-                producto["Peso"] = o
-            elif p == RDF.type:
-                producto["Sujeto"] = s
-            lista_de_productos[i_sujueto[s]] = producto
-    '''
     #mostramos los productos
-    return render_template('buscar.html', productos=lista_de_productos)
+    return render_template('buscar.html', productos=lista_de_productos, b=True)
+
+
+
+def iniciar_venta(request):
+    global lista_de_productos
+    logger.info("Analizando la peticion de compra")
+    mi_compra = []
+    #coge los indices marcados
+    for p in request.form.getlist("checkbox"):
+        mi_compra.append(lista_de_productos[int(p)])
+    
+
+    #cogo info de la compra
+    tarjeta = int(request.form['tarjeta'])
+    direccion = str(request.form['direccion'])
+    ciudad = str(request.form['ciudad'])
+    prioridad = int(request.form['prioridad']) #va entre 1 y 10, de menor a mayor
+
+    #preparo el grafo para comunicarme con el AgenteGestorDeVenta
+    #accion: Iniciar_venta
+    contenido = ECSDIAmazon["Iniciar_venta" + str(get_message_count())]
+    grafo_venta = Graph()
+    grafo_venta.add((contenido, RDF.type, ECSDIAmazon.Iniciar_venta))
+    grafo_venta.add((contenido, ECSDIAmazon.Tarjeta, Literal(tarjeta, datatype=XSD.int)))
+    grafo_venta.add((contenido, ECSDIAmazon.Prioridad, Literal(prioridad, datatype=XSD.int)))
+    
+    direccion_cliente = ECSDIAmazon["Direccion"+ str(get_message_count())]
+    grafo_venta.add((direccion_cliente, RDF.type, ECSDIAmazon.Direccion))
+    grafo_venta.add((direccion_cliente, ECSDIAmazon.Direccion, Literal(direccion, datatype=XSD.string)))
+    grafo_venta.add((direccion_cliente, ECSDIAmazon.Ciudad, Literal(ciudad, datatype=XSD.string)))
+
+    venta = ECSDIAmazon["Venta"+str(get_message_count())]
+    grafo_venta.add((venta, RDF.type, ECSDIAmazon.Venta))
+    grafo_venta.add((venta, ECSDIAmazon.Destino, URIRef(direccion_cliente)))
+
+
+    logger.info("Mi lista de productos")
+    print(lista_de_productos)
+    logger.info("Mi compra")
+    print(mi_compra)
+
+    for producto in lista_de_productos:
+        #s = producto["id_producto"]
+        #sujeto = ECSDIAmazon + s
+        url = ECSDIAmazon
+        sujeto = url.term(producto["id_producto"])
+        print(sujeto)
+        grafo_venta.add((sujeto, RDF.type, ECSDIAmazon.Producto))
+        grafo_venta.add((sujeto, ECSDIAmazon.Id_producto, producto['id_producto']))
+        grafo_venta.add((sujeto, ECSDIAmazon.Nombre_producto, producto['nombre_producto']))
+        grafo_venta.add((sujeto, ECSDIAmazon.Precio_producto, producto['precio_producto']))
+        grafo_venta.add((sujeto, ECSDIAmazon.Descripcion_producto, producto['descripcion_producto']))
+        grafo_venta.add((sujeto, ECSDIAmazon.Categoria, producto['categoria']))
+        grafo_venta.add((sujeto, ECSDIAmazon.Marca, producto['marca']))
+        grafo_venta.add((sujeto, ECSDIAmazon.Peso_producto, producto['peso']))
+        grafo_venta.add((venta, ECSDIAmazon.Contiene, URIRef(producto)))
+    
+    grafo_venta.add((contenido,ECSDIAmazon.De,URIRef(venta)))
+
+    #......
+
+    #es un ejemplo
+    return render_template('buscar.html', productos=None, b=True)
 
 
 
@@ -192,6 +228,10 @@ def buscar_productos():
     elif request.method == "POST":
         if request.form["submit"] == "Buscar":
             return peticion_buscar(request)
+        elif request.form["submit"] == "Comprar":
+            return iniciar_venta(request)
+
+        
 
 
 

@@ -80,30 +80,8 @@ def get_message_count():
     return mss_cnt
 
 
-#cogemos lo que nos envia el AgenteUsuario y hacemos la busqueda a la bd local de productos
-def buscar_productos(contenido, grafo):
-    logger.info("Analizando la peticion de busqueda")
-    #en el contenido puedo tener dos restricciones: de nombre y precio (porque el predicato se relaciona con estas dos)
-    restricciones = grafo.objects(contenido, ECSDIAmazon.Restringe)
-    r_dict = {}
-    for r in restricciones:
-        if grafo.value(subject=r, predicate=RDF.type) == ECSDIAmazon.Restriccion_nombre:
-            nombre = grafo.value(subject=r, predicate=ECSDIAmazon.Nombre)
-            r_dict['Nombre'] = nombre
-            logger.info("Restriccion nombre: " + nombre)
-        elif grafo.value(subject=r, predicate=RDF.type) == ECSDIAmazon.Restriccion_precio:
-            precio_min = grafo.value(subject=r, predicate=ECSDIAmazon.Precio_minimo)
-            precio_max = grafo.value(subject=r, predicate=ECSDIAmazon.Precio_maximo)
-            r_dict['precio_mim'] = precio_min
-            r_dict['precio_max'] = precio_max
-    
-    #construimos el grafo de busqueda accediendo a la bd local
-    brand='(.*)'
-    search_text='(.*)'
-    precio_min = 0.0
-    precio_max = sys.float_info.max
-    logger.info("Empezando la busqueda")
-
+ #construimos el grafo de busqueda accediendo a la bd local
+def aplicar_filtro(brand='(.*)', search_text='(.*)', precio_min=0.0, precio_max=sys.float_info.max):
     productos = Graph()
     productos.parse('./rdf/productos.rdf')
     
@@ -143,21 +121,45 @@ def buscar_productos(contenido, grafo):
         )
     )
 
-    result_graph = Graph()
-    for x in resultado:
-        subject = x.product
-        result_graph.add((subject, RDF.type, ECSDIAmazon.product))
-        result_graph.add((subject, ECSDIAmazon.product_id, x.id))
-        result_graph.add((subject, ECSDIAmazon.product_name, x.name))
-        result_graph.add((subject, ECSDIAmazon.product_description, x.description))
-        result_graph.add((subject, ECSDIAmazon.category, x.category))
-        result_graph.add((subject, ECSDIAmazon.price_eurocents, x.price_eurocents))
-        result_graph.add((subject, ECSDIAmazon.brand, x.brand))
+    grapfo_resultante = Graph()
+    for p in resultado:
+        logger.info("----------------------------------------------------------------------")
+        subject = p.product
+        print(subject)
+        print(p.id)
+        grapfo_resultante.add((subject, RDF.type, ECSDIAmazon.Producto))
+        grapfo_resultante.add((subject, ECSDIAmazon.Id_producto, p.id))
+        grapfo_resultante.add((subject, ECSDIAmazon.Nombre_producto, p.name))
+        grapfo_resultante.add((subject, ECSDIAmazon.Precio_producto, p.price_eurocents))
+        grapfo_resultante.add((subject, ECSDIAmazon.Descripcion_producto, p.description))
+        grapfo_resultante.add((subject, ECSDIAmazon.Categoria, p.category))
+        grapfo_resultante.add((subject, ECSDIAmazon.Marca, p.brand))
+        grapfo_resultante.add((subject, ECSDIAmazon.Peso_producto, p.weight_grams))
 
-    return result_graph
+    return grapfo_resultante
 
-    
 
+
+#cogemos lo que nos envia el AgenteUsuario y hacemos la busqueda a la bd local de productos
+def buscar_productos(contenido, grafo):
+    logger.info("Analizando la peticion de busqueda")
+    #en el contenido puedo tener dos restricciones: de nombre y precio (porque el predicato se relaciona con estas dos)
+    restricciones = grafo.objects(contenido, ECSDIAmazon.Restringe)
+    r_dict = {}
+    for r in restricciones:
+        if grafo.value(subject=r, predicate=RDF.type) == ECSDIAmazon.Restriccion_nombre:
+            nombre = grafo.value(subject=r, predicate=ECSDIAmazon.Nombre)
+            r_dict['search_text'] = nombre
+            logger.info("Restriccion nombre: " + nombre)
+        elif grafo.value(subject=r, predicate=RDF.type) == ECSDIAmazon.Restriccion_precio:
+            precio_min = grafo.value(subject=r, predicate=ECSDIAmazon.Precio_minimo)
+            precio_max = grafo.value(subject=r, predicate=ECSDIAmazon.Precio_maximo)
+            r_dict['precio_min'] = precio_min
+            r_dict['precio_max'] = precio_max
+
+    return aplicar_filtro(**r_dict).serialize(format='xml')
+
+   
 
 
 @app.route("/comm")
@@ -196,7 +198,7 @@ def communication():
                 resultado_comunicacion = buscar_productos(contenido, grafo)
                 
     logger.info('Antes de serializar la respuesta')
-    serialize = resultado_comunicacion.serialize(format='xml')
+    serialize = resultado_comunicacion
 
     return serialize, 200
 

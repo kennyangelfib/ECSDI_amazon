@@ -8,12 +8,16 @@
 <body>
         <h1>Buscar productos</h1>
         {% if not productos %}
-            <form method="post">
-                <input type="text" name="nombre" placeholder="Nombre..."/><br>
-                <input type="number" name="precio_min" step="0.1" min="0.0" placeholder="Precio minimo..."/><br>
-                <input type="number" name="precio_max" step="0.1" min="0.0" placeholder="Precio maximo..."/><br>
-                <input type="submit" name="submit" value="Buscar">
-            </form>
+            {% if b%}
+                <h3>No se ha encontrado ningún producto. Inténtalo de nuevo. </h3>
+            {% else %}
+                <form method="post">
+                    <input type="text" name="nombre" placeholder="Nombre..."/><br>
+                    <input type="number" name="precio_min" step="0.1" min="0.0" placeholder="Precio minimo..."/><br>
+                    <input type="number" name="precio_max" step="0.1" min="0.0" placeholder="Precio maximo..."/><br> <br>
+                    <input type="submit" name="submit" value="Buscar">
+                </form>
+            {% endif %}
         {% else %}
             <form method="post">
                 <table style="width:85%; border-collapse:collapse;" align="center" border="1px solid black">
@@ -23,17 +27,28 @@
                         <th style="padding:15px">Marca</th>
                         <th style="padding:15px">Categoria</th>
                         <th style="padding:15px">Descripcion</th>
+                        <th style="padding:15px">Comprar</th>
                     </tr>
-                    {% for product in productos %}
+                    {% for p in productos %}
                         <tr>
-                            <td style="padding:15px">{{product["product_name"]}}</td>
-                            <td style="padding:15px">{{product["price_euros"]}}</td>
-                            <td style="padding:15px">{{product["brand"]}}</td>
-                            <td style="padding:15px">{{product["category"]}}</td>
-                            <td style="padding:15px">{{product["product_description"]}}</td>
+                            <td style="padding:15px">{{p["nombre_producto"]}}</td>
+                            <td style="padding:15px">{{p["precio_producto"]}}€</td>
+                            <td style="padding:15px">{{p["marca"]}}</td>
+                            <td style="padding:15px">{{p["categoria"]}}</td>
+                            <td style="padding:15px">{{p["descripcion_producto"]}}</td>
+                            <td style="padding:15px"><input type="checkbox" name="checkbox" value="{{ productos.index(p) }}"></td>
                         </tr>
                     {% endfor %}
                 </table>
+
+                <br><br>
+                <tr align="left">
+                    <th style="padding:15px">Tarjeta  <input type="text" name="tarjeta"></th> <br>
+                    <th style="padding:15px">Direccion  <input type="text" name="direccion"></th> <br>
+                    <th style="padding:15px">Ciudad  <input type="text" name="ciudad"></th> <br>
+                    <th style="padding:15px">Prioridad del envio  <input type="text" name="prioridad"></th> <br> <br>
+                    <input type="submit" name="submit" value="Comprar"> <br><br>
+                </tr>
             </form>
         {% endif %}
         <br>
