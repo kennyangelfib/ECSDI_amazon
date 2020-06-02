@@ -10,7 +10,7 @@ from AgentUtil.ACLMessages import get_agent_info, send_message, build_message, g
 from AgentUtil.Agent import Agent
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Logging import config_logger
-from AgentUtil.OntoNamespaces import ECSDIAmazon, ACL,DSO
+from AgentUtil.OntoNamespaces import ECSDIAmazon, ACL, DSO
 from rdflib.namespace import RDF, FOAF
 from string import Template
 
@@ -27,7 +27,7 @@ logger = config_logger(level=1) #1 para registrar todo (error i info)
 # parsear los parametros de entrada
 args = parser.parse_args()
 if args.port is None:
-    port = 9002
+    port = 9003
 else:
     port = args.port
 
@@ -54,7 +54,7 @@ agn = Namespace("http://www.agentes.org#")
 mss_cnt = 0
 
 #crear agente
-AgenteGestorDeProductos = Agent('AgenteGestorDeProductos', agn.AgenteGestorDeProductos,
+AgenteGestorDeVentas = Agent('AgenteGestorDeVentas', agn.AgenteGestorDeVentas,
                           'http://%s:%d/comm' % (hostname, port),'http://%s:%d/Stop' % (hostname, port))
 
 
@@ -80,95 +80,19 @@ def get_message_count():
     return mss_cnt
 
 
- #construimos el grafo de busqueda accediendo a la bd local
-def aplicar_filtro(brand='(.*)', search_text='(.*)', precio_min=0.0, precio_max=sys.float_info.max):
-    productos = Graph()
-    productos.parse('./rdf/productos.rdf')
-    
-    sparql_query = Template('''
-        SELECT DISTINCT ?product ?id ?name ?description ?weight_grams ?category ?price_eurocents ?brand
-        WHERE {
-            ?product rdf:type ?type_prod .
-            ?product ns:product_id ?id .
-            ?product ns:product_name ?name .
-            ?product ns:product_description ?description .
-            ?product ns:weight_grams ?weight_grams .
-            ?product ns:category ?category .
-            ?product ns:price_eurocents ?price_eurocents .
-            ?product ns:brand ?brand .
-            FILTER (
-                ?price_eurocents > $precio_min && 
-                ?price_eurocents < $precio_max &&
-                (regex(str(?name), '$search_text', 'i') || regex(str(?description), '$search_text', 'i') ) &&
-                regex(str(?brand), '$brand', 'i')
-            )
-        }
-    ''').substitute(dict(
-        precio_min=precio_min,
-        precio_max=precio_max,
-        brand=brand,
-        search_text=search_text
-    )
-    )
-
-    #aplicamos la query
-    resultado = productos.query(
-        sparql_query,
-        initNs=dict(
-            foaf=FOAF,
-            rdf=RDF,
-            ns=ECSDIAmazon,
-        )
-    )
-
-    grapfo_resultante = Graph()
-    for p in resultado:
-        logger.info("----------------------------------------------------------------------")
-        subject = p.product
-        print(subject)
-        print(p.id)
-        grapfo_resultante.add((subject, RDF.type, ECSDIAmazon.Producto))
-        grapfo_resultante.add((subject, ECSDIAmazon.Id_producto, p.id))
-        grapfo_resultante.add((subject, ECSDIAmazon.Nombre_producto, p.name))
-        grapfo_resultante.add((subject, ECSDIAmazon.Precio_producto, p.price_eurocents))
-        grapfo_resultante.add((subject, ECSDIAmazon.Descripcion_producto, p.description))
-        grapfo_resultante.add((subject, ECSDIAmazon.Categoria, p.category))
-        grapfo_resultante.add((subject, ECSDIAmazon.Marca, p.brand))
-        grapfo_resultante.add((subject, ECSDIAmazon.Peso_producto, p.weight_grams))
-
-    return grapfo_resultante
 
 
 
-#cogemos lo que nos envia el AgenteUsuario y hacemos la busqueda a la bd local de productos
-def buscar_productos(contenido, grafo):
-    logger.info("Analizando la peticion de busqueda")
-    #en el contenido puedo tener dos restricciones: de nombre y precio (porque el predicato se relaciona con estas dos)
-    restricciones = grafo.objects(contenido, ECSDIAmazon.Restringe)
-    r_dict = {}
-    for r in restricciones:
-        if grafo.value(subject=r, predicate=RDF.type) == ECSDIAmazon.Restriccion_nombre:
-            nombre = grafo.value(subject=r, predicate=ECSDIAmazon.Nombre)
-            r_dict['search_text'] = nombre
-            logger.info("Restriccion nombre: " + nombre)
-        elif grafo.value(subject=r, predicate=RDF.type) == ECSDIAmazon.Restriccion_precio:
-            precio_min = grafo.value(subject=r, predicate=ECSDIAmazon.Precio_minimo)
-            precio_max = grafo.value(subject=r, predicate=ECSDIAmazon.Precio_maximo)
-            r_dict['precio_min'] = precio_min
-            r_dict['precio_max'] = precio_max
+def vender_productos(contenido, grafo):
+    return Graph()
 
-    return aplicar_filtro(**r_dict).serialize(format='xml')
-
-   
 
 
 @app.route("/comm")
 def communication():
     message = request.args['content'] #cogo el contenido enviado
     grafo = Graph()
-    logger.info('--Envian una comunicacion')
     grafo.parse(data=message)
-    logger.info('--Envian una comunicacion')
     message_properties = get_message_properties(grafo)
 
     resultado_comunicacion = None
@@ -176,7 +100,7 @@ def communication():
     if message_properties is None:
         # Respondemos que no hemos entendido el mensaje
         resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
-                                              sender=AgenteGestorDeProductos.uri, msgcnt=get_message_count())
+                                              sender=AgenteGestorDeVentas.uri, msgcnt=get_message_count())
     else:
         # Obtenemos la performativa
         if message_properties['performative'] != ACL.request:
@@ -189,13 +113,11 @@ def communication():
             accion = grafo.value(subject=contenido, predicate=RDF.type)
             logger.info("La accion es: " + accion)
             # Si la acción es de tipo busqueda  empezamos
-            if accion == ECSDIAmazon.Buscar_productos:
-                resultado_comunicacion = buscar_productos(contenido, grafo)
-            elif accion == ECSDIAmazon.Anadir_producto:
-                print("-----siiiiiiiii---------")
+            if accion == ECSDIAmazon.Iniciar_venta:
+                resultado_comunicacion = vender_productos(contenido, grafo)
                 
     logger.info('Antes de serializar la respuesta')
-    serialize = resultado_comunicacion
+    serialize = resultado_comunicacion.serialize(format='xml')
 
     return serialize, 200
 
@@ -238,7 +160,7 @@ def register_message():
     """
 
     logger.info('Nos registramos')
-    gr = register_agent(AgenteGestorDeProductos, DirectoryAgent, agn.AgenteGestorDeProductos, get_message_count())
+    gr = register_agent(AgenteGestorDeVentas, DirectoryAgent, agn.AgenteGestorDeVentas, get_message_count())
     return gr
 
 

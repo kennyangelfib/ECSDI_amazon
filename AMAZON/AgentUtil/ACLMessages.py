@@ -89,6 +89,10 @@ def get_message_properties(msg):
 
 #devulevo info del agente
 def get_agent_info(type_agn, directory_agent, sender, msgcnt):
+    print(" --------------parametros de entrada ------------------")
+    print(type_agn)
+    print(directory_agent)
+    print(sender)
     gmess = Graph()
     # Construimos el mensaje de registro
     gmess.bind('foaf', FOAF)
@@ -116,6 +120,11 @@ def get_agent_info(type_agn, directory_agent, sender, msgcnt):
     url = gr.value(subject=content, predicate=DSO.Uri)
     name = gr.value(subject=content, predicate=FOAF.name)
 
+    print("----------------------------------------")
+    print(name)
+    print(url)
+    print(address)
+    
     return Agent(name, url, address, None)
 
 

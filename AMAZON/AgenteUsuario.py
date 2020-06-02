@@ -200,22 +200,51 @@ def iniciar_venta(request):
         url = ECSDIAmazon
         sujeto = url.term(producto["id_producto"])
         print(sujeto)
+        print()
+        #esta parte habria que revisar
         grafo_venta.add((sujeto, RDF.type, ECSDIAmazon.Producto))
-        grafo_venta.add((sujeto, ECSDIAmazon.Id_producto, producto['id_producto']))
-        grafo_venta.add((sujeto, ECSDIAmazon.Nombre_producto, producto['nombre_producto']))
-        grafo_venta.add((sujeto, ECSDIAmazon.Precio_producto, producto['precio_producto']))
-        grafo_venta.add((sujeto, ECSDIAmazon.Descripcion_producto, producto['descripcion_producto']))
-        grafo_venta.add((sujeto, ECSDIAmazon.Categoria, producto['categoria']))
-        grafo_venta.add((sujeto, ECSDIAmazon.Marca, producto['marca']))
-        grafo_venta.add((sujeto, ECSDIAmazon.Peso_producto, producto['peso']))
-        grafo_venta.add((venta, ECSDIAmazon.Contiene, URIRef(producto)))
+        grafo_venta.add((sujeto, ECSDIAmazon.Id_producto, Literal(producto['id_producto'], datatype=XSD.string)))
+        grafo_venta.add((sujeto, ECSDIAmazon.Nombre_producto, Literal(producto['nombre_producto'], datatype=XSD.string)))
+        grafo_venta.add((sujeto, ECSDIAmazon.Precio_producto, Literal(producto['precio_producto'], datatype=XSD.float)))
+        grafo_venta.add((sujeto, ECSDIAmazon.Descripcion_producto, Literal(producto['descripcion_producto'], datatype=XSD.string)))
+        grafo_venta.add((sujeto, ECSDIAmazon.Categoria, Literal(producto['categoria'], datatype=XSD.string)))
+        grafo_venta.add((sujeto, ECSDIAmazon.Marca, Literal(producto['marca'], datatype=XSD.string)))
+        grafo_venta.add((sujeto, ECSDIAmazon.Peso_producto, Literal(producto['peso'], datatype=XSD.int)))
+        grafo_venta.add((venta, ECSDIAmazon.Contiene, URIRef(sujeto)))
     
-    grafo_venta.add((contenido,ECSDIAmazon.De,URIRef(venta)))
+    grafo_venta.add((contenido, ECSDIAmazon.De, URIRef(venta)))
 
-    #......
+    logger.info("Cogiendo informacion del AgenteGestorDeVentas")
+    print("--------------contenido---------------")
+    print(contenido)
 
-    #es un ejemplo
-    return render_template('buscar.html', productos=None, b=True)
+    #ERROR: se comunica con AgenteGestorDeProductos donde tendria que comunicarse con AgenteGestorDeVentas
+    agente = get_agent_info(agn.AgenteGestorDeVentas, DirectoryAgent, AgenteUsuario, get_message_count())
+    logger.info("Enviando peticion de iniciar venta al AgenteGestorDeVentas")
+    print(agente.name)
+    print(agente.address)
+    print(agente.uri)
+    respuesta_msg = send_message(build_message(
+            grafo_venta, perf=ACL.request, sender=AgenteUsuario.uri, receiver=agente.uri, msgcnt=get_message_count(), 
+            content=contenido), agente.address)
+    
+    logger.info("Respuesta recibida")
+    
+    #obtenemos valores factura, productos y tarjeta asocida a dicha factura de la compra para mostrar al usuario
+    venta_factura = respuesta_msg.value(predicate=RDF.type, object=ECSDIAmazon.Factura)
+    venta_tarjeta = respuesta_msg.value(subject=venta_factura, predicate=ECSDI.Tarjeta)
+    venta_precio = respuesta_msg.value(subject=venta_factura, predicate=ECSDI.Precio_total)
+    
+    venta_productos = respuesta_msg.subjects(object=ECSDI.Producto)
+    productos_factura = []
+    for prod in venta_productos:
+        p = [respuesta_msg.value(subject=prod, predicate=ECSDI.Nombre_producto), respuesta_msg.value(subject=prod, predicate=ECSDI.Precio_producto)]
+        productos_factura.append(p)
+
+    #render de factura
+    return render_template('informar_venta.html', productos=factura_productos, tarjeta=tarjeta, precio_total=venta_precio)
+
+
 
 
 
@@ -294,7 +323,7 @@ if __name__ == '__main__':
     ab1 = Process(target=agentbehavior1)
     ab1.start()
     # Ponemos en marcha el servidor Flask
-    app.run(debug=True, host=hostname, port=port, use_reloader=False)
+    app.run(debug=True, host=hostname, port=port)
     # Esperamos a que acaben los behaviors
     ab1.join()
     logger.info('Final')
