@@ -111,7 +111,7 @@ def get_agent_info(type_agn, directory_agent, sender, msgcnt):
     # b_message =  build_message(gmess, perf=ACL.request, sender=sender.uri,receiver=directory_agent.uri, msgcnt=msgcnt,content=ask_obj)
     # print("mensaje contruido")
 
-    gr = send_message( build_message(gmess, perf=ACL.request, sender=sender.uri,receiver=directory_agent.uri, msgcnt=msgcnt,content=ask_obj),directory_agent.address)
+    gr = send_message(build_message(gmess, perf=ACL.request, sender=sender.uri,receiver=directory_agent.uri, msgcnt=msgcnt,content=ask_obj),directory_agent.address)
     print("---paso 3 ---")
     dic = get_message_properties(gr)
     content = dic['content']
@@ -119,7 +119,6 @@ def get_agent_info(type_agn, directory_agent, sender, msgcnt):
     address = gr.value(subject=content, predicate=DSO.Address)
     url = gr.value(subject=content, predicate=DSO.Uri)
     name = gr.value(subject=content, predicate=FOAF.name)
-
     print("----------------------------------------")
     print(name)
     print(url)

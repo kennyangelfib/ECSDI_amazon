@@ -93,6 +93,7 @@ def communication():
     message = request.args['content'] #cogo el contenido enviado
     grafo = Graph()
     grafo.parse(data=message)
+    logger.info('--Envian una comunicacion')
     message_properties = get_message_properties(grafo)
 
     resultado_comunicacion = None
@@ -112,7 +113,7 @@ def communication():
             contenido = message_properties['content']
             accion = grafo.value(subject=contenido, predicate=RDF.type)
             logger.info("La accion es: " + accion)
-            # Si la acción es de tipo busqueda  empezamos
+            # Si la acción es de tipo iniciar_venta empezamos
             if accion == ECSDIAmazon.Iniciar_venta:
                 resultado_comunicacion = vender_productos(contenido, grafo)
                 

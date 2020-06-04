@@ -237,7 +237,7 @@ def iniciar_venta(request):
     logger.info("Cogiendo informacion del AgenteGestorDeVentas")
     print("--------------contenido---------------")
     print(contenido)
-
+    
     #ERROR: se comunica con AgenteGestorDeProductos donde tendria que comunicarse con AgenteGestorDeVentas
     agente = get_agent_info(agn.AgenteGestorDeVentas, DirectoryAgent, AgenteUsuario, get_message_count())
     logger.info("Enviando peticion de iniciar venta al AgenteGestorDeVentas")
@@ -252,17 +252,17 @@ def iniciar_venta(request):
     
     #obtenemos valores factura, productos y tarjeta asocida a dicha factura de la compra para mostrar al usuario
     venta_factura = respuesta_msg.value(predicate=RDF.type, object=ECSDIAmazon.Factura)
-    venta_tarjeta = respuesta_msg.value(subject=venta_factura, predicate=ECSDI.Tarjeta)
-    venta_precio = respuesta_msg.value(subject=venta_factura, predicate=ECSDI.Precio_total)
+    venta_tarjeta = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Tarjeta)
+    venta_precio = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Precio_total)
     
-    venta_productos = respuesta_msg.subjects(object=ECSDI.Producto)
+    venta_productos = respuesta_msg.subjects(object=ECSDIAmazon.Producto)
     productos_factura = []
     for prod in venta_productos:
-        p = [respuesta_msg.value(subject=prod, predicate=ECSDI.Nombre_producto), respuesta_msg.value(subject=prod, predicate=ECSDI.Precio_producto)]
+        p = [respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Nombre_producto), respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Precio_producto)]
         productos_factura.append(p)
 
     #render de factura
-    return render_template('informar_venta.html', productos=factura_productos, tarjeta=tarjeta, precio_total=venta_precio)
+    return render_template('informar_venta.html', productos=productos_factura, tarjeta=tarjeta, precio_total=venta_precio)
 
 
 

@@ -112,8 +112,9 @@ def register():
         # o un agente concreto por URI o nombre
         # Podriamos resolver esto tambien con un query-ref y enviar un objeto de
         # registro con variables y constantes
-
-        # Solo consideramos cuando Search indica el tipo de agente
+        
+        # IMPORTANTE!!!
+        # En la presente implementacion solo consideramos cuando Search indica el tipo de agente
         # Buscamos una coincidencia exacta
         # Retornamos el primero de la lista de posibilidades
 
@@ -125,17 +126,19 @@ def register():
         print(DSO.AgentType)
         print("hey man")
 
-        # agn_uri = next(rsearch)[0]
-
-        rsearch = dsgraph.triples((None, DSO.AgentType, agn.AgenteGestorDeProductos))
+        rsearch = dsgraph.triples((None, DSO.AgentType, agn_type))
         if rsearch is not None:
             agn_uri = next(rsearch)[0]
             agn_add = dsgraph.value(subject=agn_uri, predicate=DSO.Address)
+            agn_name = dsgraph.value(subject=agn_uri, predicate=FOAF.name)
             gr = Graph()
             gr.bind('dso', DSO)
+            gr.bind('foaf',FOAF)
             rsp_obj = agn['Directory-response']
+
             gr.add((rsp_obj, DSO.Address, agn_add))
             gr.add((rsp_obj, DSO.Uri, agn_uri))
+            gr.add((rsp_obj, FOAF.name, agn_name))
             logger.info('He encontrado a un agente')
             return build_message(gr,
                                  ACL.inform,
