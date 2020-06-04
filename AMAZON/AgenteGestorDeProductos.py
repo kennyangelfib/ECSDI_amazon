@@ -81,7 +81,7 @@ def get_message_count():
 
 
  #construimos el grafo de busqueda accediendo a la bd local
-def aplicar_filtro(brand='(.*)', search_text='(.*)', precio_min=0.0, precio_max=sys.float_info.max):
+def aplicar_filtro(brand='(.*)', search_text='(.*)', precio_min=0, precio_max=sys.maxsize):
     productos = Graph()
     productos.parse('./rdf/productos.rdf')
     
@@ -152,15 +152,15 @@ def buscar_productos(contenido, grafo):
             r_dict['search_text'] = nombre
             logger.info("Restriccion nombre: " + nombre)
         elif grafo.value(subject=r, predicate=RDF.type) == ECSDIAmazon.Restriccion_precio:
+            
             precio_min = grafo.value(subject=r, predicate=ECSDIAmazon.Precio_minimo)
             precio_max = grafo.value(subject=r, predicate=ECSDIAmazon.Precio_maximo)
-            r_dict['precio_min'] = precio_min
-            r_dict['precio_max'] = precio_max
+            if precio_min is not None:
+                r_dict['precio_min'] = precio_min
+            if precio_max is not None:
+                r_dict['precio_max'] = precio_max
 
     return aplicar_filtro(**r_dict).serialize(format='xml')
-
-   
-
 
 @app.route("/comm")
 def communication():

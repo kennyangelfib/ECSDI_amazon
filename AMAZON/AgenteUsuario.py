@@ -13,7 +13,7 @@ from AgentUtil.ACLMessages import get_agent_info, send_message, build_message, g
 from multiprocessing import Process
 from AgentUtil.FlaskServer import shutdown_server
 from multiprocessing import Queue
-
+from math import floor
 
 __author__ = 'Amazon'
 
@@ -112,18 +112,38 @@ def peticion_buscar(request):
         grafo.add((nombre_sujeto, RDF.type, ECSDIAmazon.Restriccion_nombre))
         grafo.add((nombre_sujeto, ECSDIAmazon.Nombre, Literal(nombre_producto, datatype=XSD.string)))
         grafo.add((contenido, ECSDIAmazon.Restringe, URIRef(nombre_sujeto)))
-
-    precio_min = int(request.form['precio_min'])*100
-    precio_max = int(request.form['precio_max'])*100
+    ##El precio se recibe en euros pero se ha de cambiar a centimos de euro
+        # if(request.form['precio_min']):
+    # print("el precio minimo es :")
+    # if request.form['precio_min'] == "" or request.form['precio_min'] == "0":
+    # else: print ("It's not empty")
+    # print(int(request.form['precio_min']))
+    precio_min = request.form['precio_min']
+    print("El precio minimo es:")
+    print(precio_min)
+        # else:
+        # precio_min = 1
+        # if(request.form['precio_max']):
+    precio_max = request.form['precio_max']
+    print(precio_max)
     # agregamos el rango de precios 
-    if precio_min or precio_max:
-        print(precio_min)
-        print(precio_max)
+    if precio_min != "" or precio_max != "":
         precio_sujeto = ECSDIAmazon['Restriccion_precio' + str(get_message_count())]
         grafo.add((precio_sujeto, RDF.type, ECSDIAmazon.Restriccion_precio))
-        if precio_min:
+        if precio_min != "":
+            if precio_min == "0":
+                precio_min = 0
+            else:
+                print(int(floor(float(request.form['precio_min'])*100)))
+                precio_min = int((float(request.form['precio_min'])*100)//1)
+
             grafo.add((precio_sujeto, ECSDIAmazon.Precio_minimo, Literal(precio_min)))
-        if precio_max:
+            print("Se ha agregado sin problemas")
+        if precio_max != "":
+            if precio_max == "0":
+                precio_max = 0
+            else:
+                precio_max = int((float(request.form['precio_max'])*100)//1)
             grafo.add((precio_sujeto, ECSDIAmazon.Precio_maximo, Literal(precio_max)))
         grafo.add((contenido, ECSDIAmazon.Restringe, URIRef(precio_sujeto)))
 
