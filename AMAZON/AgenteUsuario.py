@@ -214,8 +214,9 @@ def iniciar_venta(request):
     logger.info("Mi compra")
     print(mi_compra)
 
-    for producto in lista_de_productos:
-        #s = producto["id_producto"]
+    for producto in mi_compra:
+        s = producto["id_producto"]
+        print(s)
         #sujeto = ECSDIAmazon + s
         url = ECSDIAmazon
         sujeto = url.term(producto["id_producto"])
@@ -262,7 +263,7 @@ def iniciar_venta(request):
         productos_factura.append(p)
 
     #render de factura
-    return render_template('informar_venta.html', productos=productos_factura, tarjeta=tarjeta, precio_total=venta_precio)
+    return render_template('informar_venta.html', productos=productos_factura, tarjeta=venta_tarjeta, precio_total=venta_precio)
 
 
 
