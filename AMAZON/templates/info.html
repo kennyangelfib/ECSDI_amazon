@@ -4,9 +4,10 @@
     <title></title>
 </head>
 <body>
-
-<pre>Numero de mensajes {{nmess}}<pre>
-
-{{graph}}
+    <pre>Numero de mensajes {{nmess}}<pre>
+    {% for i in range(0,len) %}
+        <span>{{graph[i]}}</span>
+    {% endfor %}     
+    <!-- {graph} -->
 </body>
 </html>

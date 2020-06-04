@@ -206,9 +206,9 @@ def info():
     """
     global dsgraph
     global mss_cnt
-
-    return render_template('info.html', nmess=mss_cnt, graph=dsgraph.serialize(format='turtle'))
-
+    st = (dsgraph.serialize(format='turtle').decode()) # aplicamos decode por el string sale con una 'b' delante que simboliza que esta en binario
+    graph_array = st.split('\n')
+    return render_template('info.html', nmess=mss_cnt, len=len(graph_array),graph=graph_array)
 
 @app.route("/Stop")
 def stop():
