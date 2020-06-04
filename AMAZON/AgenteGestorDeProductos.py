@@ -160,7 +160,7 @@ def buscar_productos(contenido, grafo):
             if precio_max is not None:
                 r_dict['precio_max'] = precio_max
 
-    return aplicar_filtro(**r_dict).(format=serialize'xml')
+    return aplicar_filtro(**r_dict).serialize(format='xml')
 
 @app.route("/comm")
 def communication():

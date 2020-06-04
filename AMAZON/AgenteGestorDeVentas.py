@@ -84,9 +84,14 @@ def get_message_count():
 
 
 def vender_productos(contenido, grafo):
+    logger.info("Analizando la peticion de venta")
+    # restriciciones = grafo.objects(contenido, ECSDIAmazon.Restriccion_nombre)
+    # r_dict = {}
+    # for r in restriciones:
+    #     if grafo.value(){
+            
+    #     }
     return Graph()
-
-
 
 @app.route("/comm")
 def communication():
