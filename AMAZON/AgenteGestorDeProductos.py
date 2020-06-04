@@ -160,13 +160,12 @@ def buscar_productos(contenido, grafo):
             if precio_max is not None:
                 r_dict['precio_max'] = precio_max
 
-    return aplicar_filtro(**r_dict).serialize(format='xml')
+    return aplicar_filtro(**r_dict).(format=serialize'xml')
 
 @app.route("/comm")
 def communication():
     message = request.args['content'] #cogo el contenido enviado
     grafo = Graph()
-    logger.info('--Envian una comunicacion')
     grafo.parse(data=message)
     logger.info('--Envian una comunicacion')
     message_properties = get_message_properties(grafo)
