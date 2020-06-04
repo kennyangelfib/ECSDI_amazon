@@ -254,19 +254,21 @@ def iniciar_venta(request):
     #obtenemos valores factura, productos y tarjeta asocida a dicha factura de la compra para mostrar al usuario
     venta_factura = respuesta_msg.value(predicate=RDF.type, object=ECSDIAmazon.Factura)
     venta_tarjeta = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Tarjeta)
-    venta_precio = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Precio_total)
+    venta_precio_total = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Precio_total)
     
     venta_productos = respuesta_msg.subjects(object=ECSDIAmazon.Producto)
     productos_factura = []
     for prod in venta_productos:
-        p = [respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Nombre_producto), respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Precio_producto)]
-        productos_factura.append(p)
+        product = dict(
+            nombre_producto=str(respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Nombre_producto)),
+            precio_producto=float(respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Precio_producto)),
+        )
+        # p = [respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Nombre_producto), respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Precio_producto)]
+        print(product)
+        productos_factura.append(product)
 
     #render de factura
-    return render_template('informar_venta.html', productos=productos_factura, tarjeta=venta_tarjeta, precio_total=venta_precio)
-
-
-
+    return render_template('informar_venta.html', productos=productos_factura, tarjeta=venta_tarjeta, precio_total=venta_precio_total)
 
 
 #busqueda: get para mostrar los filtros de productos y post para atender la peticion de filtros

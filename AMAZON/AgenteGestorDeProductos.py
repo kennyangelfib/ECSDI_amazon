@@ -166,6 +166,7 @@ def buscar_productos(contenido, grafo):
 def communication():
     message = request.args['content'] #cogo el contenido enviado
     grafo = Graph()
+    logger.info('--Envian una comunicacion')
     grafo.parse(data=message)
     logger.info('--Envian una comunicacion')
     message_properties = get_message_properties(grafo)
