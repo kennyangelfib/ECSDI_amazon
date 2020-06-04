@@ -162,6 +162,64 @@ def buscar_productos(contenido, grafo):
 
     return aplicar_filtro(**r_dict).serialize(format='xml')
 
+
+
+
+#anade un producto a la BD local
+def anadir_producto(grafo):
+    print("--------------------------------------------------------")
+    print(grafo.serialize(format="xml"))
+    id_producto = precio_producto = peso_producto = tarjeta = unidades = 0
+    vendedor = nombre_producto = descripcion_producto = categoria = marca = ""
+
+    for s,p,o in grafo:
+        if str(p) == ECSDIAmazon + "Categoria":
+            categoria = str(o)
+        elif str(p) == ECSDIAmazon + "Peso_producto":
+            peso_producto = str(o)
+        elif str(p) == ECSDIAmazon + "Nombre_producto":
+            nombre_producto = str(o)
+        elif str(p) == ECSDIAmazon + "Marca":
+            marca = str(o)
+        elif str(p) == ECSDIAmazon + "Vendedor":
+            vendedor = str(o)
+        elif str(p) == ECSDIAmazon + "Id_producto":
+            id_producto = str(o)
+        elif str(p) == ECSDIAmazon + "Precio_producto":
+            precio_producto = str(o)
+        elif str(p) == ECSDIAmazon + "Descripcion_producto":
+            descripcion_producto = str(o)
+        elif str(p) == ECSDIAmazon + "Tarjeta":
+            tarjeta = str(o)
+        elif str(p) == ECSDIAmazon + "Unidades":
+            unidades = str(o)
+        
+    
+    logger.info("Imprimiendo paramteros de entrada")
+    print(id_producto, " " , nombre_producto, " ", marca, " ", precio_producto, " ", 
+    descripcion_producto, " ", vendedor, " ", categoria, " ", peso_producto)
+
+    producto = Graph()
+    producto.parse("./rdf/productos.rdf")
+
+    new_prod = ECSDIAmazon.__getattr__(str(id_producto))
+    producto.add((new_prod, RDF.type, Literal(ECSDIAmazon + "product")))
+    producto.add((new_prod, ECSDIAmazon.product_id, Literal(id_producto)))
+    producto.add((new_prod, ECSDIAmazon.price_eurocents, Literal(precio_producto)))
+    producto.add((new_prod, ECSDIAmazon.category, Literal(categoria)))
+    producto.add((new_prod, ECSDIAmazon.seller, Literal(vendedor)))
+    producto.add((new_prod, ECSDIAmazon.product_name, Literal(nombre_producto)))
+    producto.add((new_prod, ECSDIAmazon.product_description, Literal(descripcion_producto)))
+    producto.add((new_prod, ECSDIAmazon.brand, Literal(marca)))
+    producto.add((new_prod, ECSDIAmazon.weight_grams, Literal(peso_producto)))
+    producto.add((new_prod, ECSDIAmazon.credit_card, Literal(tarjeta)))
+    producto.add((new_prod, ECSDIAmazon.unit, Literal(unidades)))
+    
+    logger.info("Escribiendo en la BD")
+    producto.serialize("./rdf/productos.rdf")
+    return grafo.serialize(format="xml")
+
+
 @app.route("/comm")
 def communication():
     message = request.args['content'] #cogo el contenido enviado
@@ -192,7 +250,7 @@ def communication():
             if accion == ECSDIAmazon.Buscar_productos:
                 resultado_comunicacion = buscar_productos(contenido, grafo)
             elif accion == ECSDIAmazon.Anadir_producto:
-                print("-----siiiiiiiii---------")
+                resultado_comunicacion = anadir_producto(grafo)
                 
     logger.info('Antes de serializar la respuesta')
     serialize = resultado_comunicacion

@@ -88,7 +88,7 @@ def anadir_producto(request):
     id_producto = uuid.uuid4()  #generate a random id
     vendedor = request.form["id_vendedor"]
     nombre =request.form["nombre_producto"]
-    precio = int(int(request.form["precio_producto"])/100)
+    precio = int(int(request.form["precio_producto"])*100)
     peso = int(request.form["peso"])
     marca = request.form["marca"]
     categoria = request.form["categoria"]
