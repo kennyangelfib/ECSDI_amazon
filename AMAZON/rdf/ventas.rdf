@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:ns1="http://www.nuestra-ontologia.com/ECSDIAmazon/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/6592a36d-7bd1-4587-9afa-b243d0353dd7">
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Productos_id>['B00XA41SF4', 'B003L6ZPQ4']</ns1:Productos_id>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Venta_id>6592a36d-7bd1-4587-9afa-b243d0353dd7</ns1:Venta_id>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+  </rdf:Description>
+  </rdf:Description>
+</rdf:RDF>

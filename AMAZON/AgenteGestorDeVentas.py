@@ -13,6 +13,7 @@ from AgentUtil.Logging import config_logger
 from AgentUtil.OntoNamespaces import ECSDIAmazon, ACL, DSO
 from rdflib.namespace import RDF, FOAF
 from string import Template
+import uuid
 
 
 
@@ -85,19 +86,52 @@ def calcularprobablefechadeenvio(prioridad):
     x = datetime.now() + timedelta(days= (prioridad*1)+ 1) 
     x.strftime("%x")
 #en proceso
-def registrarVenta(contenido,grafo):
+def registrarVenta(contenido, grafo):
     """ Funcion que registra la venta realizada a la base de datos"""
     logger.info("Registrando la venta")
-    ontologyFile = open('../rdf/ventas')
+    print("----------------------------------------")
+    print(grafo.serialize(format="xml"))
+    
+    venta_id = uuid.uuid4()
+    direccion = ciudad = ""
+    tarjeta = prioridad = codigo_postal = 0
+    id_productos = []
 
-    grafoVentas = Graph()
-    grafoVentas.bind('default', ECSDIAmazon)
-    grafoVentas.parse(ontologyFile, format='turtle')
-    grafoVentas += grafo
+    for s,p,o in grafo:
+        if str(p) == ECSDIAmazon + "Tarjeta":
+            tarjeta = str(o)
+        elif str(p) == ECSDIAmazon + "Prioridad":
+            prioridad = str(o)
+        elif str(p) == ECSDIAmazon + "Direccion":
+            direccion = str(o)
+        elif str(p) == ECSDIAmazon + "Ciudad":
+            ciudad = str(o)
+        elif str(p) == ECSDIAmazon + "Codigo_postal":
+            codigo_postal = str(o)
+        elif str(p) == ECSDIAmazon + "Id_producto":
+            id_productos.append(str(o))
+    
+    logger.info("Imprimiendo paramteros de venta")
+    print(venta_id, "tarjeta: " , tarjeta, "prioridad: ", prioridad, "direccion: ", direccion, "ciudad: ", 
+    ciudad, "cd_postal: ", codigo_postal)
 
-    # Guardem el graf
-    grafoVentas.serialize(destination='../data/ComprasDB', format='turtle')
+    venta = Graph()
+    venta.parse("./rdf/ventas.rdf")
+
+    nueva_venta = ECSDIAmazon.__getattr__(str(venta_id))
+    venta.add((nueva_venta, RDF.type, Literal(ECSDIAmazon + "venta")))
+    venta.add((nueva_venta, ECSDIAmazon.Venta_id, Literal(venta_id)))
+    venta.add((nueva_venta, ECSDIAmazon.Tarjeta, Literal(tarjeta)))
+    venta.add((nueva_venta, ECSDIAmazon.Prioridad, Literal(prioridad)))
+    venta.add((nueva_venta, ECSDIAmazon.Direccion, Literal(direccion)))
+    venta.add((nueva_venta, ECSDIAmazon.Ciudad, Literal(ciudad)))
+    venta.add((nueva_venta, ECSDIAmazon.Codigo_postal, Literal(codigo_postal)))
+    venta.add((nueva_venta, ECSDIAmazon.Productos_id, Literal(id_productos)))
+    
+    logger.info("Escribiendo en la BD")
+    venta.serialize("./rdf/ventas.rdf")
     logger.info("Registro de venta finalizado")
+    return venta_id
 
 #en proceso
 def cobroVenta(precio_quasi_total,precio_envio,tarjeta):
@@ -211,7 +245,7 @@ def vender_productos(contenido, grafo):
     """Funcion que efectua el proceso de venta, distribuyendo la responsabilidad de distribucion a un thread"""
     
     logger.info("Peticion de venta recibida")
-    idventa = registrarVenta(grafo)
+    idventa = registrarVenta(contenido, grafo)
     grafo.add(subject=contenido,)
     grafo.add((contenido, ECSDIAmazon.Id_venta, Literal(idventa, datatype=XSD.int)))
     tarjeta = grafo.value(subject=contenido, predicate=ECSDIAmazon.Tarjeta)
