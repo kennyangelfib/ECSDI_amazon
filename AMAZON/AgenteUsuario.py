@@ -172,7 +172,7 @@ def peticion_buscar(request):
     logger.info("Resultado de busqueda")
     print(lista_de_productos)
     #mostramos los productos
-    return render_template('buscar.html', productos=lista_de_productos, b=True)
+    return render_template('buscar.html', productos=sorted(lista_de_productos, key=lambda p_list: p_list["precio_producto"]), b=True)
 
 
 
@@ -189,6 +189,7 @@ def iniciar_venta(request):
     tarjeta = int(request.form['tarjeta'])
     direccion = str(request.form['direccion'])
     ciudad = str(request.form['ciudad'])
+    codigo_postal = int(request.form['codigo_postal'])
     prioridad = int(request.form['prioridad']) #va entre 1 y 10, de menor a mayor
 
     #preparo el grafo para comunicarme con el AgenteGestorDeVenta
@@ -203,6 +204,7 @@ def iniciar_venta(request):
     grafo_venta.add((direccion_cliente, RDF.type, ECSDIAmazon.Direccion))
     grafo_venta.add((direccion_cliente, ECSDIAmazon.Direccion, Literal(direccion, datatype=XSD.string)))
     grafo_venta.add((direccion_cliente, ECSDIAmazon.Ciudad, Literal(ciudad, datatype=XSD.string)))
+    grafo_venta.add((direccion_cliente, ECSDIAmazon.Codigo_postal, Literal(codigo_postal, datatype=XSD.int)))
 
     venta = ECSDIAmazon["Venta"+str(get_message_count())]
     grafo_venta.add((venta, RDF.type, ECSDIAmazon.Venta))
@@ -239,7 +241,6 @@ def iniciar_venta(request):
     print("--------------contenido---------------")
     print(contenido)
     
-    #ERROR: se comunica con AgenteGestorDeProductos donde tendria que comunicarse con AgenteGestorDeVentas
     agente = get_agent_info(agn.AgenteGestorDeVentas, DirectoryAgent, AgenteUsuario, get_message_count())
     logger.info("Enviando peticion de iniciar venta al AgenteGestorDeVentas")
     print(agente.name)
@@ -284,6 +285,10 @@ def buscar_productos():
             return iniciar_venta(request)
 
         
+
+@app.route("/devolucion", methods=["GET", "POST"])
+def devolver_productos():
+    return True
 
 
 
@@ -345,8 +350,8 @@ if __name__ == '__main__':
     # Ponemos en marcha los behaviors
     ab1 = Process(target=agentbehavior1)
     ab1.start()
-    # Ponemos en marcha el servidor Flask
-    app.run(debug=True, host=hostname, port=port)
+    # Run server
+    app.run(host=hostname, port=port, debug=True)
     # Esperamos a que acaben los behaviors
     ab1.join()
     logger.info('Final')

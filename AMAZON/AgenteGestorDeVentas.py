@@ -182,7 +182,7 @@ def communication():
             resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
                                                   sender=DirectoryAgent.uri, msgcnt=get_message_count())
         else:
-            # Extraemos el contenido que ha de ser una accion de la ontologia definida en Protege
+            #Extraemos el contenido que ha de ser una accion de la ontologia 
             contenido = message_properties['content']
             accion = grafo.value(subject=contenido, predicate=RDF.type)
             logger.info("La accion es: " + accion)

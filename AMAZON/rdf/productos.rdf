@@ -3,173 +3,186 @@
    xmlns:ns1="http://www.nuestra-ontologia.com/ECSDIAmazon/"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 >
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B00CTIITYU">
-    <ns1:product_id>B00CTIITYU</ns1:product_id>
-    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2995</ns1:price_eurocents>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">907</ns1:weight_grams>
-    <ns1:brand>MOLTO</ns1:brand>
-    <ns1:product_description>Fabulosa cocina totalmente equipada con horno, campana extractora, microondas, lavadora y 12 accesorios de cocina. ¡Conviértete en el mejor cocinero y sorprende a tus comensales con tus recetas! La puerta del horno y de la lavadora se abren como los de verdad.Medidas aproximadas de la cocina montada: 82 (alto) x 56 (ancho) x 28 (fondo). Pesos y medidas:- Dimensiones: Alto: 82 cm. Ancho: 56 cm. Fondo: 28 cm.- Peso: 2,70...</ns1:product_description>
-    <ns1:category>Juguete</ns1:category>
-    <ns1:seller>Amazon</ns1:seller>
-    <ns1:product_name>Moltó Cocina de juguete</ns1:product_name>
-  </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B00699R6UI">
     <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1456</ns1:price_eurocents>
-    <ns1:category>Juguete</ns1:category>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">145</ns1:weight_grams>
-    <ns1:product_name>Saxofon Metalizado</ns1:product_name>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
     <ns1:product_description>Sin descripción</ns1:product_description>
-    <ns1:product_id>B00699R6UI</ns1:product_id>
-    <ns1:seller>Amazon</ns1:seller>
     <ns1:brand>Claudio Reig</ns1:brand>
+    <ns1:category>Juguete</ns1:category>
+    <ns1:product_name>Saxofon Metalizado</ns1:product_name>
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">145</ns1:weight_grams>
+    <ns1:product_id>B00699R6UI</ns1:product_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+    <ns1:seller>Amazon</ns1:seller>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/5e3a8684-2831-4640-ad47-cdf56a53e816">
-    <ns1:product_description>Calidad 100%</ns1:product_description>
-    <ns1:product_id>5e3a8684-2831-4640-ad47-cdf56a53e816</ns1:product_id>
-    <ns1:category>Deporte</ns1:category>
     <ns1:seller>Tanvir</ns1:seller>
+    <ns1:product_description>Calidad 100%</ns1:product_description>
+    <ns1:product_name>Bambas adidas</ns1:product_name>
+    <ns1:brand>Adidas</ns1:brand>
+    <ns1:category>Deporte</ns1:category>
+    <ns1:unit>5</ns1:unit>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+    <ns1:product_id>5e3a8684-2831-4640-ad47-cdf56a53e816</ns1:product_id>
+    <ns1:weight_grams>500.0</ns1:weight_grams>
     <ns1:credit_card>1111</ns1:credit_card>
     <ns1:price_eurocents>12000.0</ns1:price_eurocents>
-    <ns1:weight_grams>500.0</ns1:weight_grams>
-    <ns1:brand>Adidas</ns1:brand>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:unit>5</ns1:unit>
-    <ns1:product_name>Bambas adidas</ns1:product_name>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B077Y3DD6C">
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:seller>Amazon</ns1:seller>
-    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">64759</ns1:price_eurocents>
-    <ns1:product_description>Procesador: Core i7; RAM Instalada: 8 GB; Tamaño pantalla: 15,600 ''; Disco duro: 1.024 GB; Pantalla táctil: No; Sistema operativo: Windows 10; Versión sistema operativo: Home...</ns1:product_description>
     <ns1:product_id>B077Y3DD6C</ns1:product_id>
+    <ns1:product_description>Procesador: Core i7; RAM Instalada: 8 GB; Tamaño pantalla: 15,600 ''; Disco duro: 1.024 GB; Pantalla táctil: No; Sistema operativo: Windows 10; Versión sistema operativo: Home...</ns1:product_description>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">64759</ns1:price_eurocents>
     <ns1:category>Ordenador personal</ns1:category>
     <ns1:product_name>Acer Aspire 5 A515-51G - Ordenador portátil 15.6" HD</ns1:product_name>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2199</ns1:weight_grams>
     <ns1:brand>Acer</ns1:brand>
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2199</ns1:weight_grams>
+    <ns1:seller>Amazon</ns1:seller>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B00XA41SF4">
+    <ns1:product_description>Sin descripción</ns1:product_description>
+    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">881</ns1:price_eurocents>
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">45359</ns1:weight_grams>
+    <ns1:category>Comestibles</ns1:category>
+    <ns1:seller>Amazon</ns1:seller>
+    <ns1:product_name>Flor Suavizante regular Nenuco</ns1:product_name>
+    <ns1:brand>Reckitt Benckiser Spain</ns1:brand>
+    <ns1:product_id>B00XA41SF4</ns1:product_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/9275319e-77ad-43c1-9b31-3b5ea5d790b1">
+    <ns1:unit>1</ns1:unit>
+    <ns1:product_description>Nada</ns1:product_description>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+    <ns1:price_eurocents>70000.0</ns1:price_eurocents>
+    <ns1:category>Electronica</ns1:category>
+    <ns1:brand>One plus</ns1:brand>
+    <ns1:weight_grams>1000.0</ns1:weight_grams>
+    <ns1:product_id>9275319e-77ad-43c1-9b31-3b5ea5d790b1</ns1:product_id>
+    <ns1:product_name>One plus A87</ns1:product_name>
+    <ns1:credit_card>1111</ns1:credit_card>
+    <ns1:seller>Tanvir</ns1:seller>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/aeb1f270-e082-4236-8507-f1807ca2ac92">
+    <ns1:credit_card>1111</ns1:credit_card>
+    <ns1:category>Deporte</ns1:category>
+    <ns1:product_name>Bambas nike</ns1:product_name>
+    <ns1:brand>Nike</ns1:brand>
+    <ns1:unit>2</ns1:unit>
+    <ns1:product_description>calidad 100%</ns1:product_description>
+    <ns1:product_id>aeb1f270-e082-4236-8507-f1807ca2ac92</ns1:product_id>
+    <ns1:price_eurocents>8000.0</ns1:price_eurocents>
+    <ns1:weight_grams>500.0</ns1:weight_grams>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+    <ns1:seller>Tanvir</ns1:seller>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B01NGUFO7M">
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+    <ns1:seller>Amazon</ns1:seller>
+    <ns1:product_id>B01NGUFO7M</ns1:product_id>
+    <ns1:brand>Hasbro</ns1:brand>
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">671</ns1:weight_grams>
+    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1917</ns1:price_eurocents>
+    <ns1:category>Juguete</ns1:category>
+    <ns1:product_description>Imagine Big Adventures in my little pony - Friendship with Equestrian Girls Minis Play Out Scenes from the equestrian Girls Movies with imaginative Playsets and Equestrian Girls principal celestial - Mini de mini muñecas This juego Comes With a doll and Over 20 classroom accessories...</ns1:product_description>
+    <ns1:product_name>My Little Pony - Equestría mini escuela Celestia</ns1:product_name>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B014HSRA6C">
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">99</ns1:weight_grams>
+    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4901</ns1:price_eurocents>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+    <ns1:brand>Bioworld</ns1:brand>
+    <ns1:product_description>Si eres el fan de Zelda que prefiere no destacar entre la multitud también mucho esta puede ser la prenda de Zelda infundido perfectamente sobria para usted. ¡Echa un vistazo el diseño sutil, hasta que lo abra para arriba por supuesto para revelar el estilo clásico de Zelda!...</ns1:product_description>
+    <ns1:category>Videojuegos</ns1:category>
+    <ns1:product_id>B014HSRA6C</ns1:product_id>
+    <ns1:product_name>The Legend Of Zelda</ns1:product_name>
+    <ns1:seller>Amazon</ns1:seller>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B002YEV8O2">
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">254</ns1:weight_grams>
+    <ns1:product_id>B002YEV8O2</ns1:product_id>
+    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7694</ns1:price_eurocents>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+    <ns1:brand>Testo SE &amp; Co. KGaA</ns1:brand>
+    <ns1:product_name>Termo-Higrómetro</ns1:product_name>
+    <ns1:category>BISS Basic</ns1:category>
+    <ns1:product_description>Humedad/Punto De Rocío/Instrumento De Medición De Temperatura, Con Las Baterías</ns1:product_description>
+    <ns1:seller>Amazon</ns1:seller>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B01JD9PGMU">
-    <ns1:seller>Amazon</ns1:seller>
-    <ns1:product_id>B01JD9PGMU</ns1:product_id>
-    <ns1:brand>Dibea GmbH &amp; Co. KG</ns1:brand>
-    <ns1:category>Productos para animales</ns1:category>
-    <ns1:product_description>- Base: 50 x 30 cm, Altura: 80 cm; Barras de sisal de unos 8 cm de diámetro; -1 caseta;- 1 plataformas;- 1 bola de juego;- Material extrasuave;- Sisal resistente para el cuidado de las uñas...</ns1:product_description>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6001</ns1:weight_grams>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
     <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2723</ns1:price_eurocents>
     <ns1:product_name>Árbol Rascador para Gatos, Escalador</ns1:product_name>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B01788F6NC">
-    <ns1:product_id>B01788F6NC</ns1:product_id>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1300</ns1:price_eurocents>
-    <ns1:category>Casa</ns1:category>
-    <ns1:product_description>Sin descripción</ns1:product_description>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">444</ns1:weight_grams>
-    <ns1:brand>Protenrop</ns1:brand>
     <ns1:seller>Amazon</ns1:seller>
-    <ns1:product_name>Dispensador de latas</ns1:product_name>
+    <ns1:category>Productos para animales</ns1:category>
+    <ns1:product_description>- Base: 50 x 30 cm, Altura: 80 cm; Barras de sisal de unos 8 cm de diámetro; -1 caseta;- 1 plataformas;- 1 bola de juego;- Material extrasuave;- Sisal resistente para el cuidado de las uñas...</ns1:product_description>
+    <ns1:brand>Dibea GmbH &amp; Co. KG</ns1:brand>
+    <ns1:product_id>B01JD9PGMU</ns1:product_id>
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6001</ns1:weight_grams>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B079ZXV5QN">
+    <ns1:brand>Mopec</ns1:brand>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+    <ns1:product_name>Mopec Figura Novios y Videojuegos, Poliresina, Blanco, 8.5x18.5x21 cm</ns1:product_name>
+    <ns1:product_id>B079ZXV5QN</ns1:product_id>
+    <ns1:product_description>Sin descripción</ns1:product_description>
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">730</ns1:weight_grams>
+    <ns1:seller>Amazon</ns1:seller>
+    <ns1:category>Casa</ns1:category>
+    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2323</ns1:price_eurocents>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B003L6ZPQ4">
-    <ns1:category>Instrumentos musicales</ns1:category>
-    <ns1:product_description>Cable de instrumento estándar en versión DELUXE con tres metros de longitud, un diámetro de cable de 6 mm y extra reforzado transición del cable al conector. Características:-Denominación de de la serie de serie: S Marca: Stagg: sgc3dl de longitud: 3 m Diámetro del cable: 6 mm Norma de conformidad con RoHS Puertos: 2 x conector jack de 6,3 mm mono de color: negro...</ns1:product_description>
-    <ns1:brand>Stagg</ns1:brand>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">199</ns1:weight_grams>
     <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">628</ns1:price_eurocents>
     <ns1:product_name>SCable de conexión para instrumentos</ns1:product_name>
     <ns1:product_id>B003L6ZPQ4</ns1:product_id>
-    <ns1:seller>Amazon</ns1:seller>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B079ZXV5QN">
-    <ns1:seller>Amazon</ns1:seller>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">730</ns1:weight_grams>
+    <ns1:category>Instrumentos musicales</ns1:category>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:category>Casa</ns1:category>
-    <ns1:product_name>Mopec Figura Novios y Videojuegos, Poliresina, Blanco, 8.5x18.5x21 cm</ns1:product_name>
-    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2323</ns1:price_eurocents>
+    <ns1:brand>Stagg</ns1:brand>
+    <ns1:product_description>Cable de instrumento estándar en versión DELUXE con tres metros de longitud, un diámetro de cable de 6 mm y extra reforzado transición del cable al conector. Características:-Denominación de de la serie de serie: S Marca: Stagg: sgc3dl de longitud: 3 m Diámetro del cable: 6 mm Norma de conformidad con RoHS Puertos: 2 x conector jack de 6,3 mm mono de color: negro...</ns1:product_description>
+    <ns1:seller>Amazon</ns1:seller>
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">199</ns1:weight_grams>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B01788F6NC">
     <ns1:product_description>Sin descripción</ns1:product_description>
-    <ns1:brand>Mopec</ns1:brand>
-    <ns1:product_id>B079ZXV5QN</ns1:product_id>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B014HSRA6C">
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">444</ns1:weight_grams>
+    <ns1:product_id>B01788F6NC</ns1:product_id>
     <ns1:seller>Amazon</ns1:seller>
-    <ns1:product_id>B014HSRA6C</ns1:product_id>
-    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4901</ns1:price_eurocents>
-    <ns1:product_description>Si eres el fan de Zelda que prefiere no destacar entre la multitud también mucho esta puede ser la prenda de Zelda infundido perfectamente sobria para usted. ¡Echa un vistazo el diseño sutil, hasta que lo abra para arriba por supuesto para revelar el estilo clásico de Zelda!...</ns1:product_description>
-    <ns1:category>Videojuegos</ns1:category>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">99</ns1:weight_grams>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:product_name>The Legend Of Zelda</ns1:product_name>
-    <ns1:brand>Bioworld</ns1:brand>
+    <ns1:brand>Protenrop</ns1:brand>
+    <ns1:category>Casa</ns1:category>
+    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1300</ns1:price_eurocents>
+    <ns1:product_name>Dispensador de latas</ns1:product_name>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/1631590995">
-    <ns1:product_id>1631590995</ns1:product_id>
     <ns1:product_name>A Family Cookbook</ns1:product_name>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
+    <ns1:product_description>Sin descripción</ns1:product_description>
     <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">612</ns1:weight_grams>
     <ns1:seller>Amazon</ns1:seller>
     <ns1:category>Libro</ns1:category>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1647</ns1:price_eurocents>
-    <ns1:product_description>Sin descripción</ns1:product_description>
     <ns1:brand>Quarry Books</ns1:brand>
+    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1647</ns1:price_eurocents>
+    <ns1:product_id>1631590995</ns1:product_id>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/aeb1f270-e082-4236-8507-f1807ca2ac92">
-    <ns1:seller>Tanvir</ns1:seller>
-    <ns1:credit_card>1111</ns1:credit_card>
-    <ns1:product_description>calidad 100%</ns1:product_description>
-    <ns1:weight_grams>500.0</ns1:weight_grams>
-    <ns1:unit>2</ns1:unit>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B00CTIITYU">
+    <ns1:brand>MOLTO</ns1:brand>
+    <ns1:product_description>Fabulosa cocina totalmente equipada con horno, campana extractora, microondas, lavadora y 12 accesorios de cocina. ¡Conviértete en el mejor cocinero y sorprende a tus comensales con tus recetas! La puerta del horno y de la lavadora se abren como los de verdad.Medidas aproximadas de la cocina montada: 82 (alto) x 56 (ancho) x 28 (fondo). Pesos y medidas:- Dimensiones: Alto: 82 cm. Ancho: 56 cm. Fondo: 28 cm.- Peso: 2,70...</ns1:product_description>
+    <ns1:product_name>Moltó Cocina de juguete</ns1:product_name>
+    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2995</ns1:price_eurocents>
+    <ns1:product_id>B00CTIITYU</ns1:product_id>
+    <ns1:category>Juguete</ns1:category>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:category>Deporte</ns1:category>
-    <ns1:price_eurocents>8000.0</ns1:price_eurocents>
-    <ns1:product_name>Bambas nike</ns1:product_name>
-    <ns1:product_id>aeb1f270-e082-4236-8507-f1807ca2ac92</ns1:product_id>
-    <ns1:brand>Nike</ns1:brand>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B002YEV8O2">
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:category>BISS Basic</ns1:category>
-    <ns1:product_name>Termo-Higrómetro</ns1:product_name>
-    <ns1:product_description>Humedad/Punto De Rocío/Instrumento De Medición De Temperatura, Con Las Baterías</ns1:product_description>
-    <ns1:brand>Testo SE &amp; Co. KGaA</ns1:brand>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">254</ns1:weight_grams>
-    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7694</ns1:price_eurocents>
-    <ns1:product_id>B002YEV8O2</ns1:product_id>
     <ns1:seller>Amazon</ns1:seller>
+    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">907</ns1:weight_grams>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B07585BPB3">
-    <ns1:seller>Amazon</ns1:seller>
     <ns1:product_id>B07585BPB3</ns1:product_id>
+    <ns1:seller>Amazon</ns1:seller>
     <ns1:brand>Wiko</ns1:brand>
-    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15859</ns1:price_eurocents>
-    <ns1:product_description>Móvil Wiko View XL 4G Black 5Ž99' Libre (Dual SIM, 32 GB de ROM, 3 GB de RAM, procesador Qualcomm Quad Core 1,4GHz, cámara selfie de 16 MP y principal de 13 MP, Android 7.1)</ns1:product_description>
-    <ns1:category>CE</ns1:category>
     <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">163</ns1:weight_grams>
+    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15859</ns1:price_eurocents>
     <ns1:product_name>Wiko View XL - Smartphone de pantalla panorámica</ns1:product_name>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B00XA41SF4">
-    <ns1:brand>Reckitt Benckiser Spain</ns1:brand>
-    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">881</ns1:price_eurocents>
-    <ns1:product_description>Sin descripción</ns1:product_description>
-    <ns1:category>Comestibles</ns1:category>
-    <ns1:product_id>B00XA41SF4</ns1:product_id>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
-    <ns1:seller>Amazon</ns1:seller>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">45359</ns1:weight_grams>
-    <ns1:product_name>Flor Suavizante regular Nenuco</ns1:product_name>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/B01NGUFO7M">
-    <ns1:product_id>B01NGUFO7M</ns1:product_id>
-    <ns1:product_name>My Little Pony - Equestría mini escuela Celestia</ns1:product_name>
-    <ns1:seller>Amazon</ns1:seller>
-    <ns1:product_description>Imagine Big Adventures in my little pony - Friendship with Equestrian Girls Minis Play Out Scenes from the equestrian Girls Movies with imaginative Playsets and Equestrian Girls principal celestial - Mini de mini muñecas This juego Comes With a doll and Over 20 classroom accessories...</ns1:product_description>
-    <ns1:price_eurocents rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1917</ns1:price_eurocents>
-    <ns1:category>Juguete</ns1:category>
-    <ns1:brand>Hasbro</ns1:brand>
-    <ns1:weight_grams rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">671</ns1:weight_grams>
+    <ns1:category>CE</ns1:category>
+    <ns1:product_description>Móvil Wiko View XL 4G Black 5Ž99' Libre (Dual SIM, 32 GB de ROM, 3 GB de RAM, procesador Qualcomm Quad Core 1,4GHz, cámara selfie de 16 MP y principal de 13 MP, Android 7.1)</ns1:product_description>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/product</rdf:type>
   </rdf:Description>
 </rdf:RDF>
