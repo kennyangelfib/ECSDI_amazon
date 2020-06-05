@@ -254,6 +254,7 @@ def iniciar_venta(request):
     #obtenemos valores factura, productos y tarjeta asocida a dicha factura de la compra para mostrar al usuario
     venta_factura = respuesta_msg.value(predicate=RDF.type, object=ECSDIAmazon.Factura)
     venta_tarjeta = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Tarjeta)
+    venta_fecha_aproximada = respuesta_msg.value(subject=venta, predicate=ECSDIAmazon.Fecha_aproximada)
     venta_precio_total = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Precio_total)
     
     venta_productos = respuesta_msg.subjects(object=ECSDIAmazon.Producto)
@@ -268,7 +269,7 @@ def iniciar_venta(request):
         productos_factura.append(product)
 
     #render de factura
-    return render_template('informar_venta.html', productos=productos_factura, tarjeta=venta_tarjeta, precio_total=venta_precio_total)
+    return render_template('informar_venta.html', productos=productos_factura, tarjeta=venta_tarjeta, precio_total=venta_precio_total,fecha_aproximada = venta_fecha_aproximada)
 
 
 #busqueda: get para mostrar los filtros de productos y post para atender la peticion de filtros

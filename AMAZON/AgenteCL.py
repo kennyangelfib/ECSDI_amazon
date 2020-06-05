@@ -81,14 +81,30 @@ def get_message_count():
     mss_cnt += 1
     return mss_cnt
 
+def gestionarEncargo(contenido, grafo):
+    # generar_lotes
+    # Asignar_transportista
+    # Informar_que ha recibido_correctamente
+    # Crear respuesta
 
-def generar_lotes(contenido, grafo):
+    graf_aux = Graph()
+    graf_aux.bind('default', ECSDIAmazon)
+    
+respuesta = msg_respuesta.value(predicate=RDF.type, object=ECSDIAmazon.Respuesta)
+
+if "Enviado" == msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Mensaje):
+        logger.info("Se prodece al cobro")
+        fecha_final = msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Fecha_final)
+        transportista_asignado = msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Transportista_asignado)
+        precio_envio = msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Precio_envio)
+        precio_quasi_total = grafo.value(subject=sujeto, predicate=ECSDIAmazon.Precio_total)
+        tarjeta = grafo.value(subject=sujeto, predicate=ECSDIAmazon.Tarjeta)
+        grafinforme = cobroVenta(precio_quasi_total,precio_envio,tarjeta)
+        informe=grafinforme.value(predicate=RDF.type, object=ECSDIAmazon.Informe)
     
 
-
-
 @app.route("/comm")
-def communication():
+def comunicacion():
     message = request.args['content'] #cogo el contenido enviado
     grafo = Graph()
     grafo.parse(data=message)
@@ -100,34 +116,26 @@ def communication():
     if message_properties is None:
         # Respondemos que no hemos entendido el mensaje
         resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
-                                              sender=AgenteCL.uri, msgcnt=get_message_count())
+                                              sender=AgenteGestorDeVentas.uri, msgcnt=get_message_count())
     else:
         # Obtenemos la performativa
         if message_properties['performative'] != ACL.request:
             # Si no es un request, respondemos que no hemos entendido el mensaje
             resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
-                                                  sender=DirectoryAgent.uri, msgcnt=get_message_count())
+                                                  sender=AgenteGestorDeVentas.uri, msgcnt=get_message_count())
         else:
             #Extraemos el contenido que ha de ser una accion de la ontologia 
             contenido = message_properties['content']
             accion = grafo.value(subject=contenido, predicate=RDF.type)
             logger.info("La accion es: " + accion)
             # Si la acción es de tipo iniciar_venta empezamos
-            if accion == ECSDIAmazon.Venta_realizada:
+            if accion == ECSDIAmazon.Encargo_envio:
                 resultado_comunicacion = generar_lotes(contenido, grafo)
                 
     logger.info('Antes de serializar la respuesta')
     serialize = resultado_comunicacion.serialize(format='xml')
 
     return serialize, 200
-
-
-
-
-
-
-
-
 
 
 @app.route("/Stop")
@@ -141,13 +149,6 @@ def stop():
     shutdown_server()
     return "Parando Servidor"
 
-
-@app.route("/comm")
-def comunicacion():
-    """
-    Entrypoint de comunicacion del agente
-    """
-    return "Nada"
 
 
 def tidyup():

@@ -273,8 +273,9 @@ def vender_productos(contenido, grafo):
         precio_total += float(precioProducto)
 
         grafo_factura.add((nueva_factura, ECSDIAmazon.FormadaPor, URIRef(producto)))
-
-
+    
+    prioridad = grafo.contenido(subject=contenido,predicate=ECSDIAmazon.Prioridad)
+    grafo_factura.add((nueva_factura, ECSDIAmazon.Fecha_aproximada, Literal(calcularprobablefechadeenvio(prioridad), datatype=XSD.string)))
     grafo_factura.add((nueva_factura, ECSDIAmazon.Precio_total, Literal(precio_total, datatype=XSD.float)))
     grafo_factura.add((nueva_factura, ECSDIAmazon.Id_venta, Literal(idventa, datatype=XSD.int)))
 
