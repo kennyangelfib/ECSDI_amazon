@@ -154,6 +154,46 @@ def register():
                 ACL.inform,
                 sender=DirectoryAgent.uri,
                 msgcnt=mss_cnt)
+    def process_special_search(cp):
+        """ La busqueda especial es buscar centros logisticos con codigo postal mas cercano al que nos han enviado"""
+
+        logger.info('Peticion de busqueda especial')
+
+        rsearch = dsgraph.triples((None, DSO.AgentType, None))
+
+        i = 0
+        graph = Graph()
+        graph.bind('dso', DSO)
+        bag = BNode()
+        graph.add((bag, RDF.type, RDF.Bag))
+
+        for a, b, c in rsearch:
+            agn_uri2 = a
+            agn_add = dsgraph.value(subject=agn_uri2, predicate=DSO.Address)
+            agn_name = dsgraph.value(subject=agn_uri2, predicate=FOAF.name)
+            agn_cp = abs(int(dsgraph.value(subject=agn_uri2, predicate= ECSDI.CodigoPostal)) - int(cp))
+
+            rsp_obj = agn['Directory-response' + str(i)]
+            graph.add((rsp_obj, DSO.Address, agn_add))
+            graph.add((rsp_obj, DSO.Uri, agn_uri2))
+            graph.add((rsp_obj, FOAF.name, agn_name))
+            graph.add((rsp_obj,ECSDI.DiferenciaCodigoPostal,Literal(agn_cp, datatype=XSD.int)))
+            graph.add((bag, URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#_') + str(i), rsp_obj))
+            logger.info("Agente encontrado: " + agn_name)
+            i += 1
+
+        if rsearch is not None:
+            return build_message(graph,
+                                 ACL.inform,
+                                 sender=CentroLogisticoDirectoryAgent.uri,
+                                 msgcnt=mss_cnt,
+                                 content=bag)
+        else:
+            #Si no encontramos a ninguno se evia la respuesta pero con
+            return build_message(Graph(),
+                                 ACL.inform,
+                                 sender=CentroLogisticoDirectoryAgent.uri,
+                                 msgcnt=mss_cnt)
 
     global dsgraph
     global mss_cnt
@@ -192,6 +232,9 @@ def register():
             # Accion de busqueda
             elif accion == DSO.Search:
                 gr = process_search()
+            elif accion == DSO.SearchSpecial:
+                #La buquedas especiales son: centros logisticos cercanos.
+                gr = process_special_search()
             # No habia ninguna accion en el mensaje
             else:
                 gr = build_message(Graph(),

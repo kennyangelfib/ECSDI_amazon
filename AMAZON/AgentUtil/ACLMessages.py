@@ -12,7 +12,7 @@ __author__ = 'Amazon'
 
 from rdflib import Graph
 import requests
-from AgentUtil.OntoNamespaces import ACL, DSO
+from AgentUtil.OntoNamespaces import ACL, DSO,ECSDIAmazon
 from AgentUtil.Agent import Agent
 from rdflib import Graph, Namespace, Literal, XSD
 from rdflib.namespace import RDF, FOAF
@@ -87,7 +87,7 @@ def get_message_properties(msg):
                 msgdic[key] = val
     return msgdic
 
-#devulevo info del agente
+#devuelvo info del agente
 def get_agent_info(type_agn, directory_agent, sender, msgcnt):
     print(" --------------parametros de entrada ------------------")
     print(type_agn)
@@ -126,6 +126,37 @@ def get_agent_info(type_agn, directory_agent, sender, msgcnt):
     
     return Agent(name, url, address, None)
 
+#Falta acabar
+def get_Neareast_Logistic_Center_info(type_agn, directory_agent, sender, msgcnt, cp):
+    """Funcion que retorna el agente logistico mas cercano"""
+    gmess = Graph()
+    # Construimos el mensaje de registro
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    ask_obj = agn[sender.name + '-SearchSpecial'] 
+
+    gmess.add((ask_obj, RDF.type, DSO.SearchSpecial))
+    gmess.add((ask_obj, DSO.AgentType, type_agn))
+    gmess.add((ask_obj, ECSDIAmazon.Codigo_postal,Literal(cp,datatype=XSD.int)))
+    gr = send_message(build_message(gmess, perf=ACL.request, sender=sender.uri, receiver=directory_agent.uri, msgcnt=msgcnt,
+                      content=ask_obj),directory_agent.address
+    )
+    dic = get_message_properties(gr)
+    content = dic['content']
+    agents = []
+
+
+    for (s, p, o) in gr.triples((content, None, None)):
+        if str(p).startswith('http://www.w3.org/1999/02/22-rdf-syntax-ns#_'):
+            address = gr.value(subject=o, predicate=DSO.Address)
+            url = gr.value(subject=o, predicate=DSO.Uri)
+            name = gr.value(subject=o, predicate=FOAF.name)
+            dif = gr.value(subject=o, predicate=ECSDI.DiferenciaCodigoPostal)
+            agent = Agent2(name, url, address, dif, None)
+            agents += [agent]
+    agent = sorted(agents, key=lambda agent2: agent2.diference)
+    return 
+
 
 # registrar a un agente
 def register_agent(agent, directoryAgent, typeOfAgent, messageCount):
@@ -148,3 +179,4 @@ def register_agent(agent, directoryAgent, typeOfAgent, messageCount):
                       content=reg_obj,
                       msgcnt=messageCount),
         directoryAgent.address)
+
