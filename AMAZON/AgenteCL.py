@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 """
-Agente que procesa las transferencias banciarias
+Agente centro logistico
 """
 from flask import Flask, render_template, request
 import socket
@@ -32,7 +31,7 @@ logger = config_logger(level=1) #1 para registrar todo (error i info)
 # parsear los parametros de entrada
 args = parser.parse_args()
 if args.port is None:
-    port = 9010
+    port = 9015
 else:
     port = args.port
 
@@ -59,7 +58,7 @@ queue = Queue()
 mss_cnt = 0
 
 #crear agente
-AgenteFinanciero = Agent('AgenteFinanciero', agn.AgenteFinanciero,
+AgenteUsuario = Agent('AgenteCL', agn.AgenteCL,
                           'http://%s:%d/comm' % (hostname, port),'http://%s:%d/Stop' % (hostname, port))
 
 
@@ -68,6 +67,7 @@ DirectoryAgent = Agent('DirectoryAgent',
                        agn.Directory,
                        'http://%s:%d/Register' % (dhostname, dport),
                        'http://%s:%d/Stop' % (dhostname, dport))
+
 
 
 #crear aplicacion servidor
@@ -82,12 +82,15 @@ def get_message_count():
     return mss_cnt
 
 
+def generar_lotes(contenido, grafo):
+    
+
+
 
 @app.route("/comm")
 def communication():
     message = request.args['content'] #cogo el contenido enviado
     grafo = Graph()
-    logger.info('--Envian una comunicacion')
     grafo.parse(data=message)
     logger.info('--Envian una comunicacion')
     message_properties = get_message_properties(grafo)
@@ -95,76 +98,67 @@ def communication():
     resultado_comunicacion = None
 
     if message_properties is None:
-        #respondemos que no hemos entendido el mensaje
+        # Respondemos que no hemos entendido el mensaje
         resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
-                                              sender=AgenteFinanciero.uri, msgcnt=get_message_count())
+                                              sender=AgenteCL.uri, msgcnt=get_message_count())
     else:
-        #obtenemos la performativa
+        # Obtenemos la performativa
         if message_properties['performative'] != ACL.request:
-            #Si no es un request, respondemos que no hemos entendido el mensaje
+            # Si no es un request, respondemos que no hemos entendido el mensaje
             resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
                                                   sender=DirectoryAgent.uri, msgcnt=get_message_count())
         else:
-            #Extraemos el contenido que ha de ser una accion de la ontologia
+            #Extraemos el contenido que ha de ser una accion de la ontologia 
             contenido = message_properties['content']
             accion = grafo.value(subject=contenido, predicate=RDF.type)
             logger.info("La accion es: " + accion)
-            #si la acción es de tipo tranferencia empezamos
-            if accion == ECSDIAmazon.Transferencia_cobrar:
-                logger.info("Cobrar")
-                transferencia = grafo.value(predicate=RDF.type, object=ECSDIAmazon.Transferencia_cobrar)
-                tarjeta = grafo.value(subject=transferencia, predicate=ECSDIAmazon.Tarjeta)
-                precio_total = grafo.value(subject=transferencia, predicate=ECSDIAmazon.Precio_total)
-
-                #enviando respuesta al AgenteGestorDeVenta
-                sujeto = ECSDIAmazon["Transferencia"+str(get_message_count())]
-                grafo_msg = Graph()
-                grafo_msg.add((sujeto, RDF.type, ECSDIAmazon.Transferencia))
-                grafo_msg.add((sujeto, ECSDIAmazon.Estado, Literal("Existosa")))
-                logger.info("Cogiendo informacion del AgenteGestorDeVentas")
-                print("--------------contenido---------------")
-                print(sujeto)
-                
-                agente = get_agent_info(agn.AgenteGestorDeVentas, DirectoryAgent, AgenteFinanciero, get_message_count())
-
-                respuesta_msg = send_message(build_message(
-                        grafo_msg, perf=ACL.request, sender=AgenteFinanciero.uri, receiver=agente.uri, msgcnt=get_message_count(), 
-                        content=contenido), agente.address)
-                
-                logger.info("Respuesta recibida")
-                
-
-                return render_template('transferencia.html', tarjeta=tarjeta, precio_total=precio_total)
-
+            # Si la acción es de tipo iniciar_venta empezamos
+            if accion == ECSDIAmazon.Venta_realizada:
+                resultado_comunicacion = generar_lotes(contenido, grafo)
                 
     logger.info('Antes de serializar la respuesta')
-    serialize = resultado_comunicacion.serialize(format="xml")
+    serialize = resultado_comunicacion.serialize(format='xml')
+
     return serialize, 200
+
+
+
+
+
+
+
+
+
 
 @app.route("/Stop")
 def stop():
     """
-    Entrypoint to the agent
-    :return: string
-    """
+    Entrypoint que para el agente
 
-    tidyUp()
+    :return:
+    """
+    tidyup()
     shutdown_server()
-    return "Stopping server"
+    return "Parando Servidor"
 
 
-#función llamada antes de cerrar el servidor
-def tidyUp():
+@app.route("/comm")
+def comunicacion():
     """
-    Previous actions for the agent.
+    Entrypoint de comunicacion del agente
     """
+    return "Nada"
 
+
+def tidyup():
+    """
+    Acciones previas a parar el agente
+
+    """
     global queue
     queue.put(0)
-
     pass
 
-#función para registro de agente en el servicio de directorios
 def register_message():
     """
     Envia un mensaje de registro al servicio de registro
@@ -177,7 +171,7 @@ def register_message():
 
     logger.info('Nos registramos')
 
-    gr = register_agent(AgenteFinanciero, DirectoryAgent, agn.AgenteFinanciero, get_message_count())
+    gr = register_agent(AgenteCL, DirectoryAgent, agn.AgenteCL, get_message_count())
     return gr
 
 
@@ -188,18 +182,14 @@ def agentbehavior1():
     :return:
     """
     graf = register_message()
-
-
+        
 
 if __name__ == '__main__':
-    # ------------------------------------------------------------------------------------------------------
-    # Run behaviors
+    # Ponemos en marcha los behaviors
     ab1 = Process(target=agentbehavior1)
     ab1.start()
-
     # Run server
     app.run(host=hostname, port=port, debug=True)
-
-    # Wait behaviors
+    # Esperamos a que acaben los behaviors
     ab1.join()
-    print('The End')
+    logger.info('Final')
