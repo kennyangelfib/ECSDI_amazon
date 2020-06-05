@@ -15,10 +15,10 @@ import socket
 import argparse
 
 from flask import Flask, request, render_template
-from rdflib import Graph, RDF, Namespace, RDFS
+from rdflib import Graph, RDF, Namespace, RDFS, BNode, URIRef
 from rdflib.namespace import FOAF
 
-from AgentUtil.OntoNamespaces import ACL, DSO
+from AgentUtil.OntoNamespaces import ACL, DSO, ECSDIAmazon
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Agent import Agent
 from AgentUtil.ACLMessages import build_message, get_message_properties
@@ -91,6 +91,8 @@ def register():
         agn_name = gm.value(subject=content, predicate=FOAF.name)
         agn_uri = gm.value(subject=content, predicate=DSO.Uri)
         agn_type = gm.value(subject=content, predicate=DSO.AgentType)
+        # agn_cp = gm.value(subject=content,predicate=ECSDIAmazon.Codigo_postal)
+
         
         # Añadimos la informacion en el grafo de registro vinculandola a la URI
         # del agente y registrandola como tipo FOAF.Agent
@@ -98,6 +100,9 @@ def register():
         dsgraph.add((agn_uri, FOAF.name, agn_name))
         dsgraph.add((agn_uri, DSO.Address, agn_add))
         dsgraph.add((agn_uri, DSO.AgentType, agn_type))
+        # if agn_cp is not None:       
+        #     dsgraph.add((agn_uri, ECSDIAmazon.Codigo_postal, agn_cp))
+
 
         # Generamos un mensaje de respuesta
         return build_message(Graph(),
@@ -154,46 +159,40 @@ def register():
                 ACL.inform,
                 sender=DirectoryAgent.uri,
                 msgcnt=mss_cnt)
+    
     def process_special_search(cp):
         """ La busqueda especial es buscar centros logisticos con codigo postal mas cercano al que nos han enviado"""
-
+        #terminado pero los datos que necesita leer es decir los agentes centros logisticos aun tienen cp
         logger.info('Peticion de busqueda especial')
-
-        rsearch = dsgraph.triples((None, DSO.AgentType, None))
-
-        i = 0
-        graph = Graph()
-        graph.bind('dso', DSO)
-        bag = BNode()
-        graph.add((bag, RDF.type, RDF.Bag))
-
+        agn_type = gm.value(subject=content, predicate=DSO.AgentType)
+        rsearch = dsgraph.triples((None, DSO.AgentType, agn_type))
+        minim = None
+        v_min = 0
         for a, b, c in rsearch:
-            agn_uri2 = a
-            agn_add = dsgraph.value(subject=agn_uri2, predicate=DSO.Address)
-            agn_name = dsgraph.value(subject=agn_uri2, predicate=FOAF.name)
-            agn_cp = abs(int(dsgraph.value(subject=agn_uri2, predicate= ECSDI.CodigoPostal)) - int(cp))
+            agn_cp = abs(int(dsgraph.value(subject=a, predicate= ECSDIAmazon.Codigo_postal)) - int(cp))
+            if minim == None or v_min > agn_cp:
+               minim = a
 
-            rsp_obj = agn['Directory-response' + str(i)]
-            graph.add((rsp_obj, DSO.Address, agn_add))
-            graph.add((rsp_obj, DSO.Uri, agn_uri2))
-            graph.add((rsp_obj, FOAF.name, agn_name))
-            graph.add((rsp_obj,ECSDI.DiferenciaCodigoPostal,Literal(agn_cp, datatype=XSD.int)))
-            graph.add((bag, URIRef(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#_') + str(i), rsp_obj))
-            logger.info("Agente encontrado: " + agn_name)
-            i += 1
-
-        if rsearch is not None:
-            return build_message(graph,
+        if minim is not None:
+            gr = Graph()
+            gr.bind('dso', DSO)
+            gr.bind('foaf',FOAF)
+            rsp_obj = agn['Directory-response']
+            logger.info('He encontrado a un agente mas cercano')
+            return build_message(gr,
                                  ACL.inform,
-                                 sender=CentroLogisticoDirectoryAgent.uri,
+                                 sender=DirectoryAgent.uri,
                                  msgcnt=mss_cnt,
-                                 content=bag)
+                                 receiver=minim,
+                                 content=rsp_obj)
         else:
-            #Si no encontramos a ninguno se evia la respuesta pero con
+            logger.info("sorry no match found")
+            # print("sorry no match found")
+            # Si no encontramos nada retornamos un inform sin contenido
             return build_message(Graph(),
-                                 ACL.inform,
-                                 sender=CentroLogisticoDirectoryAgent.uri,
-                                 msgcnt=mss_cnt)
+                ACL.inform,
+                sender=DirectoryAgent.uri,
+                msgcnt=mss_cnt)
 
     global dsgraph
     global mss_cnt
@@ -234,7 +233,11 @@ def register():
                 gr = process_search()
             elif accion == DSO.SearchSpecial:
                 #La buquedas especiales son: centros logisticos cercanos.
-                gr = process_special_search()
+                cp_list = gm.objects(subject=content, predicate=ECSDIAmazon.Codigo_postal)
+                cp = None
+                for c in cp_list:
+                    cp = c
+                gr = process_special_search(cp)
             # No habia ninguna accion en el mensaje
             else:
                 gr = build_message(Graph(),

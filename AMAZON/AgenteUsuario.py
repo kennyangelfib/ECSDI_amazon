@@ -15,7 +15,7 @@ from AgentUtil.FlaskServer import shutdown_server
 from multiprocessing import Queue
 from math import floor
 
-__author__ = 'Amazon'
+__author__ = 'ECSDI_AMAZON'
 
 
 #definimos los parametros de entrada (linea de comandos)
@@ -91,7 +91,6 @@ def get_message_count():
 def main():
     print("Dentro del main / ")
     return render_template("pg_usuario.html")
-
 
 
 #funcion que se encarga de pedir la busqueda de productos al agente GestorDeProductos

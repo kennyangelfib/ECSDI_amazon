@@ -172,7 +172,7 @@ def cobroVenta(precio_quasi_total,precio_envio,tarjeta):
     contenido = ECSDIAmazon["Informar"+ str(get_message_count())]
     grafo_transaccion.add((contenido, RDF.type, ECSDIAmazon.Informar))
     grafo_transaccion.add((contenido, ECSDIAmazon.Tarjeta, Literal(tarjeta, datatype=XSD.int)))
-    grafo_transaccion.add((contenido, ECSDIAmazon.Precio_total, Literal(preciototal, datatype=XSD.float)))
+    grafo_transaccion.add((contenido, ECSDIAmazon.Precio_total, Literal(precio_total_final, datatype=XSD.float)))
     grafo_transaccion.add((contenido, ECSDIAmazon.Mensaje, Literal(mensaje, datatype=XSD.string)))
 
     return grafo_transaccion
@@ -183,8 +183,9 @@ def enviarVenta(contenido,grafo):
     '''Se encarga de enviar asignar el encargo de envio al centro logistico mas cercano al codigo postal'''
     logger.info("Obteniendo el centro logistico mas cercano al lugar de envio mediante el codigo postal")
     #Obtener el agente mas cercano
-    centrologistico = get_Neareast_Logistic_Center_info (agn.AgenteCentroLogistico, DirectoryAgent, AgenteUsuario, get_message_count(),int(codepostal))       
-   
+    # centrologistico = get_Neareast_Logistic_Center_info(agn.AgenteCentroLogistico, DirectoryAgent, AgenteGestorDeVentas, get_message_count(),int(codepostal))       
+    centrologistico = get_agent_info(agn.AgenteCL, DirectoryAgent, AgenteGestorDeVentas, get_message_count())       
+
     #Reusamos el contenido del grafo antiguo para que se convierta en uno de tipo Encargo_envio
     logger.info("Haciendo peticion envio")
     grafo.remove((contenido, RDF.type, ECSDIAmazon.Iniciar_venta))
@@ -219,8 +220,8 @@ def enviarVenta(contenido,grafo):
         
         grafinforme.add((informe, ECSDIAmazon.Precio_envio, Literal(precio_envio, datatype=XSD.float)))
         grafinforme.add((informe, ECSDIAmazon.Precio_venta, Literal(precio_quasi_total, datatype=XSD.float)))
-        grafinforme.add((informe, ECSDIAmazon.Fecha_final, Literal(precio_quasi_total, datatype=XSD.date)))
-        grafinforme.add((informe, ECSDIAmazon.transportista_asignado, Literal(precio_quasi_total, datatype=XSD.float)))
+        grafinforme.add((informe, ECSDIAmazon.Fecha_final, Literal(fecha_final, datatype=XSD.date)))
+        grafinforme.add((informe, ECSDIAmazon.Transportista_asignado, Literal(transportista_asignado, datatype=XSD.float)))
         
         ##Queda informar al usuario de que se le ha cobrado(total_final y precio_venta y precio_envio) por que el envio ya se ha realizado con la 
         # fecha final de llegada,el transportista asignado, total
@@ -245,8 +246,7 @@ def vender_productos(contenido, grafo):
     """Funcion que efectua el proceso de venta, distribuyendo la responsabilidad de distribucion a un thread"""
     
     logger.info("Peticion de venta recibida")
-    idventa = registrarVenta(contenido, grafo)
-    grafo.add(subject=contenido,)
+    idventa = registrarVenta(grafo)
     grafo.add((contenido, ECSDIAmazon.Id_venta, Literal(idventa, datatype=XSD.int)))
     tarjeta = grafo.value(subject=contenido, predicate=ECSDIAmazon.Tarjeta)
 
