@@ -86,7 +86,7 @@ def calcularprobablefechadeenvio(prioridad):
     x = datetime.now() + timedelta(days= (prioridad*1)+ 1) 
     x.strftime("%x")
 #en proceso
-def registrarVenta(contenido, grafo):
+def registrarVenta(grafo):
     """ Funcion que registra la venta realizada a la base de datos"""
     logger.info("Registrando la venta")
     print("----------------------------------------")
