@@ -86,7 +86,7 @@ def get_message_count():
 def calcularprobablefechadeenvio(prioridad):
     """Calcula el dia aproximado de envio apartir de la prioridad(1-10),ahora es un factor de 1 y sumando 1dia extra"""
     x = datetime.now() + timedelta(days= (prioridad*1)+ 1) 
-    x.strftime("%x")
+    return x.strftime('%Y-%m-%d') 
 #en proceso
 def registrarVenta(grafo):
     """ Funcion que registra la venta realizada a la base de datos"""
@@ -154,9 +154,10 @@ def cobroVenta(precio_quasi_total,precio_envio,tarjeta):
     respuesta_cobro = send_message(build_message(
             grafo_transaccion, perf=ACL.request, sender=AgenteGestorDeVentas.uri, receiver=agente_financiero.uri, msgcnt=get_message_count(), 
             content=contenido), agente_financiero.address)
-    
-    rpt = respuesta_cobro.value(predicate=ECSDIAmazon.Tranferencia)
-    if rpt == "Exitosa":
+    print(respuesta_cobro.serialize(format="turtle" ).decode())
+    transferencia = respuesta_cobro.value(predicate=RDF.type, object=ECSDIAmazon.Transferencia)
+    print("La transferencia es :", transferencia)
+    if "Exitosa" == str(respuesta_cobro.value(subject=transferencia, predicate=ECSDIAmazon.Estado)):
         logger.info("Se ha cobrado la venta exitosamente")
         mensaje = "Se ha cobrado a su cuenta"
     else:
@@ -176,68 +177,79 @@ def cobroVenta(precio_quasi_total,precio_envio,tarjeta):
     grafo_transaccion.add((contenido, ECSDIAmazon.Tarjeta, Literal(tarjeta, datatype=XSD.int)))
     grafo_transaccion.add((contenido, ECSDIAmazon.Precio_total, Literal(precio_total_final, datatype=XSD.float)))
     grafo_transaccion.add((contenido, ECSDIAmazon.Mensaje, Literal(mensaje, datatype=XSD.string)))
-
+    logger.info("Se genera el la parte del informe de cobro")
     return grafo_transaccion
 
 
 #en proceso
-def enviarVenta(grafo):
+def enviarVenta(contenido,grafo):
     '''Se encarga de enviar asignar el encargo de envio al centro logistico mas cercano al codigo postal'''
     logger.info("Obteniendo el centro logistico mas cercano al lugar de envio mediante el codigo postal")
     #Obtener el agente mas cercano
     # centrologistico = get_Neareast_Logistic_Center_info(agn.AgenteCentroLogistico, DirectoryAgent, AgenteGestorDeVentas, get_message_count(),int(codepostal))       
     centrologistico = get_agent_info(agn.AgenteCL, DirectoryAgent, AgenteGestorDeVentas, get_message_count())       
-
+    ###ERROR: No esta reemplazando el Iniciar_venta por el Encargo_envio correctamente
+    ###Solucionado
     #Reusamos el contenido del grafo antiguo para que se convierta en uno de tipo Encargo_envio
     logger.info("Haciendo peticion envio")
     grafo.remove((contenido, RDF.type, ECSDIAmazon.Iniciar_venta))
     sujeto = ECSDIAmazon['Encargo_envio' + str(get_message_count())]
     grafo.add((sujeto, RDF.type, ECSDIAmazon.Encargo_envio))
-
     for a, b, c in grafo:
         if a == contenido:
             grafo.remove((a, b, c))
             grafo.add((sujeto, b, c))
     #####
-    
+    print("ADEU ")
+    print(grafo.serialize(format="turtle").decode())
     logger.info("Informando de encargo de envio a centro logistico")
     msg_respuesta = send_message(build_message(
                                 grafo, perf=ACL.request, sender=AgenteGestorDeVentas.uri,receiver=centrologistico.uri,msgcnt=get_message_count(), content=sujeto)
                                 , centrologistico.address)
     logger.info("El encargo de envio que ha sido enviado")
-    respuesta = msg_respuesta.value(predicate=RDF.type, object=ECSDIAmazon.Respuesta)
-    if "Enviado" == msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Mensaje):
+
+    respuesta_centro_logistico = msg_respuesta.value(predicate=RDF.type, object=ECSDIAmazon.Respuesta)
+    print(msg_respuesta.serialize(format="turtle").decode())
+    print("El nombre de la respuesta es:", respuesta_centro_logistico)
+    print(msg_respuesta.value(subject=respuesta_centro_logistico, predicate=ECSDIAmazon.Mensaje))
+    if "Enviado" == str(msg_respuesta.value(subject=respuesta_centro_logistico, predicate=ECSDIAmazon.Mensaje)) :
         logger.info("Se prodece al cobro")
-        fecha_final = msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Fecha_final)
-        transportista_asignado = msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Transportista_asignado)
-        precio_envio = msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Precio_envio)
-        precio_quasi_total = grafo.value(subject=sujeto, predicate=ECSDIAmazon.Precio_total)
-        tarjeta = grafo.value(subject=sujeto, predicate=ECSDIAmazon.Tarjeta)
-        grafinforme = cobroVenta(precio_quasi_total,precio_envio,tarjeta)
-        informe=grafinforme.value(predicate=RDF.type, object=ECSDIAmazon.Informe)
-        #esta parte comentada ya esta en el grafoinforme
-        # grafinforme.add((contenido, ECSDIAmazon.Tarjeta, Literal(tarjeta, datatype=XSD.int)))
-        # grafinforme.add((contenido, ECSDIAmazon.Precio_total, Literal(preciototal, datatype=XSD.float)))
-        # grafinforme.add((contenido, ECSDIAmazon.message, Literal(message, datatype=XSD.string)))
+        fecha_final = str(msg_respuesta.value(subject=respuesta_centro_logistico, predicate=ECSDIAmazon.Fecha_final))
+        transportista_asignado = str(msg_respuesta.value(subject=respuesta_centro_logistico, predicate=ECSDIAmazon.Transportista_asignado))
+        precio_envio = float(msg_respuesta.value(subject=respuesta_centro_logistico, predicate=ECSDIAmazon.Precio_envio))
         
-        grafinforme.add((informe, ECSDIAmazon.Precio_envio, Literal(precio_envio, datatype=XSD.float)))
-        grafinforme.add((informe, ECSDIAmazon.Precio_venta, Literal(precio_quasi_total, datatype=XSD.float)))
-        grafinforme.add((informe, ECSDIAmazon.Fecha_final, Literal(fecha_final, datatype=XSD.date)))
-        grafinforme.add((informe, ECSDIAmazon.Transportista_asignado, Literal(transportista_asignado, datatype=XSD.float)))
+        precio_quasi_total = grafo.value(subject=sujeto, predicate=ECSDIAmazon.Precio_total)
+        tarjeta = int(grafo.value(subject=sujeto, predicate=ECSDIAmazon.Tarjeta))
+        grafinfo = cobroVenta(precio_quasi_total, precio_envio, tarjeta)
+        print("El graf informe es:",grafinfo.serialize(format= "turtle").decode())
+        logger.info("Se complementa el informe con los datos de envio")
+        informar=grafinfo.value(predicate=RDF.type, object=ECSDIAmazon.Informar)
+        #esta parte esta comentada por que ya esta en el grafoinforme
+        # grafinfo.add((informar, ECSDIAmazon.Tarjeta, Literal(tarjeta, datatype=XSD.int)))
+        # grafinfo.add((informar, ECSDIAmazon.Precio_total, Literal(preciototal, datatype=XSD.float)))
+        # grafinfo.add((informar, ECSDIAmazon.message, Literal(message, datatype=XSD.string)))
+        print("El precio de envio es:", precio_envio)
+        print("El quasi_total es:", precio_quasi_total)
+        grafinfo.add((informar, ECSDIAmazon.Precio_envio, Literal(precio_envio, datatype=XSD.float)))
+        logger.info("informe- 2")
+        grafinfo.add((informar, ECSDIAmazon.Precio_venta, Literal(precio_quasi_total, datatype=XSD.float)))
+        logger.info("informe- 3")
+        grafinfo.add((informar, ECSDIAmazon.Fecha_final, Literal(fecha_final, datatype=XSD.string)))
+        grafinfo.add((informar, ECSDIAmazon.Transportista_asignado, Literal(transportista_asignado, datatype=XSD.string)))
         
         ##Queda informar al usuario de que se le ha cobrado(total_final y precio_venta y precio_envio) por que el envio ya se ha realizado con la 
         # fecha final de llegada,el transportista asignado, total
         idventa = grafo.value(subject=sujeto, predicate=ECSDIAmazon.Id_venta)
-        grafinforme.add((informe, ECSDIAmazon.Id_venta, Literal(idventa, datatype=XSD.int)))
+        grafinfo.add((informar, ECSDIAmazon.Id_venta, Literal(idventa, datatype=XSD.int)))
         logger.info("Se informa al usuario que el cobro ha sido efectuado al cobro y que ya se ha enviado la venta con id"+str(idventa))
         agente_usuario = get_agent_info(agn.AgenteUsuario, DirectoryAgent, AgenteGestorDeVentas, get_message_count())
         msg_respuesta_user = send_message(build_message(
-                                grafinforme, perf=ACL.request, sender=AgenteGestorDeVentas.uri,receiver=agente_usuario.uri,msgcnt=get_message_count(), contenido=informe)
+                                grafinfo, perf=ACL.request, sender=AgenteGestorDeVentas.uri,receiver=agente_usuario.uri,msgcnt=get_message_count(), content=informar)
                                 , agente_usuario.address)
         respuesta_user= msg_respuesta_user.value(predicate=RDF.type, object=ECSDIAmazon.Respuesta)
 
-        if "OK" == msg_respuesta_user.value(subject=respuesta_user, predicate=ECSDIAmazon.Mensaje):
-            logger.info("La venta y el envio de esta han sido exitosos")
+        if "OK" == str(msg_respuesta_user.value(subject=respuesta_user, predicate=ECSDIAmazon.Mensaje)):
+            logger.info("La venta " + str(idventa) +" y su envio de han sido exitosos")
         else:
             logger.info("No se esperaba esta respuesta del usuario al enviarle el informe")    
     else:
@@ -263,24 +275,22 @@ def vender_productos(contenido, grafo):
 
     venta = grafo.value(subject=contenido, predicate=ECSDIAmazon.De)
 
-    precio_total = 0
+    precio_total = 0.0
     for producto in grafo.objects(subject=venta, predicate=ECSDIAmazon.Contiene):
         grafo_factura.add((producto, RDF.type, ECSDIAmazon.Producto))
 
         nombreProducto = grafo.value(subject=producto, predicate=ECSDIAmazon.Nombre_producto)
         grafo_factura.add((producto, ECSDIAmazon.Nombre_producto, Literal(nombreProducto, datatype=XSD.string)))
 
-        print("antes: ", precio_total)    
         precioProducto = grafo.value(subject=producto, predicate=ECSDIAmazon.Precio_producto)
-        print("precio cogido del grafo: ", float(precioProducto))
         grafo_factura.add((producto, ECSDIAmazon.Precio_producto, Literal(float(precioProducto), datatype=XSD.float)))
+        
         precio_total += float(precioProducto)
-        print("despues:", precio_total)
 
         grafo_factura.add((nueva_factura, ECSDIAmazon.FormadaPor, URIRef(producto)))
     
     prioridad = grafo.value(subject=contenido,predicate=ECSDIAmazon.Prioridad)
-    grafo_factura.add((nueva_factura, ECSDIAmazon.Fecha_aproximada, Literal(calcularprobablefechadeenvio(prioridad), datatype=XSD.string)))
+    grafo_factura.add((nueva_factura, ECSDIAmazon.Fecha_aproximada, Literal(calcularprobablefechadeenvio(int(prioridad)), datatype=XSD.string)))
     grafo_factura.add((nueva_factura, ECSDIAmazon.Precio_total, Literal(precio_total, datatype=XSD.float)))
     grafo_factura.add((nueva_factura, ECSDIAmazon.Id_venta, Literal(idventa, datatype=XSD.int)))
 
@@ -291,6 +301,7 @@ def vender_productos(contenido, grafo):
     # Enviar encargo de envio al Centro logistico
     thread = Thread(target=enviarVenta, args=(contenido,grafo))
     thread.start()
+    # enviarVenta(contenido,grafo)
     logger.info("Devolviendo factura")
     return grafo_factura
 
@@ -321,6 +332,8 @@ def communication():
             logger.info("La accion es: " + accion)
             # Si la acción es de tipo iniciar_venta empezamos
             if accion == ECSDIAmazon.Iniciar_venta:
+                for item in grafo.subjects(RDF.type, ACL.FipaAclMessage):
+                        grafo.remove((item, None, None))
                 resultado_comunicacion = vender_productos(contenido, grafo)
                 
     logger.info('Antes de serializar la respuesta')

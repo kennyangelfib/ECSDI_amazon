@@ -314,10 +314,45 @@ def stop():
 
 @app.route("/comm")
 def comunicacion():
-    """
-    Entrypoint de comunicacion del agente
-    """
-    return "Nada"
+    message = request.args['content'] #cogo el contenido enviado
+    grafo = Graph()
+    logger.info('--Envian una comunicacion')
+    grafo.parse(data=message)
+    logger.info('--Envian una comunicacion')
+    message_properties = get_message_properties(grafo)
+
+    resultado_comunicacion = None
+
+    if message_properties is None:
+        #respondemos que no hemos entendido el mensaje
+        resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
+                                              sender=AgenteUsuario.uri, msgcnt=get_message_count())
+    else:
+        #obtenemos la performativa
+        if message_properties['performative'] != ACL.request:
+            #Si no es un request, respondemos que no hemos entendido el mensaje
+            resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
+                                                  sender=AgenteUsuario.uri, msgcnt=get_message_count())
+        else:
+            #Extraemos el contenido que ha de ser una accion de la ontologia
+            contenido = message_properties['content']
+            accion = grafo.value(subject=contenido, predicate=RDF.type)
+            logger.info("La accion es: " + accion)
+            #si la acción es de tipo tranferencia empezamos
+            print(grafo.serialize(format="turtle").decode())
+            if accion == ECSDIAmazon.Informar:
+                logger.info("Ya apunto de finalizar")
+                # thread = Thread(target=enviarVenta, args=(contenido,grafo))
+                # thread.start()
+                graf = Graph()
+                mensaje = ECSDIAmazon["Respuesta"+ str(get_message_count())]
+                graf.add((mensaje,RDF.type, ECSDIAmazon.Respuesta))
+                graf.add((mensaje,ECSDIAmazon.Mensaje,Literal("OK",datatype=XSD.string)))
+                resultado_comunicacion = graf
+            
+    logger.info("Antes de serializar la respuesta")
+    serialize = resultado_comunicacion.serialize(format="xml")
+    return serialize, 200
 
 
 def tidyup():

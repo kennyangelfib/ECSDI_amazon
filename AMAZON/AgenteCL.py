@@ -13,6 +13,7 @@ from multiprocessing import Process
 from AgentUtil.FlaskServer import shutdown_server
 from multiprocessing import Queue
 from math import floor
+from datetime import datetime,timedelta
 
 __author__ = 'Amazon'
 
@@ -58,7 +59,7 @@ queue = Queue()
 mss_cnt = 0
 
 #crear agente
-AgenteUsuario = Agent('AgenteCL', agn.AgenteCL,
+AgenteCL = Agent('AgenteCL', agn.AgenteCL,
                           'http://%s:%d/comm' % (hostname, port),'http://%s:%d/Stop' % (hostname, port))
 
 
@@ -81,28 +82,41 @@ def get_message_count():
     mss_cnt += 1
     return mss_cnt
 
+def calcularfechadeenviofinal(prioridad):
+    """Calcula el dia aproximado de envio apartir de la prioridad(1-10),ahora es un factor de 1 y sumando 1"""
+    x = datetime.now() + timedelta(days= (prioridad*1)) 
+    return x.strftime("%Y-%m-%d") 
+
 def gestionarEncargo(contenido, grafo):
     # generar_lotes
     # Asignar_transportista
     # Informar_que ha recibido_correctamente
     # Crear respuesta
-
+    ##ERROR: No se sabe qpero esa aqui 
+    logger.info("Gestionando Encargo de envio")
+    logger.info("parte - 1")
+    transportista_asignado = "AgenteTransportista1"
+    logger.info("parte - 2")
+    print(grafo.serialize(format="turtle").decode())
+    print("contenido es", contenido)
+    prioridad =  grafo.value(subject=contenido ,predicate=ECSDIAmazon.Prioridad)
+    if prioridad is None:
+        logger.info("Oh Oh lo esta considerando no definido")
+    fecha_final = calcularfechadeenviofinal(int(prioridad))
+    precio_envio = 2.0
+    logger.info("Los valores van bien")
     graf_aux = Graph()
     graf_aux.bind('default', ECSDIAmazon)
+    contenido_responder = ECSDIAmazon["Responder-" + str(get_message_count())] 
+    graf_aux.add((contenido_responder, RDF.type, ECSDIAmazon.Respuesta))
+    graf_aux.add((contenido_responder, ECSDIAmazon.Precio_envio, Literal(precio_envio, datatype=XSD.float)))
+    logger.info("parte - 3")
+    graf_aux.add((contenido_responder, ECSDIAmazon.Fecha_final, Literal(fecha_final, datatype=XSD.string)))
+    graf_aux.add((contenido_responder, ECSDIAmazon.Transportista_asignado, Literal(transportista_asignado, datatype=XSD.string)))
+    graf_aux.add((contenido_responder, ECSDIAmazon.Mensaje,Literal("Enviado",datatype=XSD.string)))
+    logger.info("parte - 4")
+    return graf_aux
     
-respuesta = msg_respuesta.value(predicate=RDF.type, object=ECSDIAmazon.Respuesta)
-
-if "Enviado" == msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Mensaje):
-        logger.info("Se prodece al cobro")
-        fecha_final = msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Fecha_final)
-        transportista_asignado = msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Transportista_asignado)
-        precio_envio = msg_respuesta.value(subject=respuesta, predicate=ECSDIAmazon.Precio_envio)
-        precio_quasi_total = grafo.value(subject=sujeto, predicate=ECSDIAmazon.Precio_total)
-        tarjeta = grafo.value(subject=sujeto, predicate=ECSDIAmazon.Tarjeta)
-        grafinforme = cobroVenta(precio_quasi_total,precio_envio,tarjeta)
-        informe=grafinforme.value(predicate=RDF.type, object=ECSDIAmazon.Informe)
-    
-
 @app.route("/comm")
 def comunicacion():
     message = request.args['content'] #cogo el contenido enviado
@@ -110,27 +124,28 @@ def comunicacion():
     grafo.parse(data=message)
     logger.info('--Envian una comunicacion')
     message_properties = get_message_properties(grafo)
-
+    print(grafo.serialize(format="turtle").decode())
     resultado_comunicacion = None
 
     if message_properties is None:
         # Respondemos que no hemos entendido el mensaje
         resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
-                                              sender=AgenteGestorDeVentas.uri, msgcnt=get_message_count())
+                                              sender=AgenteCL.uri, msgcnt=get_message_count())
     else:
         # Obtenemos la performativa
         if message_properties['performative'] != ACL.request:
             # Si no es un request, respondemos que no hemos entendido el mensaje
             resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
-                                                  sender=AgenteGestorDeVentas.uri, msgcnt=get_message_count())
+                                                  sender=AgenteCL.uri, msgcnt=get_message_count())
         else:
             #Extraemos el contenido que ha de ser una accion de la ontologia 
             contenido = message_properties['content']
+
             accion = grafo.value(subject=contenido, predicate=RDF.type)
             logger.info("La accion es: " + accion)
             # Si la acción es de tipo iniciar_venta empezamos
             if accion == ECSDIAmazon.Encargo_envio:
-                resultado_comunicacion = generar_lotes(contenido, grafo)
+                resultado_comunicacion = gestionarEncargo(contenido, grafo)
                 
     logger.info('Antes de serializar la respuesta')
     serialize = resultado_comunicacion.serialize(format='xml')

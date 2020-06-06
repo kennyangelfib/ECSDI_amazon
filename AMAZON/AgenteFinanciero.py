@@ -81,7 +81,22 @@ def get_message_count():
     mss_cnt += 1
     return mss_cnt
 
+def realizar_transferencia(contenido,grafo,escobro):
+    if (escobro):
+        logger.info("Se realiza el cobro")
+        transferencia = grafo.value(predicate=RDF.type, object=ECSDIAmazon.Transferencia_cobrar)
+    else:
+        logger.info("Se realiza el pago")
+        transferencia = grafo.value(predicate=RDF.type, object=ECSDIAmazon.Transferencia_pagar)
+    tarjeta = grafo.value(subject=transferencia, predicate=ECSDIAmazon.Tarjeta)
+    precio_total = grafo.value(subject=transferencia, predicate=ECSDIAmazon.Precio_total)
 
+    #enviando respuesta al AgenteGestorDeVenta
+    sujeto = ECSDIAmazon["Transferencia"+str(get_message_count())]
+    grafo_msg = Graph()
+    grafo_msg.add((sujeto, RDF.type, ECSDIAmazon.Transferencia))
+    grafo_msg.add((sujeto, ECSDIAmazon.Estado, Literal("Exitosa")))
+    return grafo_msg
 
 @app.route("/comm")
 def communication():
@@ -103,7 +118,7 @@ def communication():
         if message_properties['performative'] != ACL.request:
             #Si no es un request, respondemos que no hemos entendido el mensaje
             resultado_comunicacion = build_message(Graph(), ACL['not-understood'],
-                                                  sender=DirectoryAgent.uri, msgcnt=get_message_count())
+                                                  sender=AgenteFinanciero.uri, msgcnt=get_message_count())
         else:
             #Extraemos el contenido que ha de ser una accion de la ontologia
             contenido = message_properties['content']
@@ -111,30 +126,21 @@ def communication():
             logger.info("La accion es: " + accion)
             #si la acción es de tipo tranferencia empezamos
             if accion == ECSDIAmazon.Transferencia_cobrar:
-                logger.info("Cobrar")
-                transferencia = grafo.value(predicate=RDF.type, object=ECSDIAmazon.Transferencia_cobrar)
-                tarjeta = grafo.value(subject=transferencia, predicate=ECSDIAmazon.Tarjeta)
-                precio_total = grafo.value(subject=transferencia, predicate=ECSDIAmazon.Precio_total)
-
-                #enviando respuesta al AgenteGestorDeVenta
-                sujeto = ECSDIAmazon["Transferencia"+str(get_message_count())]
-                grafo_msg = Graph()
-                grafo_msg.add((sujeto, RDF.type, ECSDIAmazon.Transferencia))
-                grafo_msg.add((sujeto, ECSDIAmazon.Estado, Literal("Existosa")))
-                logger.info("Cogiendo informacion del AgenteGestorDeVentas")
-                print("--------------contenido---------------")
-                print(sujeto)
+                resultado_comunicacion = realizar_transferencia(contenido,grafo,True)
+            elif accion == ECSDIAmazon.Tranferencia_pago:
+                resultado_comunicacion = realizar_transferencia(contenido,grafo,False)    
+                # logger.info("Cogiendo informacion del AgenteGestorDeVentas")
+                # print("--------------contenido---------------")
+                # print(sujeto)
                 
-                agente = get_agent_info(agn.AgenteGestorDeVentas, DirectoryAgent, AgenteFinanciero, get_message_count())
+                # agente = get_agent_info(agn.AgenteGestorDeVentas, DirectoryAgent, AgenteFinanciero, get_message_count())
 
-                respuesta_msg = send_message(build_message(
-                        grafo_msg, perf=ACL.request, sender=AgenteFinanciero.uri, receiver=agente.uri, msgcnt=get_message_count(), 
-                        content=contenido), agente.address)
+                # respuesta_msg = send_message(build_message(
+                #         grafo_msg, perf=ACL.request, sender=AgenteFinanciero.uri, receiver=agente.uri, msgcnt=get_message_count(), 
+                #         content=contenido), agente.address)
                 
-                logger.info("Respuesta recibida")
-                
-
-                return render_template('transferencia.html', tarjeta=tarjeta, precio_total=precio_total)
+                # logger.info("Respuesta recibida")
+                # return render_template('transferencia.html', tarjeta=tarjeta, precio_total=precio_total)
 
                 
     logger.info('Antes de serializar la respuesta')

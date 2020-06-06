@@ -3,284 +3,774 @@
    xmlns:ns1="http://www.nuestra-ontologia.com/ECSDIAmazon/"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 >
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/7f537576-9a5d-4f32-8f8a-95bbe2ebd8eb">
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Productos_id>[]</ns1:Productos_id>
+    <ns1:Venta_id>7f537576-9a5d-4f32-8f8a-95bbe2ebd8eb</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+  </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e206614c-f370-4724-89cb-e23f5391cd94">
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Prioridad>1</ns1:Prioridad>
     <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Venta_id>e206614c-f370-4724-89cb-e23f5391cd94</ns1:Venta_id>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
     <ns1:Tarjeta>1111</ns1:Tarjeta>
     <ns1:Productos_id>['B014HSRA6C', '1631590995']</ns1:Productos_id>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Venta_id>e206614c-f370-4724-89cb-e23f5391cd94</ns1:Venta_id>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Prioridad>1</ns1:Prioridad>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/7158d738-781f-46a5-a55a-a9ae4c857672">
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Venta_id>7158d738-781f-46a5-a55a-a9ae4c857672</ns1:Venta_id>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/8cb80ae9-4e01-40cb-9cff-6756c97c2c64">
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Venta_id>8cb80ae9-4e01-40cb-9cff-6756c97c2c64</ns1:Venta_id>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Direccion>Palau</ns1:Direccion>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e06b550a-8dc9-4c18-bdb9-885cc30623c0">
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Venta_id>e06b550a-8dc9-4c18-bdb9-885cc30623c0</ns1:Venta_id>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/80da3f6b-96e6-498f-9f78-c7b8cc5f2b03">
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Venta_id>80da3f6b-96e6-498f-9f78-c7b8cc5f2b03</ns1:Venta_id>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Prioridad>1</ns1:Prioridad>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/aa28e846-04a5-43cb-87be-e42adad7f6ef">
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Venta_id>aa28e846-04a5-43cb-87be-e42adad7f6ef</ns1:Venta_id>
-    <ns1:Direccion>Palau</ns1:Direccion>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/7bb5a693-3323-4134-987a-eefe632629c8">
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Venta_id>7bb5a693-3323-4134-987a-eefe632629c8</ns1:Venta_id>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Productos_id>['B003L6ZPQ4', 'B01788F6NC']</ns1:Productos_id>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/8fd4b809-c3be-405a-8b9c-73d1c85b5f78">
     <ns1:Venta_id>8fd4b809-c3be-405a-8b9c-73d1c85b5f78</ns1:Venta_id>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
     <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
     <ns1:Prioridad>1</ns1:Prioridad>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/68293e9d-f3d2-46ae-baa4-cfcfcd824f21">
+    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Venta_id>68293e9d-f3d2-46ae-baa4-cfcfcd824f21</ns1:Venta_id>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/a55c79f9-ffa2-4079-bebe-56f2ac044fe4">
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>a55c79f9-ffa2-4079-bebe-56f2ac044fe4</ns1:Venta_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e67d93ae-b091-48af-8e6e-9af2f18b7af7">
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Tarjeta>11</ns1:Tarjeta>
+    <ns1:Venta_id>e67d93ae-b091-48af-8e6e-9af2f18b7af7</ns1:Venta_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/7bb5a693-3323-4134-987a-eefe632629c8">
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B003L6ZPQ4', 'B01788F6NC']</ns1:Productos_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Venta_id>7bb5a693-3323-4134-987a-eefe632629c8</ns1:Venta_id>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/b3f8964b-69fe-4dc6-a28f-f37d1b3d0b34">
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Venta_id>b3f8964b-69fe-4dc6-a28f-f37d1b3d0b34</ns1:Venta_id>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/8db3c82b-077a-4c56-80f9-72f510a9fa10">
-    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/df0e8b7c-f32d-4209-9a0f-79b050ce7c44">
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Venta_id>df0e8b7c-f32d-4209-9a0f-79b050ce7c44</ns1:Venta_id>
     <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Venta_id>8db3c82b-077a-4c56-80f9-72f510a9fa10</ns1:Venta_id>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/3f7fd619-43cb-4fdf-8358-f097703bc2d9">
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>11</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Venta_id>3f7fd619-43cb-4fdf-8358-f097703bc2d9</ns1:Venta_id>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Direccion>1</ns1:Direccion>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/4cb7b6e2-aa3a-47e3-a637-2b36279c127c">
+    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>4cb7b6e2-aa3a-47e3-a637-2b36279c127c</ns1:Venta_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/f78065c5-ab16-48a5-9d6f-6978513d8686">
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Venta_id>f78065c5-ab16-48a5-9d6f-6978513d8686</ns1:Venta_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/69416f66-51ac-4d52-ad3c-2b048871fbed">
+    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Venta_id>69416f66-51ac-4d52-ad3c-2b048871fbed</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/6592a36d-7bd1-4587-9afa-b243d0353dd7">
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Productos_id>['B00XA41SF4', 'B003L6ZPQ4']</ns1:Productos_id>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Venta_id>6592a36d-7bd1-4587-9afa-b243d0353dd7</ns1:Venta_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/096868a0-fb08-420f-b888-ecb86479606f">
+    <ns1:Ciudad>12</ns1:Ciudad>
+    <ns1:Direccion>12</ns1:Direccion>
+    <ns1:Codigo_postal>12</ns1:Codigo_postal>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Venta_id>096868a0-fb08-420f-b888-ecb86479606f</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Tarjeta>12</ns1:Tarjeta>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/df99066e-eb4e-4fc3-b07a-3648c9cefff1">
     <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
-    <ns1:Prioridad>1</ns1:Prioridad>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
     <ns1:Venta_id>df99066e-eb4e-4fc3-b07a-3648c9cefff1</ns1:Venta_id>
     <ns1:Ciudad>Barcelona</ns1:Ciudad>
     <ns1:Tarjeta>1111</ns1:Tarjeta>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/4cb7b6e2-aa3a-47e3-a637-2b36279c127c">
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
     <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
-    <ns1:Venta_id>4cb7b6e2-aa3a-47e3-a637-2b36279c127c</ns1:Venta_id>
     <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/68293e9d-f3d2-46ae-baa4-cfcfcd824f21">
-    <ns1:Direccion>Palau</ns1:Direccion>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/77d9bfa0-c462-49d5-b41d-732be404737b">
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Tarjeta>11</ns1:Tarjeta>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Venta_id>68293e9d-f3d2-46ae-baa4-cfcfcd824f21</ns1:Venta_id>
-    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+    <ns1:Direccion>1</ns1:Direccion>
     <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Venta_id>77d9bfa0-c462-49d5-b41d-732be404737b</ns1:Venta_id>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/8dc7bf8f-20f5-4cad-aa2f-93f9de6c5feb">
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Venta_id>8dc7bf8f-20f5-4cad-aa2f-93f9de6c5feb</ns1:Venta_id>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/68c446ea-d1f0-4fa8-9049-7bb99abc634a">
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Venta_id>68c446ea-d1f0-4fa8-9049-7bb99abc634a</ns1:Venta_id>
     <ns1:Prioridad>1</ns1:Prioridad>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
     <ns1:Productos_id>['B079ZXV5QN', 'B00XA41SF4', 'B01JD9PGMU', 'B01788F6NC', 'B01NGUFO7M']</ns1:Productos_id>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
     <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Venta_id>68c446ea-d1f0-4fa8-9049-7bb99abc634a</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/048dabc5-a3cf-4e87-b8e9-2937a6298f0b">
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e49b6818-e19c-4130-b3ef-a6b06e8ca7f8">
     <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
     <ns1:Codigo_postal>8001</ns1:Codigo_postal>
     <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Venta_id>048dabc5-a3cf-4e87-b8e9-2937a6298f0b</ns1:Venta_id>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
     <ns1:Direccion>Palau</ns1:Direccion>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>e49b6818-e19c-4130-b3ef-a6b06e8ca7f8</ns1:Venta_id>
     <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/0dc0a159-868f-4da4-98d2-13f66542a466">
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/aa847f07-584e-4403-8d5a-a9609f6cb964">
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Venta_id>aa847f07-584e-4403-8d5a-a9609f6cb964</ns1:Venta_id>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/d839de8c-46a4-46f2-911b-7f28d91dc587">
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Venta_id>d839de8c-46a4-46f2-911b-7f28d91dc587</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/acb77c2d-993e-4ccd-9d97-491afbcb1e56">
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Venta_id>acb77c2d-993e-4ccd-9d97-491afbcb1e56</ns1:Venta_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Productos_id>['B00XA41SF4', 'B003L6ZPQ4']</ns1:Productos_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/2b718bcd-6f49-49ea-8b06-5f6098ba4187">
+    <ns1:Prioridad>11</ns1:Prioridad>
+    <ns1:Tarjeta>11</ns1:Tarjeta>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Venta_id>2b718bcd-6f49-49ea-8b06-5f6098ba4187</ns1:Venta_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/9b433675-ef02-4753-95d9-c7149ab8ab2f">
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>9b433675-ef02-4753-95d9-c7149ab8ab2f</ns1:Venta_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>1</ns1:Ciudad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/f295a8c4-8fc9-400f-9fd0-4ddb66c32e1c">
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Venta_id>f295a8c4-8fc9-400f-9fd0-4ddb66c32e1c</ns1:Venta_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/8db3c82b-077a-4c56-80f9-72f510a9fa10">
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Venta_id>8db3c82b-077a-4c56-80f9-72f510a9fa10</ns1:Venta_id>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/a20e1f9f-a83c-42e6-9fb1-20f412e4e77c">
+    <ns1:Prioridad>5</ns1:Prioridad>
+    <ns1:Direccion>2</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Venta_id>a20e1f9f-a83c-42e6-9fb1-20f412e4e77c</ns1:Venta_id>
+    <ns1:Ciudad>3</ns1:Ciudad>
+    <ns1:Codigo_postal>4</ns1:Codigo_postal>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/7158d738-781f-46a5-a55a-a9ae4c857672">
+    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Venta_id>7158d738-781f-46a5-a55a-a9ae4c857672</ns1:Venta_id>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
     <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Venta_id>0dc0a159-868f-4da4-98d2-13f66542a466</ns1:Venta_id>
-    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/42aaf8cf-ffed-4c35-943d-7cdd408ae987">
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Venta_id>42aaf8cf-ffed-4c35-943d-7cdd408ae987</ns1:Venta_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/aee4a1ae-ffd3-4288-86a6-48cc40b652a5">
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Venta_id>aee4a1ae-ffd3-4288-86a6-48cc40b652a5</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/352ccd2a-6abb-4a04-9e7e-d4ebb9460a3a">
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Tarjeta>11</ns1:Tarjeta>
+    <ns1:Venta_id>352ccd2a-6abb-4a04-9e7e-d4ebb9460a3a</ns1:Venta_id>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/9f08533b-cec0-41f0-aebb-65afdc0a68c9">
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Venta_id>9f08533b-cec0-41f0-aebb-65afdc0a68c9</ns1:Venta_id>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e6db54ca-25e4-4891-b844-edb3f9fd25d5">
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>[]</ns1:Productos_id>
+    <ns1:Venta_id>e6db54ca-25e4-4891-b844-edb3f9fd25d5</ns1:Venta_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/2e9bae9e-5cf2-469e-89ac-44b73417011d">
+    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
+    <ns1:Direccion>Palau</ns1:Direccion>
     <ns1:Tarjeta>1111</ns1:Tarjeta>
     <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
     <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Venta_id>2e9bae9e-5cf2-469e-89ac-44b73417011d</ns1:Venta_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/05fcd3d9-b083-4f0c-90ae-81d28026bef7">
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>05fcd3d9-b083-4f0c-90ae-81d28026bef7</ns1:Venta_id>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/0a5bb6bf-5794-401e-b745-78bd2b66c8ad">
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Venta_id>0a5bb6bf-5794-401e-b745-78bd2b66c8ad</ns1:Venta_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e59d5e81-d8a6-4be6-8f93-50349a442099">
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Productos_id>['B079ZXV5QN', 'B00699R6UI']</ns1:Productos_id>
+    <ns1:Venta_id>e59d5e81-d8a6-4be6-8f93-50349a442099</ns1:Venta_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/ebdf1243-193e-42a6-aece-6a5b3e29cf08">
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>ebdf1243-193e-42a6-aece-6a5b3e29cf08</ns1:Venta_id>
+    <ns1:Direccion>11</ns1:Direccion>
+    <ns1:Ciudad>11</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Productos_id>[]</ns1:Productos_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/b311235e-e5b0-446a-b034-69a30560036b">
+    <ns1:Direccion>w1</ns1:Direccion>
+    <ns1:Tarjeta>12</ns1:Tarjeta>
+    <ns1:Venta_id>b311235e-e5b0-446a-b034-69a30560036b</ns1:Venta_id>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Ciudad>wq</ns1:Ciudad>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/72a7bbe8-1cc9-4851-826d-e4857a78d8d7">
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Venta_id>72a7bbe8-1cc9-4851-826d-e4857a78d8d7</ns1:Venta_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>1</ns1:Ciudad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/8cb80ae9-4e01-40cb-9cff-6756c97c2c64">
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Venta_id>8cb80ae9-4e01-40cb-9cff-6756c97c2c64</ns1:Venta_id>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/8213a96f-5ebd-4668-b4e4-695da0d99d61">
+    <ns1:Venta_id>8213a96f-5ebd-4668-b4e4-695da0d99d61</ns1:Venta_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>1</ns1:Ciudad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/40a61633-26f5-47ed-ab2d-795c946dcff0">
+    <ns1:Productos_id>['B01788F6NC', 'B00XA41SF4']</ns1:Productos_id>
+    <ns1:Venta_id>40a61633-26f5-47ed-ab2d-795c946dcff0</ns1:Venta_id>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Direccion>Palau</ns1:Direccion>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/b114ee3a-3945-4f7b-9fbe-d708680a8d33">
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>b114ee3a-3945-4f7b-9fbe-d708680a8d33</ns1:Venta_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Ciudad>3</ns1:Ciudad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Productos_id>[]</ns1:Productos_id>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Direccion>2</ns1:Direccion>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/aa28e846-04a5-43cb-87be-e42adad7f6ef">
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>aa28e846-04a5-43cb-87be-e42adad7f6ef</ns1:Venta_id>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Direccion>Palau</ns1:Direccion>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/91636144-7f3f-46b0-a696-ebe2cf5c1a03">
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Productos_id>[]</ns1:Productos_id>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>91636144-7f3f-46b0-a696-ebe2cf5c1a03</ns1:Venta_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/c4d894b3-a1f4-4d60-a2cb-3a21d168a7ff">
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Venta_id>c4d894b3-a1f4-4d60-a2cb-3a21d168a7ff</ns1:Venta_id>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/3629bbc8-cb71-4c09-9dd7-748451085636">
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Venta_id>3629bbc8-cb71-4c09-9dd7-748451085636</ns1:Venta_id>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/ba833ddb-fed1-42b5-a88f-8662dea215a0">
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>ba833ddb-fed1-42b5-a88f-8662dea215a0</ns1:Venta_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/3b9a52e2-cd86-4183-93cf-66ff03f6eba0">
+    <ns1:Venta_id>3b9a52e2-cd86-4183-93cf-66ff03f6eba0</ns1:Venta_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/36a9ddb1-a735-4544-a7e9-18045afd9838">
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>11</ns1:Ciudad>
+    <ns1:Venta_id>36a9ddb1-a735-4544-a7e9-18045afd9838</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Direccion>11</ns1:Direccion>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e6f8afbb-ddf0-4a8e-aec2-ccaac4d66e01">
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>11</ns1:Ciudad>
+    <ns1:Venta_id>e6f8afbb-ddf0-4a8e-aec2-ccaac4d66e01</ns1:Venta_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/b3aa50a1-9152-4d17-9b54-68d965f34e51">
+    <ns1:Prioridad>11</ns1:Prioridad>
+    <ns1:Tarjeta>11</ns1:Tarjeta>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Venta_id>b3aa50a1-9152-4d17-9b54-68d965f34e51</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/64c35ce8-0a19-41a1-aa73-ee418a9a2911">
+    <ns1:Venta_id>64c35ce8-0a19-41a1-aa73-ee418a9a2911</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>111</ns1:Ciudad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/1ee8b845-6f12-453f-bd3e-d51c9bbb6962">
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Venta_id>1ee8b845-6f12-453f-bd3e-d51c9bbb6962</ns1:Venta_id>
+    <ns1:Direccion>11</ns1:Direccion>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/ca5c200c-5b55-43ff-80da-e81257abbd0e">
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Venta_id>ca5c200c-5b55-43ff-80da-e81257abbd0e</ns1:Venta_id>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/a8e8eceb-1fbf-4122-bd0d-ea69b4de931c">
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Venta_id>a8e8eceb-1fbf-4122-bd0d-ea69b4de931c</ns1:Venta_id>
+    <ns1:Direccion>1</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/c41f9b29-fb04-454d-ba7a-c80fda4c4958">
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Venta_id>c41f9b29-fb04-454d-ba7a-c80fda4c4958</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
     <ns1:Prioridad>1</ns1:Prioridad>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e33bece7-064b-421a-992d-5faf8880f3ee">
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
     <ns1:Venta_id>e33bece7-064b-421a-992d-5faf8880f3ee</ns1:Venta_id>
     <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Direccion>Palau</ns1:Direccion>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/6f54c7b2-a2a9-443a-abe1-81bbf17aefb1">
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>6f54c7b2-a2a9-443a-abe1-81bbf17aefb1</ns1:Venta_id>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Productos_id>['B003L6ZPQ4', 'B00CTIITYU', 'B01788F6NC', 'B01NGUFO7M', 'B002YEV8O2']</ns1:Productos_id>
     <ns1:Codigo_postal>8001</ns1:Codigo_postal>
   </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/75d273ae-7627-4676-8c44-93301603db97">
+    <ns1:Prioridad>12</ns1:Prioridad>
+    <ns1:Venta_id>75d273ae-7627-4676-8c44-93301603db97</ns1:Venta_id>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Tarjeta>12</ns1:Tarjeta>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Codigo_postal>21</ns1:Codigo_postal>
+    <ns1:Ciudad>21211</ns1:Ciudad>
+    <ns1:Direccion>21</ns1:Direccion>
+  </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/73677d7e-bd0e-488d-98ed-a5198fcb81c3">
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Venta_id>73677d7e-bd0e-488d-98ed-a5198fcb81c3</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
     <ns1:Ciudad>Barcelona</ns1:Ciudad>
     <ns1:Direccion>Palau</ns1:Direccion>
     <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Venta_id>73677d7e-bd0e-488d-98ed-a5198fcb81c3</ns1:Venta_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e82db8fc-f7ea-4004-95f0-14e400f40299">
+    <ns1:Codigo_postal>11</ns1:Codigo_postal>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Venta_id>e82db8fc-f7ea-4004-95f0-14e400f40299</ns1:Venta_id>
+    <ns1:Ciudad>qwe</ns1:Ciudad>
+    <ns1:Direccion>qw</ns1:Direccion>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/b07316f2-0820-40ff-b22d-dbcecad338f2">
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>b07316f2-0820-40ff-b22d-dbcecad338f2</ns1:Venta_id>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e06b550a-8dc9-4c18-bdb9-885cc30623c0">
+    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Venta_id>e06b550a-8dc9-4c18-bdb9-885cc30623c0</ns1:Venta_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/c558d078-3169-4d07-be3a-651660679f89">
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Venta_id>c558d078-3169-4d07-be3a-651660679f89</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/78e12ece-5be4-4536-8aab-fba1d9e68810">
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Venta_id>78e12ece-5be4-4536-8aab-fba1d9e68810</ns1:Venta_id>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Tarjeta>11</ns1:Tarjeta>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/a2a6aa48-aae8-440e-bd98-7209da2ab3ab">
     <ns1:Venta_id>a2a6aa48-aae8-440e-bd98-7209da2ab3ab</ns1:Venta_id>
-    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
     <ns1:Tarjeta>1111</ns1:Tarjeta>
     <ns1:Direccion>Palau</ns1:Direccion>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/6f54c7b2-a2a9-443a-abe1-81bbf17aefb1">
-    <ns1:Productos_id>['B003L6ZPQ4', 'B00CTIITYU', 'B01788F6NC', 'B01NGUFO7M', 'B002YEV8O2']</ns1:Productos_id>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
     <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Venta_id>6f54c7b2-a2a9-443a-abe1-81bbf17aefb1</ns1:Venta_id>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/69416f66-51ac-4d52-ad3c-2b048871fbed">
-    <ns1:Venta_id>69416f66-51ac-4d52-ad3c-2b048871fbed</ns1:Venta_id>
-    <ns1:Direccion>Palau</ns1:Direccion>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
     <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
     <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e49b6818-e19c-4130-b3ef-a6b06e8ca7f8">
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
-    <ns1:Venta_id>e49b6818-e19c-4130-b3ef-a6b06e8ca7f8</ns1:Venta_id>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/36987f59-e5fd-4214-bdcb-1b09eb3eb6ab">
+    <ns1:Codigo_postal>11</ns1:Codigo_postal>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Venta_id>36987f59-e5fd-4214-bdcb-1b09eb3eb6ab</ns1:Venta_id>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Direccion>1</ns1:Direccion>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
+    <ns1:Ciudad>1</ns1:Ciudad>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/acb77c2d-993e-4ccd-9d97-491afbcb1e56">
-    <ns1:Venta_id>acb77c2d-993e-4ccd-9d97-491afbcb1e56</ns1:Venta_id>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Productos_id>['B00XA41SF4', 'B003L6ZPQ4']</ns1:Productos_id>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e9fa3106-4ece-4855-92b8-98f472a72b20">
     <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Direccion>qeqwe</ns1:Direccion>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Ciudad>qwe</ns1:Ciudad>
+    <ns1:Venta_id>e9fa3106-4ece-4855-92b8-98f472a72b20</ns1:Venta_id>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/e59d5e81-d8a6-4be6-8f93-50349a442099">
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/f8d1adbf-b691-45f7-9429-af78613572ae">
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Ciudad>1</ns1:Ciudad>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
     <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Venta_id>e59d5e81-d8a6-4be6-8f93-50349a442099</ns1:Venta_id>
-    <ns1:Productos_id>['B079ZXV5QN', 'B00699R6UI']</ns1:Productos_id>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Venta_id>f8d1adbf-b691-45f7-9429-af78613572ae</ns1:Venta_id>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/6592a36d-7bd1-4587-9afa-b243d0353dd7">
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Productos_id>['B00XA41SF4', 'B003L6ZPQ4']</ns1:Productos_id>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Venta_id>6592a36d-7bd1-4587-9afa-b243d0353dd7</ns1:Venta_id>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/2e9bae9e-5cf2-469e-89ac-44b73417011d">
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Venta_id>2e9bae9e-5cf2-469e-89ac-44b73417011d</ns1:Venta_id>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/aee4a1ae-ffd3-4288-86a6-48cc40b652a5">
-    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
-    <ns1:Venta_id>aee4a1ae-ffd3-4288-86a6-48cc40b652a5</ns1:Venta_id>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/0dc0a159-868f-4da4-98d2-13f66542a466">
     <ns1:Direccion>Palau</ns1:Direccion>
     <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Venta_id>0dc0a159-868f-4da4-98d2-13f66542a466</ns1:Venta_id>
     <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Prioridad>1</ns1:Prioridad>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/ba833ddb-fed1-42b5-a88f-8662dea215a0">
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
     <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
-    <ns1:Ciudad>Barcelona</ns1:Ciudad>
-    <ns1:Tarjeta>1111</ns1:Tarjeta>
-    <ns1:Venta_id>ba833ddb-fed1-42b5-a88f-8662dea215a0</ns1:Venta_id>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
     <ns1:Prioridad>1</ns1:Prioridad>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/40a61633-26f5-47ed-ab2d-795c946dcff0">
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/f2f2c414-ced7-464c-a65e-57cce7812c3b">
+    <ns1:Venta_id>f2f2c414-ced7-464c-a65e-57cce7812c3b</ns1:Venta_id>
+    <ns1:Tarjeta>1</ns1:Tarjeta>
+    <ns1:Ciudad>1</ns1:Ciudad>
+    <ns1:Direccion>1</ns1:Direccion>
+    <ns1:Productos_id>['B077Y3DD6C']</ns1:Productos_id>
     <ns1:Prioridad>1</ns1:Prioridad>
-    <ns1:Productos_id>['B01788F6NC', 'B00XA41SF4']</ns1:Productos_id>
     <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
-    <ns1:Direccion>Palau</ns1:Direccion>
-    <ns1:Venta_id>40a61633-26f5-47ed-ab2d-795c946dcff0</ns1:Venta_id>
-    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/80da3f6b-96e6-498f-9f78-c7b8cc5f2b03">
+    <ns1:Productos_id>['B00XA41SF4']</ns1:Productos_id>
+    <ns1:Venta_id>80da3f6b-96e6-498f-9f78-c7b8cc5f2b03</ns1:Venta_id>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
     <ns1:Ciudad>Barcelona</ns1:Ciudad>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Prioridad>1</ns1:Prioridad>
     <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <ns1:Direccion>Palau</ns1:Direccion>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/8d8c827f-f255-4f41-8ee5-3846ea2127d7">
+    <ns1:Tarjeta>12</ns1:Tarjeta>
+    <ns1:Ciudad>dqw</ns1:Ciudad>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Venta_id>8d8c827f-f255-4f41-8ee5-3846ea2127d7</ns1:Venta_id>
+    <ns1:Codigo_postal>1</ns1:Codigo_postal>
+    <ns1:Direccion>qw</ns1:Direccion>
+    <ns1:Productos_id>[]</ns1:Productos_id>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.nuestra-ontologia.com/ECSDIAmazon/048dabc5-a3cf-4e87-b8e9-2937a6298f0b">
+    <ns1:Productos_id>['B003L6ZPQ4']</ns1:Productos_id>
+    <ns1:Codigo_postal>8001</ns1:Codigo_postal>
+    <ns1:Venta_id>048dabc5-a3cf-4e87-b8e9-2937a6298f0b</ns1:Venta_id>
+    <ns1:Tarjeta>1111</ns1:Tarjeta>
+    <rdf:type>http://www.nuestra-ontologia.com/ECSDIAmazon/venta</rdf:type>
+    <ns1:Prioridad>1</ns1:Prioridad>
+    <ns1:Direccion>Palau</ns1:Direccion>
+    <ns1:Ciudad>Barcelona</ns1:Ciudad>
   </rdf:Description>
 </rdf:RDF>
