@@ -17,6 +17,8 @@ import uuid
 from datetime import datetime,timedelta
 
 
+
+
 #definimos los parametros de entrada (linea de comandos)
 parser = argparse.ArgumentParser()
 parser.add_argument('--open', help="Define si el servidor esta abierto al exterior o no", action='store_true', default=False)
@@ -83,9 +85,8 @@ def get_message_count():
     return mss_cnt
 def calcularprobablefechadeenvio(prioridad):
     """Calcula el dia aproximado de envio apartir de la prioridad(1-10),ahora es un factor de 1 y sumando 1dia extra"""
-    p = int(prioridad)
-    x = datetime.now() + timedelta(days= (p*1)+ 1) 
-    return x.strftime("%Y-%m-%d") 
+    x = datetime.now() + timedelta(days= (prioridad*1)+ 1) 
+    x.strftime("%x")
 #en proceso
 def registrarVenta(grafo):
     """ Funcion que registra la venta realizada a la base de datos"""
