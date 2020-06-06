@@ -14,7 +14,7 @@ from AgentUtil.OntoNamespaces import ECSDIAmazon, ACL, DSO
 from rdflib.namespace import RDF, FOAF
 from string import Template
 import uuid
-
+from datetime import datetime,timedelta
 
 
 #definimos los parametros de entrada (linea de comandos)
@@ -83,8 +83,9 @@ def get_message_count():
     return mss_cnt
 def calcularprobablefechadeenvio(prioridad):
     """Calcula el dia aproximado de envio apartir de la prioridad(1-10),ahora es un factor de 1 y sumando 1dia extra"""
-    x = datetime.now() + timedelta(days= (prioridad*1)+ 1) 
-    x.strftime("%x")
+    p = int(prioridad)
+    x = datetime.now() + timedelta(days= (p*1)+ 1) 
+    return x.strftime("%Y-%m-%d") 
 #en proceso
 def registrarVenta(grafo):
     """ Funcion que registra la venta realizada a la base de datos"""
@@ -179,7 +180,7 @@ def cobroVenta(precio_quasi_total,precio_envio,tarjeta):
 
 
 #en proceso
-def enviarVenta(contenido,grafo):
+def enviarVenta(grafo):
     '''Se encarga de enviar asignar el encargo de envio al centro logistico mas cercano al codigo postal'''
     logger.info("Obteniendo el centro logistico mas cercano al lugar de envio mediante el codigo postal")
     #Obtener el agente mas cercano
@@ -268,13 +269,16 @@ def vender_productos(contenido, grafo):
         nombreProducto = grafo.value(subject=producto, predicate=ECSDIAmazon.Nombre_producto)
         grafo_factura.add((producto, ECSDIAmazon.Nombre_producto, Literal(nombreProducto, datatype=XSD.string)))
 
+        print("antes: ", precio_total)    
         precioProducto = grafo.value(subject=producto, predicate=ECSDIAmazon.Precio_producto)
+        print("precio cogido del grafo: ", float(precioProducto))
         grafo_factura.add((producto, ECSDIAmazon.Precio_producto, Literal(float(precioProducto), datatype=XSD.float)))
         precio_total += float(precioProducto)
+        print("despues:", precio_total)
 
         grafo_factura.add((nueva_factura, ECSDIAmazon.FormadaPor, URIRef(producto)))
     
-    prioridad = grafo.contenido(subject=contenido,predicate=ECSDIAmazon.Prioridad)
+    prioridad = grafo.value(subject=contenido,predicate=ECSDIAmazon.Prioridad)
     grafo_factura.add((nueva_factura, ECSDIAmazon.Fecha_aproximada, Literal(calcularprobablefechadeenvio(prioridad), datatype=XSD.string)))
     grafo_factura.add((nueva_factura, ECSDIAmazon.Precio_total, Literal(precio_total, datatype=XSD.float)))
     grafo_factura.add((nueva_factura, ECSDIAmazon.Id_venta, Literal(idventa, datatype=XSD.int)))

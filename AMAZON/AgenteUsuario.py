@@ -167,11 +167,11 @@ def peticion_buscar(request):
             peso=str(respuesta_msg.value(subject=item, predicate=ECSDIAmazon.Peso_producto))
         )
         lista_de_productos.append(product)
-
+    lista_de_productos = sorted(lista_de_productos, key=lambda p_list: p_list["precio_producto"])
     logger.info("Resultado de busqueda")
     print(lista_de_productos)
     #mostramos los productos
-    return render_template('buscar.html', productos=sorted(lista_de_productos, key=lambda p_list: p_list["precio_producto"]), b=True)
+    return render_template('buscar.html', productos=lista_de_productos, b=True)
 
 
 
@@ -208,6 +208,8 @@ def iniciar_venta(request):
     venta = ECSDIAmazon["Venta"+str(get_message_count())]
     grafo_venta.add((venta, RDF.type, ECSDIAmazon.Venta))
     grafo_venta.add((venta, ECSDIAmazon.Destino, URIRef(direccion_cliente)))
+    print("---------------------------------------------")
+    print(grafo_venta.serialize(format="xml"))
 
 
     logger.info("Mi lista de productos")
@@ -253,9 +255,9 @@ def iniciar_venta(request):
     
     #obtenemos valores factura, productos y tarjeta asocida a dicha factura de la compra para mostrar al usuario
     venta_factura = respuesta_msg.value(predicate=RDF.type, object=ECSDIAmazon.Factura)
-    venta_tarjeta = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Tarjeta)
-    venta_fecha_aproximada = respuesta_msg.value(subject=venta, predicate=ECSDIAmazon.Fecha_aproximada)
-    venta_precio_total = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Precio_total)
+    venta_tarjeta = int(respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Tarjeta))
+    venta_fecha_aproximada = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Fecha_aproximada)
+    venta_precio_total = float(respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Precio_total))
     
     venta_productos = respuesta_msg.subjects(object=ECSDIAmazon.Producto)
     productos_factura = []
@@ -267,6 +269,12 @@ def iniciar_venta(request):
         # p = [respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Nombre_producto), respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Precio_producto)]
         print(product)
         productos_factura.append(product)
+
+    print("----------------------")
+    print(respuesta_msg.serialize(format="turtle").decode())
+    
+
+
 
     #render de factura
     return render_template('informar_venta.html', productos=productos_factura, tarjeta=venta_tarjeta, precio_total=venta_precio_total,fecha_aproximada = venta_fecha_aproximada)
