@@ -124,12 +124,7 @@ def register():
         # Retornamos el primero de la lista de posibilidades
 
         logger.info('Peticion de busqueda')
-        print("HEY BEFORE")
         agn_type = gm.value(subject=content, predicate=DSO.AgentType)
-        print(agn_type)
-        print("HEY")
-        print(DSO.AgentType)
-        print("hey man")
 
         rsearch = dsgraph.triples((None, DSO.AgentType, agn_type))
         if rsearch is not None:
@@ -153,7 +148,6 @@ def register():
                                  content=rsp_obj)
         else:
             logger.info("sorry no match found")
-            # print("sorry no match found")
             # Si no encontramos nada retornamos un inform sin contenido
             return build_message(Graph(),
                 ACL.inform,
@@ -187,7 +181,6 @@ def register():
                                  content=rsp_obj)
         else:
             logger.info("sorry no match found")
-            # print("sorry no match found")
             # Si no encontramos nada retornamos un inform sin contenido
             return build_message(Graph(),
                 ACL.inform,

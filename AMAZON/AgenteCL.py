@@ -94,27 +94,22 @@ def gestionarEncargo(contenido, grafo):
     # Crear respuesta
     ##ERROR: No se sabe qpero esa aqui 
     logger.info("Gestionando Encargo de envio")
-    logger.info("parte - 1")
+    
+    logger.info("Asignando realizando negociacion")
+    
+    logger.info("Asignando transportista")
     transportista_asignado = "AgenteTransportista1"
-    logger.info("parte - 2")
-    print(grafo.serialize(format="turtle").decode())
-    print("contenido es", contenido)
     prioridad =  grafo.value(subject=contenido ,predicate=ECSDIAmazon.Prioridad)
-    if prioridad is None:
-        logger.info("Oh Oh lo esta considerando no definido")
     fecha_final = calcularfechadeenviofinal(int(prioridad))
     precio_envio = 2.0
-    logger.info("Los valores van bien")
     graf_aux = Graph()
     graf_aux.bind('default', ECSDIAmazon)
     contenido_responder = ECSDIAmazon["Responder-" + str(get_message_count())] 
     graf_aux.add((contenido_responder, RDF.type, ECSDIAmazon.Respuesta))
     graf_aux.add((contenido_responder, ECSDIAmazon.Precio_envio, Literal(precio_envio, datatype=XSD.float)))
-    logger.info("parte - 3")
     graf_aux.add((contenido_responder, ECSDIAmazon.Fecha_final, Literal(fecha_final, datatype=XSD.string)))
     graf_aux.add((contenido_responder, ECSDIAmazon.Transportista_asignado, Literal(transportista_asignado, datatype=XSD.string)))
     graf_aux.add((contenido_responder, ECSDIAmazon.Mensaje,Literal("Enviado",datatype=XSD.string)))
-    logger.info("parte - 4")
     return graf_aux
     
 @app.route("/comm")
@@ -122,9 +117,7 @@ def comunicacion():
     message = request.args['content'] #cogo el contenido enviado
     grafo = Graph()
     grafo.parse(data=message)
-    logger.info('--Envian una comunicacion')
     message_properties = get_message_properties(grafo)
-    print(grafo.serialize(format="turtle").decode())
     resultado_comunicacion = None
 
     if message_properties is None:
@@ -147,7 +140,6 @@ def comunicacion():
             if accion == ECSDIAmazon.Encargo_envio:
                 resultado_comunicacion = gestionarEncargo(contenido, grafo)
                 
-    logger.info('Antes de serializar la respuesta')
     serialize = resultado_comunicacion.serialize(format='xml')
 
     return serialize, 200

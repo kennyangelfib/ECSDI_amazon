@@ -82,6 +82,7 @@ def get_message_count():
     return mss_cnt
 
 def realizar_transferencia(contenido,grafo,escobro):
+    logger.info("Analizando peticion de transferencia")
     if (escobro):
         logger.info("Se realiza el cobro")
         transferencia = grafo.value(predicate=RDF.type, object=ECSDIAmazon.Transferencia_cobrar)
@@ -102,9 +103,7 @@ def realizar_transferencia(contenido,grafo,escobro):
 def communication():
     message = request.args['content'] #cogo el contenido enviado
     grafo = Graph()
-    logger.info('--Envian una comunicacion')
     grafo.parse(data=message)
-    logger.info('--Envian una comunicacion')
     message_properties = get_message_properties(grafo)
 
     resultado_comunicacion = None
@@ -123,27 +122,12 @@ def communication():
             #Extraemos el contenido que ha de ser una accion de la ontologia
             contenido = message_properties['content']
             accion = grafo.value(subject=contenido, predicate=RDF.type)
-            logger.info("La accion es: " + accion)
             #si la acción es de tipo tranferencia empezamos
             if accion == ECSDIAmazon.Transferencia_cobrar:
-                resultado_comunicacion = realizar_transferencia(contenido,grafo,True)
+                resultado_comunicacion = realizar_transferencia(contenido,grafo,True)   
             elif accion == ECSDIAmazon.Tranferencia_pago:
-                resultado_comunicacion = realizar_transferencia(contenido,grafo,False)    
-                # logger.info("Cogiendo informacion del AgenteGestorDeVentas")
-                # print("--------------contenido---------------")
-                # print(sujeto)
-                
-                # agente = get_agent_info(agn.AgenteGestorDeVentas, DirectoryAgent, AgenteFinanciero, get_message_count())
+                resultado_comunicacion = realizar_transferencia(contenido,grafo,False)
 
-                # respuesta_msg = send_message(build_message(
-                #         grafo_msg, perf=ACL.request, sender=AgenteFinanciero.uri, receiver=agente.uri, msgcnt=get_message_count(), 
-                #         content=contenido), agente.address)
-                
-                # logger.info("Respuesta recibida")
-                # return render_template('transferencia.html', tarjeta=tarjeta, precio_total=precio_total)
-
-                
-    logger.info('Antes de serializar la respuesta')
     serialize = resultado_comunicacion.serialize(format="xml")
     return serialize, 200
 
@@ -208,4 +192,4 @@ if __name__ == '__main__':
 
     # Wait behaviors
     ab1.join()
-    print('The End')
+    logger.info('The End')

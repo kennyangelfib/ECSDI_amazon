@@ -23,16 +23,20 @@
     </script>
 </head>
 <body>
-        <h1>Buscar productos</h1>
+        <h1  align="center" >Buscar productos</h1>
         {% if not productos %}
             {% if b%}
-                <h3>No se ha encontrado ningún producto. Inténtalo de nuevo. </h3>
+                <h3 align="center">No se ha encontrado ningún producto. Inténtalo de nuevo. </h3>
             {% else %}
                 <form method="post">
-                    <input type="text" name="nombre" placeholder="Nombre..."/><br>
-                    <input type="number" name="precio_min" step="0.1" min="0.0" placeholder="Precio minimo..."/><br>
-                    <input type="number" name="precio_max" step="0.1" min="0.0" placeholder="Precio maximo..."/><br> <br>
-                    <input type="submit" name="submit" value="Buscar">
+                    <table style="width:11%; border-collapse:collapse;" align="center">
+                        <tr><td><input type="text" name="nombre" placeholder="Nombre..."/></td> </tr>
+                        <tr><td><input type="number" name="precio_min" step="0.1" min="0.0" placeholder="Precio minimo..."/></td> </tr>
+                        <tr><td><input type="number" name="precio_max" step="0.1" min="0.0" placeholder="Precio maximo..."/></td> </tr>
+                        <tr><td><input type="submit" name="submit" value="Buscar"></td> </tr>
+                        <tr><td><a href="javascript:history.back()" style="color: black; text-decoration: none;"  ><span  style="font-size: 130%"> &#8592;</span> Volver </a></span></td> </tr>
+                    </table>
+                    
                 </form>
             {% endif %}
         {% else %}
@@ -59,17 +63,44 @@
                 </table>
 
                 <br><br>
-                <tr align="left">
-                    <th style="padding:15px">Tarjeta  <input type="text" class="input_compra" name="tarjeta"></th> <br>
-                    <th style="padding:15px">Direccion  <input type="text" class="input_compra"name="direccion"></th> <br>
-                    <th style="padding:15px">Ciudad  <input type="text" class="input_compra" name="ciudad"></th> <br>
-                    <th style="padding:15px">Codigo postal  <input type="text" class="input_compra" name="codigo_postal"></th> <br>
-                    <th style="padding:15px">Prioridad del envio  <input type="text" class="input_compra" name="prioridad"></th> <br> <br>
-                    <input type="submit" name="submit" value="Comprar"> <br><br>
-                </tr>
+                <table style="width:85%; border-collapse:collapse;" align="center"> 
+                    <tr>
+                        <td>
+                            Tarjeta:
+                            <input type="text" class="input_compra" name="tarjeta" placeholder="4777-2333-3223-7654">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Dirección:
+                        <input type="text" class="input_compra" name="direccion" placeholder="Av. Diagonal 435 "></td>
+                    </tr>  
+                    <tr>
+                        <td>
+                            Ciudad: 
+                        <input type="text" class="input_compra" name="ciudad" placeholder="Barcelona">
+                        </td>
+                    </tr>  
+                    <tr>
+                        <td>
+                            Codigo postal:
+                            <input type="text" class="input_compra" name="codigo_postal" placeholder="08028">
+                        </td>
+                    </tr>  
+                    <tr>
+                        <td>Prioridad del envio: 
+                            <input type="text" class="input_compra" name="prioridad" placeholder="1 ... 10">
+                        </td>
+                    </tr>
+                    <tr> 
+                        <td> 
+                            <input type="submit" name="submit" value="Comprar">
+                        </td>
+                    </tr>
+                </table>
             </form>
         {% endif %}
         <br>
-        <a href="javascript:history.back()">Volver</a>
+        
 </body>
 </html>

@@ -79,6 +79,8 @@ dsgraph = Graph()
 
 lista_de_productos = []
 
+ultimo_informe_recibido = Graph()
+
 def get_message_count():
     global mss_cnt
     if mss_cnt is None:
@@ -89,7 +91,6 @@ def get_message_count():
 #ruta definida para mostrar la pagina principal con diferente opciones
 @app.route("/")
 def main():
-    print("Dentro del main / ")
     return render_template("pg_usuario.html")
 
 
@@ -106,26 +107,14 @@ def peticion_buscar(request):
     nombre_producto = request.form["nombre"]
     #agregamos el nombre del producto
     if nombre_producto:
-        print(nombre_producto)
         nombre_sujeto = ECSDIAmazon["Restriccion_nombre" + str(get_message_count)]
         grafo.add((nombre_sujeto, RDF.type, ECSDIAmazon.Restriccion_nombre))
         grafo.add((nombre_sujeto, ECSDIAmazon.Nombre, Literal(nombre_producto, datatype=XSD.string)))
         grafo.add((contenido, ECSDIAmazon.Restringe, URIRef(nombre_sujeto)))
-    ##El precio se recibe en euros pero se ha de cambiar a centimos de euro
-        # if(request.form['precio_min']):
-    # print("el precio minimo es :")
-    # if request.form['precio_min'] == "" or request.form['precio_min'] == "0":
-    # else: print ("It's not empty")
-    # print(int(request.form['precio_min']))
     precio_min = request.form['precio_min']
-    print("El precio minimo es:")
-    print(precio_min)
-        # else:
-        # precio_min = 1
-        # if(request.form['precio_max']):
     precio_max = request.form['precio_max']
-    print(precio_max)
-    # agregamos el rango de precios 
+    # agregamos el rango de precios
+    ## Recordar: El precio se recibe en euros pero se ha de cambiar a centimos de euro
     if precio_min != "" or precio_max != "":
         precio_sujeto = ECSDIAmazon['Restriccion_precio' + str(get_message_count())]
         grafo.add((precio_sujeto, RDF.type, ECSDIAmazon.Restriccion_precio))
@@ -133,11 +122,9 @@ def peticion_buscar(request):
             if precio_min == "0":
                 precio_min = 0
             else:
-                print(int(floor(float(request.form['precio_min'])*100)))
                 precio_min = int((float(request.form['precio_min'])*100)//1)
 
             grafo.add((precio_sujeto, ECSDIAmazon.Precio_minimo, Literal(precio_min)))
-            print("Se ha agregado sin problemas")
         if precio_max != "":
             if precio_max == "0":
                 precio_max = 0
@@ -168,9 +155,7 @@ def peticion_buscar(request):
         )
         lista_de_productos.append(product)
     lista_de_productos = sorted(lista_de_productos, key=lambda p_list: p_list["precio_producto"])
-    logger.info("Resultado de busqueda")
-    print(lista_de_productos)
-    #mostramos los productos
+    logger.info("Mostramos resultado de la busqueda")
     return render_template('buscar.html', productos=lista_de_productos, b=True,only_search=True)
 
 
@@ -185,11 +170,11 @@ def iniciar_venta(request):
     
 
     #cogo info de la compra
-    tarjeta = int(request.form['tarjeta'])
+    tarjeta = str(request.form['tarjeta'])
     direccion = str(request.form['direccion'])
     ciudad = str(request.form['ciudad'])
     codigo_postal = int(request.form['codigo_postal'])
-    prioridad = int(request.form['prioridad']) #va entre 1 y 10, de menor a mayor
+    prioridad = int(request.form['prioridad']) #va entre 1 y 10, de mayor a menor prioridad  
 
     #preparo el grafo para comunicarme con el AgenteGestorDeVenta
     #accion: Iniciar_venta
@@ -208,26 +193,15 @@ def iniciar_venta(request):
     venta = ECSDIAmazon["Venta"+str(get_message_count())]
     grafo_venta.add((venta, RDF.type, ECSDIAmazon.Venta))
     grafo_venta.add((venta, ECSDIAmazon.Destino, URIRef(direccion_cliente)))
-    print("---------------------------------------------")
-    print(grafo_venta.serialize(format="xml"))
-
-
     logger.info("Mi lista de productos")
-    print(lista_de_productos)
     logger.info("Mi compra")
-    print(mi_compra)
     if not mi_compra:
         return render_template('buscar.html', productos=lista_de_productos, b=True,only_search=False,buy_empty=True)
 
     for producto in mi_compra:
         s = producto["id_producto"]
-        print(s)
-        #sujeto = ECSDIAmazon + s
         url = ECSDIAmazon
         sujeto = url.term(producto["id_producto"])
-        print(sujeto)
-        print()
-        #esta parte habria que revisar
         grafo_venta.add((sujeto, RDF.type, ECSDIAmazon.Producto))
         grafo_venta.add((sujeto, ECSDIAmazon.Id_producto, Literal(producto['id_producto'], datatype=XSD.string)))
         grafo_venta.add((sujeto, ECSDIAmazon.Nombre_producto, Literal(producto['nombre_producto'], datatype=XSD.string)))
@@ -239,16 +213,8 @@ def iniciar_venta(request):
         grafo_venta.add((venta, ECSDIAmazon.Contiene, URIRef(sujeto)))
     
     grafo_venta.add((contenido, ECSDIAmazon.De, URIRef(venta)))
-
-    logger.info("Cogiendo informacion del AgenteGestorDeVentas")
-    print("--------------contenido---------------")
-    print(contenido)
-    
     agente = get_agent_info(agn.AgenteGestorDeVentas, DirectoryAgent, AgenteUsuario, get_message_count())
     logger.info("Enviando peticion de iniciar venta al AgenteGestorDeVentas")
-    print(agente.name)
-    print(agente.address)
-    print(agente.uri)
     respuesta_msg = send_message(build_message(
             grafo_venta, perf=ACL.request, sender=AgenteUsuario.uri, receiver=agente.uri, msgcnt=get_message_count(), 
             content=contenido), agente.address)
@@ -257,7 +223,7 @@ def iniciar_venta(request):
     
     #obtenemos valores factura, productos y tarjeta asocida a dicha factura de la compra para mostrar al usuario
     venta_factura = respuesta_msg.value(predicate=RDF.type, object=ECSDIAmazon.Factura)
-    venta_tarjeta = int(respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Tarjeta))
+    venta_tarjeta = str(respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Tarjeta))
     venta_fecha_aproximada = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Fecha_aproximada)
     venta_precio_total = float(respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Precio_total))
     venta_id=str(respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Id_venta))
@@ -269,16 +235,9 @@ def iniciar_venta(request):
             nombre_producto=str(respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Nombre_producto)),
             precio_producto=float(respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Precio_producto)),
         )
-        # p = [respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Nombre_producto), respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Precio_producto)]
-        print(product)
         productos_factura.append(product)
     productos_factura = sorted(productos_factura, key=lambda p_list: p_list["precio_producto"])
-    print("----------------------")
-    print(respuesta_msg.serialize(format="turtle").decode())
-    
-
-
-
+    logger.info("Mostramos la factura recibida")
     #render de factura
     return render_template('factura.html', productos=productos_factura,id_compra=venta_id, tarjeta=venta_tarjeta, precio_total=venta_precio_total,fecha_aproximada = venta_fecha_aproximada)
 
@@ -286,7 +245,6 @@ def iniciar_venta(request):
 #busqueda: get para mostrar los filtros de productos y post para atender la peticion de filtros
 @app.route("/buscar", methods=["GET","POST"])
 def buscar_productos():
-    print("Dentro del /buscar")
     if request.method == "GET":
         return render_template("buscar.html", productos=None)
     elif request.method == "POST":
@@ -295,7 +253,23 @@ def buscar_productos():
         elif request.form["submit"] == "Comprar":
             return iniciar_venta(request)
 
-        
+@app.route("/ultimo_informe", methods=["GET"])
+def obtener_ultimo_informe():
+    if request.method == "GET":
+        return mostrar_ultimo_informe(request)
+
+def mostrar_ultimo_informe(request):
+    global ultimo_informe_recibido
+    venta_info = ultimo_informe_recibido.value(predicate=RDF.type, object=ECSDIAmazon.Informar)
+    id_venta = ultimo_informe_recibido.value(subject=venta_info, predicate=ECSDIAmazon.Id_venta)
+    transportista = ultimo_informe_recibido.value(subject=venta_info, predicate=ECSDIAmazon.Transportista_asignado)
+    fecha_final = ultimo_informe_recibido.value(subject=venta_info, predicate=ECSDIAmazon.Fecha_final)
+    precio_venta = ultimo_informe_recibido.value(subject=venta_info, predicate=ECSDIAmazon.Precio_venta)
+    precio_envio = ultimo_informe_recibido.value(subject=venta_info, predicate=ECSDIAmazon.Precio_envio)
+    precio_total = ultimo_informe_recibido.value(subject=venta_info, predicate=ECSDIAmazon.Precio_total)
+    tarjeta = ultimo_informe_recibido.value(subject=venta_info,predicate=ECSDIAmazon.Tarjeta)
+    return render_template('informe.html',id_venta=id_venta,tarjeta= tarjeta,transportista=transportista,fecha_final=fecha_final,precio_venta=precio_venta ,precio_envio=precio_envio,precio_total=precio_total)
+
 
 @app.route("/devolucion", methods=["GET", "POST"])
 def devolver_productos():
@@ -317,6 +291,7 @@ def stop():
 
 @app.route("/comm")
 def comunicacion():
+    global ultimo_informe_recibido
     message = request.args['content'] #cogo el contenido enviado
     grafo = Graph()
     logger.info('--Envian una comunicacion')
@@ -342,11 +317,11 @@ def comunicacion():
             accion = grafo.value(subject=contenido, predicate=RDF.type)
             logger.info("La accion es: " + accion)
             #si la acción es de tipo tranferencia empezamos
-            print(grafo.serialize(format="turtle").decode())
             if accion == ECSDIAmazon.Informar:
                 logger.info("Ya apunto de finalizar")
                 # thread = Thread(target=enviarVenta, args=(contenido,grafo))
                 # thread.start()
+                ultimo_informe_recibido = grafo
                 graf = Graph()
                 mensaje = ECSDIAmazon["Respuesta"+ str(get_message_count())]
                 graf.add((mensaje,RDF.type, ECSDIAmazon.Respuesta))

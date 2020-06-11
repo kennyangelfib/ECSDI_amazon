@@ -123,10 +123,7 @@ def aplicar_filtro(brand='(.*)', search_text='(.*)', precio_min=0, precio_max=sy
 
     grapfo_resultante = Graph()
     for p in resultado:
-        logger.info("----------------------------------------------------------------------")
         subject = p.product
-        print(subject)
-        print(p.id)
         grapfo_resultante.add((subject, RDF.type, ECSDIAmazon.Producto))
         grapfo_resultante.add((subject, ECSDIAmazon.Id_producto, p.id))
         grapfo_resultante.add((subject, ECSDIAmazon.Nombre_producto, p.name))
@@ -167,8 +164,7 @@ def buscar_productos(contenido, grafo):
 
 #anade un producto a la BD local
 def anadir_producto(grafo):
-    print("--------------------------------------------------------")
-    print(grafo.serialize(format="xml"))
+    logger.info("Añadiendo producto externo")
     id_producto = precio_producto = peso_producto = tarjeta = unidades = 0
     vendedor = nombre_producto = descripcion_producto = categoria = marca = ""
 
@@ -195,23 +191,24 @@ def anadir_producto(grafo):
             unidades = str(o)
         
     
-    logger.info("Imprimiendo paramteros de entrada")
-    print(id_producto, " " , nombre_producto, " ", marca, " ", precio_producto, " ", 
-    descripcion_producto, " ", vendedor, " ", categoria, " ", peso_producto)
+    # logger.info("Imprimiendo paramteros de entrada")
+    # print(id_producto, " " , nombre_producto, " ", marca, " ", precio_producto, " ", 
+    # descripcion_producto, " ", vendedor, " ", categoria, " ", peso_producto)
 
     producto = Graph()
     producto.parse("./rdf/productos.rdf")
 
     new_prod = ECSDIAmazon.__getattr__(str(id_producto))
+
     producto.add((new_prod, RDF.type, Literal(ECSDIAmazon + "product")))
     producto.add((new_prod, ECSDIAmazon.product_id, Literal(id_producto)))
-    producto.add((new_prod, ECSDIAmazon.price_eurocents, Literal(precio_producto)))
+    producto.add((new_prod, ECSDIAmazon.price_eurocents, Literal(precio_producto,datatype="http://www.w3.org/2001/XMLSchema#integer")))
     producto.add((new_prod, ECSDIAmazon.category, Literal(categoria)))
     producto.add((new_prod, ECSDIAmazon.seller, Literal(vendedor)))
     producto.add((new_prod, ECSDIAmazon.product_name, Literal(nombre_producto)))
     producto.add((new_prod, ECSDIAmazon.product_description, Literal(descripcion_producto)))
     producto.add((new_prod, ECSDIAmazon.brand, Literal(marca)))
-    producto.add((new_prod, ECSDIAmazon.weight_grams, Literal(peso_producto)))
+    producto.add((new_prod, ECSDIAmazon.weight_grams, Literal(peso_producto,datatype="http://www.w3.org/2001/XMLSchema#integer")))
     producto.add((new_prod, ECSDIAmazon.credit_card, Literal(tarjeta)))
     producto.add((new_prod, ECSDIAmazon.unit, Literal(unidades)))
     
@@ -321,4 +318,4 @@ if __name__ == '__main__':
 
     # Wait behaviors
     ab1.join()
-    print('The End')
+    logger.info('The End')

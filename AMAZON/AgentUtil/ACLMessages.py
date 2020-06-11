@@ -89,41 +89,24 @@ def get_message_properties(msg):
 
 #devuelvo info del agente
 def get_agent_info(type_agn, directory_agent, sender, msgcnt):
-    print(" --------------parametros de entrada ------------------")
-    print(type_agn)
-    print(directory_agent)
-    print(sender)
     gmess = Graph()
     # Construimos el mensaje de registro
     gmess.bind('foaf', FOAF)
     gmess.bind('dso', DSO)
     ask_obj = agn[sender.name + '-Search']
-    print("---paso 1 ---")
-
     gmess.add((ask_obj, RDF.type, DSO.Search))
     gmess.add((ask_obj, DSO.AgentType, type_agn))
-    print("---paso 2 ---")
-    print(type_agn)
-    print(directory_agent)
-    print(sender.name, " ", sender.uri)
-    print(msgcnt)
 
     # b_message =  build_message(gmess, perf=ACL.request, sender=sender.uri,receiver=directory_agent.uri, msgcnt=msgcnt,content=ask_obj)
     # print("mensaje contruido")
 
     gr = send_message(build_message(gmess, perf=ACL.request, sender=sender.uri,receiver=directory_agent.uri, msgcnt=msgcnt,content=ask_obj),directory_agent.address)
-    print("---paso 3 ---")
     dic = get_message_properties(gr)
     content = dic['content']
 
     address = gr.value(subject=content, predicate=DSO.Address)
     url = gr.value(subject=content, predicate=DSO.Uri)
     name = gr.value(subject=content, predicate=FOAF.name)
-    print("----------------------------------------")
-    print(name)
-    print(url)
-    print(address)
-    
     return Agent(name, url, address, None)
 
 #terminado 

@@ -102,16 +102,16 @@ def anadir_producto(request):
     grafo.add((sujeto, ECSDIAmazon.Id_producto, Literal(id_producto, datatype=XSD.string)))
     grafo.add((sujeto, ECSDIAmazon.Vendedor, Literal(vendedor, datatype=XSD.string)))
     grafo.add((sujeto, ECSDIAmazon.Nombre_producto, Literal(nombre, datatype=XSD.string)))
-    grafo.add((sujeto, ECSDIAmazon.Precio_producto, Literal(precio, datatype=XSD.float)))
+    grafo.add((sujeto, ECSDIAmazon.Precio_producto, Literal(precio, datatype=XSD.int)))
     grafo.add((sujeto, ECSDIAmazon.Descripcion_producto, Literal(descripcion, datatype=XSD.string)))
     grafo.add((sujeto, ECSDIAmazon.Categoria, Literal(categoria, datatype=XSD.string)))
     grafo.add((sujeto, ECSDIAmazon.Marca, Literal(marca, datatype=XSD.string))) 
-    grafo.add((sujeto, ECSDIAmazon.Peso_producto, Literal(peso, datatype=XSD.float)))
+    grafo.add((sujeto, ECSDIAmazon.Peso_producto, Literal(peso, datatype=XSD.int)))
     grafo.add((sujeto, ECSDIAmazon.Tarjeta, Literal(tarjeta, datatype=XSD.string)))
     grafo.add((sujeto, ECSDIAmazon.Unidades, Literal(unidades, datatype=XSD.int)))
     
 
-    logger.info("Cogiendo informacion del AgenteGestorDeProductos")
+    # logger.info("Cogiendo informacion del AgenteGestorDeProductos")
     agente = get_agent_info(agn.AgenteGestorDeProductos, DirectoryAgent, AgenteVendedorExterno, get_message_count())
     logger.info("Enviando peticion de anadir producto al AgenteGestorDeProductos")
     respuesta_msg = send_message(build_message(
@@ -194,4 +194,4 @@ if __name__ == '__main__':
     app.run(debug=True, host=hostname, port=port)
     # Esperamos a que acaben los behaviors
     ab1.join()
-    logger.info('Final')
+    logger.info('The End')
