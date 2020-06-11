@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe compra</title>
+</head>
+<body>
+    <table style="width:40%; border-collapse:collapse;" align="center" border="1px solid black">
+        <h3 style="text-align: center;">Factura</h3>
+        <tr align="left">
+            <th style="padding:15px">Nombre</th>
+            <th style="padding:15px">Precio</th>
+        </tr>
+        {% for p in productos %}
+            <tr>
+                <td style="padding:15px">{{p["nombre_producto"]}}</td>
+                <td style="padding:15px">{{p["precio_producto"]}}€</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <th align="left" style="padding:15px">Total*</th>
+            <td style="padding:15px"><b>{{precio_total}}€ </b></td>
+        </tr>  
+    </table>
+    <table style="width:40%; border-collapse:collapse;" align="center">
+        <tr>
+            <td style="font-size: 90%;">*Sin costes de envio </td>
+        
+        </tr> 
+        <th style="padding-top: 20px;" align="left"> Información adicional </th>
+        <tr>
+            <td style="font-size: 100%;">Fecha aproximada de llegada: {{fecha_aproximada}}</td>
+        </tr>
+        <tr>
+            <td>
+                Se cobrará en la tarjeta: {{tarjeta}}
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

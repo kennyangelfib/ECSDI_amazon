@@ -171,7 +171,7 @@ def peticion_buscar(request):
     logger.info("Resultado de busqueda")
     print(lista_de_productos)
     #mostramos los productos
-    return render_template('buscar.html', productos=lista_de_productos, b=True)
+    return render_template('buscar.html', productos=lista_de_productos, b=True,only_search=True)
 
 
 
@@ -180,7 +180,7 @@ def iniciar_venta(request):
     logger.info("Analizando la peticion de compra")
     mi_compra = []
     #coge los indices marcados
-    for p in request.form.getlist("checkbox"):
+    for p in request.form.getlist("product_checkbox"):
         mi_compra.append(lista_de_productos[int(p)])
     
 
@@ -216,6 +216,8 @@ def iniciar_venta(request):
     print(lista_de_productos)
     logger.info("Mi compra")
     print(mi_compra)
+    if not mi_compra:
+        return render_template('buscar.html', productos=lista_de_productos, b=True,only_search=False,buy_empty=True)
 
     for producto in mi_compra:
         s = producto["id_producto"]
@@ -258,6 +260,7 @@ def iniciar_venta(request):
     venta_tarjeta = int(respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Tarjeta))
     venta_fecha_aproximada = respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Fecha_aproximada)
     venta_precio_total = float(respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Precio_total))
+    venta_id=str(respuesta_msg.value(subject=venta_factura, predicate=ECSDIAmazon.Id_venta))
     
     venta_productos = respuesta_msg.subjects(object=ECSDIAmazon.Producto)
     productos_factura = []
@@ -269,7 +272,7 @@ def iniciar_venta(request):
         # p = [respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Nombre_producto), respuesta_msg.value(subject=prod, predicate=ECSDIAmazon.Precio_producto)]
         print(product)
         productos_factura.append(product)
-
+    productos_factura = sorted(productos_factura, key=lambda p_list: p_list["precio_producto"])
     print("----------------------")
     print(respuesta_msg.serialize(format="turtle").decode())
     
@@ -277,7 +280,7 @@ def iniciar_venta(request):
 
 
     #render de factura
-    return render_template('informar_venta.html', productos=productos_factura, tarjeta=venta_tarjeta, precio_total=venta_precio_total,fecha_aproximada = venta_fecha_aproximada)
+    return render_template('factura.html', productos=productos_factura,id_compra=venta_id, tarjeta=venta_tarjeta, precio_total=venta_precio_total,fecha_aproximada = venta_fecha_aproximada)
 
 
 #busqueda: get para mostrar los filtros de productos y post para atender la peticion de filtros

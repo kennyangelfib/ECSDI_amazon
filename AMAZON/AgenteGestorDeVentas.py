@@ -242,6 +242,7 @@ def enviarVenta(contenido,grafo):
         idventa = grafo.value(subject=sujeto, predicate=ECSDIAmazon.Id_venta)
         grafinfo.add((informar, ECSDIAmazon.Id_venta, Literal(idventa, datatype=XSD.int)))
         logger.info("Se informa al usuario que el cobro ha sido efectuado al cobro y que ya se ha enviado la venta con id"+str(idventa))
+        print(grafinfo.serialize(format = "turtle").decode()) 
         agente_usuario = get_agent_info(agn.AgenteUsuario, DirectoryAgent, AgenteGestorDeVentas, get_message_count())
         msg_respuesta_user = send_message(build_message(
                                 grafinfo, perf=ACL.request, sender=AgenteGestorDeVentas.uri,receiver=agente_usuario.uri,msgcnt=get_message_count(), content=informar)
@@ -289,10 +290,11 @@ def vender_productos(contenido, grafo):
 
         grafo_factura.add((nueva_factura, ECSDIAmazon.FormadaPor, URIRef(producto)))
     
+    precio_total =  round(precio_total,2)
     prioridad = grafo.value(subject=contenido,predicate=ECSDIAmazon.Prioridad)
     grafo_factura.add((nueva_factura, ECSDIAmazon.Fecha_aproximada, Literal(calcularprobablefechadeenvio(int(prioridad)), datatype=XSD.string)))
     grafo_factura.add((nueva_factura, ECSDIAmazon.Precio_total, Literal(precio_total, datatype=XSD.float)))
-    grafo_factura.add((nueva_factura, ECSDIAmazon.Id_venta, Literal(idventa, datatype=XSD.int)))
+    grafo_factura.add((nueva_factura, ECSDIAmazon.Id_venta, Literal(idventa, datatype=XSD.string)))
 
     #Es estrictamente necesario la siguiente parte por que ya ponemos el precio_total al grafo ya que sera usado por el metodo enviarVenta
     ini_venta = grafo.value(predicate=RDF.type, object=ECSDIAmazon.Iniciar_venta)

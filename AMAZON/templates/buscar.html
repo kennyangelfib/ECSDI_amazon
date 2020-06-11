@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscar productos</title>
+    <script>
+        function validateList(){
+            const texts = document.querySelectorAll('.input_compra');
+            for (var i = 0; i < texts.length; i++){
+                if (texts[i].value.length == 0){
+                    alert(`El campo ${texts[i].name} no puede ser vacio`);
+                    return false
+                }
+            }
+            const checkboxes = document.querySelectorAll('input[name="product_checkbox"]:checked');
+            if (checkboxes.length == 0) {
+                alert("Seleccionar almenos un producto, no se puede realizar compras vacias")
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
         <h1>Buscar productos</h1>
@@ -19,7 +36,7 @@
                 </form>
             {% endif %}
         {% else %}
-            <form method="post">
+            <form name="productsForm" method="post" onsubmit="return validateList()" action="/buscar">
                 <table style="width:85%; border-collapse:collapse;" align="center" border="1px solid black">
                     <tr align="left">
                         <th style="padding:15px">Nombre</th>
@@ -36,24 +53,23 @@
                             <td style="padding:15px">{{p["marca"]}}</td>
                             <td style="padding:15px">{{p["categoria"]}}</td>
                             <td style="padding:15px">{{p["descripcion_producto"]}}</td>
-                            <td style="padding:15px"><input type="checkbox" name="checkbox" value="{{ productos.index(p) }}"></td>
+                            <td style="padding:15px"><input  type="checkbox" name="product_checkbox" value="{{ productos.index(p) }}"></td>
                         </tr>
                     {% endfor %}
                 </table>
 
                 <br><br>
                 <tr align="left">
-                    <th style="padding:15px">Tarjeta  <input type="text" name="tarjeta"></th> <br>
-                    <th style="padding:15px">Direccion  <input type="text" name="direccion"></th> <br>
-                    <th style="padding:15px">Ciudad  <input type="text" name="ciudad"></th> <br>
-                    <th style="padding:15px">Codigo postal  <input type="text" name="codigo_postal"></th> <br>
-                    <th style="padding:15px">Prioridad del envio  <input type="text" name="prioridad"></th> <br> <br>
+                    <th style="padding:15px">Tarjeta  <input type="text" class="input_compra" name="tarjeta"></th> <br>
+                    <th style="padding:15px">Direccion  <input type="text" class="input_compra"name="direccion"></th> <br>
+                    <th style="padding:15px">Ciudad  <input type="text" class="input_compra" name="ciudad"></th> <br>
+                    <th style="padding:15px">Codigo postal  <input type="text" class="input_compra" name="codigo_postal"></th> <br>
+                    <th style="padding:15px">Prioridad del envio  <input type="text" class="input_compra" name="prioridad"></th> <br> <br>
                     <input type="submit" name="submit" value="Comprar"> <br><br>
                 </tr>
             </form>
         {% endif %}
         <br>
         <a href="javascript:history.back()">Volver</a>
-    
 </body>
 </html>
